@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import { View, Text, TextInput, Button, FlatList, Image, TouchableOpacity, StyleSheet } from 'react-native';
 import Colors from '../constants/Colors';
 
+
 class DogSearchScreen extends Component {
 
     constructor(props) {
@@ -41,7 +42,7 @@ class DogSearchScreen extends Component {
                         breed_id: itemData.item.id,
                     }
                     )}>
-                <View>
+                <View style ={styles.dogInfo}>
                     {itemData.item.image ?
                         <Image
                             style={styles.image}
@@ -55,7 +56,7 @@ class DogSearchScreen extends Component {
                                 uri: dogImage
                             }} />
                     }
-                    <Text>{itemData.item.name}</Text>
+                    <Text style = {styles.text}>{itemData.item.name}</Text>
                 </View>
             </TouchableOpacity>
         )
@@ -107,11 +108,23 @@ const styles = StyleSheet.create({
     gridItem: {
         flex: 1,
         margin: 15,
-        height: 200
+        height: 200,
     },
     image: {
         height: 160,
-        width: 130
+        width: 160,
+        borderRadius: 15,
+        shadowColor: 'black',
+        shadowOpacity: 0.26,
+        shadowOffset: {width:0 , height: 2},
+        shadowRadius: 10,
+    },
+    dogInfo: {
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    text: {
+        fontFamily: 'open-sans-bold'
     }
 })
 

@@ -43,7 +43,7 @@ class CatSearchScreen extends Component {
                         breed_id: itemData.item.id
                     }
                     )}>
-                <View>
+                <View style={styles.catInfo}>
                     {itemData.item.image ?
                         <Image
                             style={styles.image}
@@ -57,7 +57,7 @@ class CatSearchScreen extends Component {
                                 uri: catImage
                             }} />
                     }
-                    <Text>{itemData.item.name}</Text>
+                    <Text style={styles.text}>{itemData.item.name}</Text>
                 </View>
             </TouchableOpacity>
         )
@@ -119,7 +119,22 @@ const styles = StyleSheet.create({
     },
     image: {
         height: 160,
-        width: 130
+        width: 160,
+        borderRadius: 15,
+        shadowColor: 'black',
+        shadowOpacity: 0.26,
+        shadowOffset: {width:0 , height: 2},
+        shadowRadius: 10,
+    },
+    imageContainer: {
+        
+    },
+    catInfo: {
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    text: {
+        fontFamily: 'open-sans-bold'
     }
 })
 
