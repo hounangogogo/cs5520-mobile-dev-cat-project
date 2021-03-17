@@ -35,12 +35,11 @@ class HomeScreen extends Component {
             <TouchableOpacity
                 style={styles.gridItem}
                 onPress={() =>
-                    this.props.navigation.navigate({
-                        routeName: 'CatDetail', params: {
+                    this.props.navigation.navigate('CatDetail',  {
                             breed: itemData.item.name,
                             img: itemData.item.image.url
                         }
-                    })
+                    )
                 }>
                 <View>
                     {itemData.item.image &&

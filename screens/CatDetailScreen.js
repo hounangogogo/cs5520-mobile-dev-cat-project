@@ -3,13 +3,12 @@ import { View, Text, Image, StyleSheet } from 'react-native';
 
 
 
-
 class CatDetailScreen extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            breed: this.props.navigation.getParam('breed'),
-            img: this.props.navigation.getParam('img'),
+            breed: this.props.route.params.breed,
+            img: this.props.route.params.img,
             cat: '',
             adaptability: '',
             affectionLevel: '',
@@ -26,6 +25,7 @@ class CatDetailScreen extends Component {
 
 
     componentDidMount = () => {
+        console.log(this.state.breed)
         fetch(`https://api.thecatapi.com/v1/breeds/search?q=` + this.state.breed)
             .then(res => res.json())
             .then((res) => {
@@ -45,7 +45,7 @@ class CatDetailScreen extends Component {
     }
 
     render() {
-        console.log(this.state.cat[0])
+
         return (
             <View style={styles.screen}>
                 <Image
