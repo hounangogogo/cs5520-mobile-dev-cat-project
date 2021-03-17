@@ -8,12 +8,13 @@ class HomeScreen extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            breeds: []
+            breeds: [],
+            input: ''
         }
     }
 
     componentDidMount = () => {
-        fetch(`https://api.thecatapi.com/v1/breeds`)
+        fetch(`https://api.thecatapi.com/v1/breeds?api_key=28d63f2d-2529-4a36-9bca-af21c9266759`)
             .then(res => res.json())
             .then((res) => {
                 this.setState({
@@ -29,26 +30,33 @@ class HomeScreen extends Component {
 
 
     renderGridItem = (itemData) => {
-
+        let catImage = itemData.item.image ? itemData.item.image.url :
+            'https://i.pinimg.com/736x/33/32/6d/33326dcddbf15c56d631e374b62338dc.jpg'
         return (
 
             <TouchableOpacity
                 style={styles.gridItem}
                 onPress={() =>
-                    this.props.navigation.navigate('CatDetail',  {
-                            breed: itemData.item.name,
-                            img: itemData.item.image.url
-                        }
+                    this.props.navigation.navigate('CatDetail', {
+                        breed: itemData.item.name,
+                        img: catImage,
+                        breed_id: itemData.item.id
+                    }
                     )
                 }>
                 <View>
-                    {itemData.item.image &&
+                    {itemData.item.image ?
                         <Image
                             style={styles.image}
                             source={{
-                                uri: itemData.item.image.url
+                                uri: catImage
                             }}
-                        />
+                        /> :
+                        <Image
+                            style={styles.image}
+                            source={{
+                                uri: catImage
+                            }} />
                     }
                     <Text>{itemData.item.name}</Text>
                 </View>
@@ -63,12 +71,14 @@ class HomeScreen extends Component {
                 <View style={styles.formContainer}>
                     <TextInput
                         style={styles.input}
-                        onChangeText={'dd'}
-                        value={'dd'}
+                        value={this.state.input}
+                        onChange={(e) => this.setState(
+                            {
+                                input: e.target.value
+                            })}
                     />
                     <Button title='Search Cat' />
                 </View>
-                <Text>{this.state.breeds.length}</Text>
                 <FlatList
                     keyExtractor={(item, index) => index}
                     data={this.state.breeds}
@@ -92,7 +102,6 @@ HomeScreen.navigationOptions = {
 
 const styles = StyleSheet.create({
     screen: {
-
         margin: 35
     },
     input: {

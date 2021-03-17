@@ -9,6 +9,7 @@ class CatDetailScreen extends Component {
         this.state = {
             breed: this.props.route.params.breed,
             img: this.props.route.params.img,
+            breed_id: this.props.route.params.breed_id,
             cat: '',
             adaptability: '',
             affectionLevel: '',
@@ -18,14 +19,28 @@ class CatDetailScreen extends Component {
             energyLevel: '',
             grooming: '',
             hairless: '',
-            name: ''
+            name: '',
+            album: []
 
         }
     }
 
 
+    findCatAlbum = () => {
+        let url = `https://api.thecatapi.com/v1/images/search?breed_ids=` + this.state.breed_id + `&limit=20&page=100&order=DESC`
+        fetch(url)
+            .then(res => res.json())
+            .then((res) => {
+                console.log(res)
+                this.setState({
+                    album: res
+                })
+            })
+    }
+
+
     componentDidMount = () => {
-        console.log(this.state.breed)
+
         fetch(`https://api.thecatapi.com/v1/breeds/search?q=` + this.state.breed)
             .then(res => res.json())
             .then((res) => {
@@ -42,10 +57,11 @@ class CatDetailScreen extends Component {
                     name: res[0].name
                 })
             })
+
+        this.findCatAlbum();
     }
 
     render() {
-
         return (
             <View style={styles.screen}>
                 <Image
