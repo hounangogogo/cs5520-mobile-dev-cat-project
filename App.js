@@ -1,8 +1,7 @@
 import React, {useState} from 'react';
-import { Text, View } from 'react-native';
 import * as Font from 'expo-font';
 import AppLoading from 'expo-app-loading';
-import MoiveNavigator from './navigation/Navigator';
+import Navigator from './navigation/Navigator';
 
 
 const fetchFonts = () => {
@@ -30,7 +29,7 @@ export default function App() {
 
 
   return (
-    <MoiveNavigator />
+    <Navigator />
   );
 }
 

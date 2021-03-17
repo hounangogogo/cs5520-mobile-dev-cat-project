@@ -1,127 +1,92 @@
 import React, { Component } from 'react';
-import { useState, useEffect } from 'react';
-import { View, Text, TextInput, Button, FlatList, Image, TouchableOpacity, StyleSheet } from 'react-native';
-import Colors from '../constants/Colors';
+import { View, Text, TouchableOpacity, Image, StyleSheet } from 'react-native';
+import * as Animatable from 'react-native-animatable';
+
+
 
 class HomeScreen extends Component {
-
     constructor(props) {
         super(props);
-        this.state = {
-            breeds: [],
-            input: ''
-        }
+        this.state = {}
     }
-
-    componentDidMount = () => {
-        fetch(`https://api.thecatapi.com/v1/breeds?api_key=28d63f2d-2529-4a36-9bca-af21c9266759`)
-            .then(res => res.json())
-            .then((res) => {
-                this.setState({
-                    breeds: res
-                })
-            })
-    }
-
-
-    searchCat = (breeds) => {
-
-    }
-
-
-    renderGridItem = (itemData) => {
-        let catImage = itemData.item.image ? itemData.item.image.url :
-            'https://i.pinimg.com/736x/33/32/6d/33326dcddbf15c56d631e374b62338dc.jpg'
-        return (
-
-            <TouchableOpacity
-                style={styles.gridItem}
-                onPress={() =>
-                    this.props.navigation.navigate('CatDetail', {
-                        breed: itemData.item.name,
-                        img: catImage,
-                        breed_id: itemData.item.id
-                    }
-                    )
-                }>
-                <View>
-                    {itemData.item.image ?
-                        <Image
-                            style={styles.image}
-                            source={{
-                                uri: catImage
-                            }}
-                        /> :
-                        <Image
-                            style={styles.image}
-                            source={{
-                                uri: catImage
-                            }} />
-                    }
-                    <Text>{itemData.item.name}</Text>
-                </View>
-            </TouchableOpacity>
-        )
-    }
-
-
     render() {
         return (
             <View style={styles.screen}>
-                <View style={styles.formContainer}>
-                    <TextInput
-                        style={styles.input}
-                        value={this.state.input}
-                        onChange={(e) => this.setState(
-                            {
-                                input: e.target.value
-                            })}
-                    />
-                    <Button title='Search Cat' />
+                <View style={styles.dgScreen}>
+                    <Animatable.View animation={dogAnimation}>
+                        <TouchableOpacity onPress = {()=> this.props.navigation.navigate('DogSearch')}>
+                            <Image
+                                style={styles.image}
+                                source={{
+                                    uri: `https://www.jamiesale-cartoonist.com/wp-content/uploads/dog-12.png`
+                                }}
+                            />
+                        </TouchableOpacity>
+                    </Animatable.View>
+
+                    <Animatable.View animation={catAnimation}>
+                        <TouchableOpacity onPress = {()=> this.props.navigation.navigate('CatSearch')}>
+                            <Image
+                                style={styles.image}
+                                source={{
+                                    uri: `https://www.pinclipart.com/picdir/middle/402-4022519_kawaii-cute-cat-kitten-cats-catlove-report-kawaii.png`
+                                }}
+                            />
+                        </TouchableOpacity>
+                    </Animatable.View>
+
                 </View>
-                <FlatList
-                    keyExtractor={(item, index) => index}
-                    data={this.state.breeds}
-                    renderItem={this.renderGridItem}
-                    numColumns={2} />
-            </View>
-        )
+
+            </View >
+        );
+    }
+}
+
+
+const dogAnimation = {
+    0: {
+        translateX: -200
+    },
+    0.5: {
+        translateX: -30
+    },
+    1: {
+        translateX: 0
+    }
+}
+
+
+const catAnimation = {
+
+    0: {
+        translateX: 200
+    },
+    0.5: {
+        translateX: 30
+    },
+    1: {
+        translateX: 0
     }
 
 }
-
-HomeScreen.navigationOptions = {
-    headerTitle: 'Home',
-    headerStyle: {
-        backgroundColor: Colors.orange
-    },
-    headerTintColor: 'white'
-}
-
 
 
 const styles = StyleSheet.create({
     screen: {
-        margin: 35
-    },
-    input: {
-        paddingHorizontal: 2,
-        paddingVertical: 5,
-        borderBottomWidth: 1,
-        borderBottomColor: '#30475e'
-    },
-    formContainer: {
-        width: '100%'
-    },
-    gridItem: {
         flex: 1,
-        margin: 15,
-        height: 200
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    dgScreen: {
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        alignItems: 'center'
     },
     image: {
-        height: 160,
-        width: 130
+        width: 200,
+        height: 260
     }
 })
+
 
 export default HomeScreen;
