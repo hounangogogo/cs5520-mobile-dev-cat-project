@@ -3,13 +3,13 @@ import { View, Text, Image, StyleSheet } from 'react-native';
 
 
 
-
 class CatDetailScreen extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            breed: this.props.navigation.getParam('breed'),
-            img: this.props.navigation.getParam('img'),
+            breed: this.props.route.params.breed,
+            img: this.props.route.params.img,
+            breed_id: this.props.route.params.breed_id,
             cat: '',
             adaptability: '',
             affectionLevel: '',
@@ -19,13 +19,28 @@ class CatDetailScreen extends Component {
             energyLevel: '',
             grooming: '',
             hairless: '',
-            name: ''
+            name: '',
+            album: []
 
         }
     }
 
 
+    findCatAlbum = () => {
+        let url = `https://api.thecatapi.com/v1/images/search?breed_ids=` + this.state.breed_id + `&limit=20&page=100&order=DESC`
+        fetch(url)
+            .then(res => res.json())
+            .then((res) => {
+                console.log(res)
+                this.setState({
+                    album: res
+                })
+            })
+    }
+
+
     componentDidMount = () => {
+
         fetch(`https://api.thecatapi.com/v1/breeds/search?q=` + this.state.breed)
             .then(res => res.json())
             .then((res) => {
@@ -42,10 +57,11 @@ class CatDetailScreen extends Component {
                     name: res[0].name
                 })
             })
+
+        this.findCatAlbum();
     }
 
     render() {
-        console.log(this.state.cat[0])
         return (
             <View style={styles.screen}>
                 <Image

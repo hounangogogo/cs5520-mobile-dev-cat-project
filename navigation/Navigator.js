@@ -1,19 +1,47 @@
 import React from 'react';
-
-import { createStackNavigator } from 'react-navigation-stack';
-import { createAppContainer } from 'react-navigation';
-import { createBottomTabNavigator } from 'react-navigation-tabs';
-import { createDrawerNavigator } from 'react-navigation-drawer';
+import { StyleSheet, Text, View } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
 
 import HomeScreen from '../screens/HomeScreen';
+import CatSearchScreen from '../screens/CatSearchScreen';
 import CatDetailScreen from '../screens/CatDetailScreen';
-
-const MoiveNavigator = createStackNavigator({
-    Home: HomeScreen,
-    CatDetail: {
-        screen: CatDetailScreen
-    }
-})
+import DogSearchScreen from '../screens/DogSearchScreen';
+import DogDetailScreen from '../screens/DogDetailScreen';
 
 
-export default createAppContainer(MoiveNavigator);
+const Stack = createStackNavigator();
+
+
+const Navigator = () => {
+    return (
+        <NavigationContainer>
+
+
+            <Stack.Navigator>
+                <Stack.Screen
+                    name="Home"
+                    component={HomeScreen}
+                />
+                <Stack.Screen
+                    name="DogSearch"
+                    component={DogSearchScreen}
+                />
+                <Stack.Screen
+                    name="DogDetail"
+                    component={DogDetailScreen}
+                />
+                
+                <Stack.Screen
+                    name="CatSearch"
+                    component={CatSearchScreen}
+                />
+                <Stack.Screen
+                    name="CatDetail"
+                    component={CatDetailScreen}
+                />
+            </Stack.Navigator>
+        </NavigationContainer>
+    )
+}
+export default Navigator;
