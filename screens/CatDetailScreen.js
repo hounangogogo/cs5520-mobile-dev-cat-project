@@ -44,6 +44,7 @@ class CatDetailScreen extends Component {
         fetch(`https://api.thecatapi.com/v1/breeds/search?q=` + this.state.breed)
             .then(res => res.json())
             .then((res) => {
+                
                 this.setState({
                     cat: res,
                     adaptability: res[0].adaptability,
@@ -62,6 +63,7 @@ class CatDetailScreen extends Component {
     }
 
     render() {
+        console.log(this.state.cat)
         return (
             <View style={styles.screen}>
                 <Image
