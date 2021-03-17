@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, TouchableOpacity, Image, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, Image, StyleSheet, Button } from 'react-native';
 import * as Animatable from 'react-native-animatable';
 
 
@@ -7,8 +7,19 @@ import * as Animatable from 'react-native-animatable';
 class HomeScreen extends Component {
     constructor(props) {
         super(props);
+        console.log(this.props)
         this.state = {}
     }
+
+    componentDidMount = () => {
+        this.props.navigation.setOptions({
+            headerLeft: () => (
+                <Button title = 'dd' onPress = {() => this.props.navigation.toggleDrawer()}/>
+            )
+        })
+    }
+
+
     render() {
         return (
             <View style={styles.screen}>
@@ -36,11 +47,15 @@ class HomeScreen extends Component {
                     </Animatable.View>
 
                 </View>
-
             </View >
         );
     }
 }
+
+
+
+
+
 
 
 const dogAnimation = {
