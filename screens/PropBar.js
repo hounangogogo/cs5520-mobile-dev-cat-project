@@ -26,21 +26,23 @@ export default class PropBar extends Component {
         <Text>Characteristics</Text>
         <View>
           {characs.map((charac, index) => (
-            <View
-              style={styles.li}
-              key={charac.type}
-              style={{
-                width: `${charac.level * 100}%`,
-                backgroundColor: `hsl(${hue}, ${saturation}%, ${
-                  100 / (index + 3.5)
-                }%)`,
-              }}
-            >
-              <View tyle={styles.p}>
-                <Text style={styles.pText}>{charac.type}</Text>
+            <View>
+              <Text style={styles.pText}>{charac.type}</Text>
+              <View
+                style={styles.li}
+                key={charac.type}
+                style={{
+                  width: `${charac.level * 50}%`,
+                  backgroundColor: `hsl(${hue}, ${saturation}%, ${
+                    100 / (index + 3.5)
+                  }%)`,
+                }}
+              >
+                <View tyle={styles.p}>
+                  <View tyle={styles.span}>
+                    <Text style={styles.spanText}>{charac.level}</Text>
+                  </View>
 
-                <View tyle={styles.span}>
-                  <Text style={styles.spanText}>{charac.level}</Text>
                 </View>
               </View>
             </View>
@@ -83,7 +85,8 @@ const styles = StyleSheet.create({
     color: "white",
   },
   pText: {
-    color: "white",
+    fontWeight: "400",
+
   },
   span: {
     right: 10,
