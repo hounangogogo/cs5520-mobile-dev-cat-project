@@ -19,31 +19,29 @@ export default class PropBar extends Component {
     const { hue, saturation, characs } = this.props;
 
     return (
-      <View
-        id="characteristics"
-        style={this.state.collapsed ? styles.collapsed : styles.container}
-      >
-        <Text>Characteristics</Text>
+      <View id="characteristics" style={styles.container}>
         <View>
           {characs.map((charac, index) => (
             <View>
-              <View >
-                <Text style={styles.pText}>{charac.type}</Text>
-              </View>
+              {/* <View style={styles.pTextBlock}> */}
+              <Text style={styles.pText}>{charac.type}</Text>
+              {/* </View> */}
               <View
                 style={styles.li}
                 key={charac.type}
                 style={{
-                  width: `${charac.level * 50}%`,
-                  backgroundColor: `hsl(${hue}, ${saturation}%, ${100 / (index + 3.5)
-                    }%)`,
+                  width: `${charac.level * 22}%`,
+                  // height: "13%",
+                  backgroundColor: `hsl(${hue}, ${saturation}%, ${
+                    100 / (index + 3.5)
+                  }%)`,
+                  borderRadius: 15,
                 }}
               >
                 <View tyle={styles.p}>
                   <View tyle={styles.span}>
                     <Text style={styles.spanText}>{charac.level}</Text>
                   </View>
-
                 </View>
               </View>
             </View>
@@ -56,38 +54,28 @@ export default class PropBar extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    maxWidth: 150,
+    maxWidth: "100%",
     margin: "auto",
     padding: 20,
-  },
-  collapsed: {
-    maxWidth: 100,
-    margin: "auto",
-    padding: 20,
-  },
-  image: {
-    height: 160,
-    width: 130,
   },
   characs: {
-    marginBottom: 30,
+    marginBottom: "5%",
     width: "calc(100% - 50)",
   },
   li: {
+    width: "50%",
     backgroundColor: "#888",
     color: "#fff",
-    marginBottom: 20,
+    marginBottom: "5%",
     paddingBottom: 10,
 
     // transition: width 300ms ease-in-out;
   },
   p: {
-    marginBottom: 10,
     color: "white",
   },
   pText: {
     fontWeight: "400",
-
   },
   span: {
     right: 10,
@@ -99,5 +87,6 @@ const styles = StyleSheet.create({
   spanText: {
     color: "white",
     textAlign: "right",
+    fontSize: 9,
   },
 });

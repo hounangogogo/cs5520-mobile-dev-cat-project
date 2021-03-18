@@ -3,7 +3,28 @@ import { View, Text, Image, StyleSheet } from "react-native";
 import PropBar from "./PropBar.js";
 
 import { Col, Row, Grid } from "react-native-easy-grid";
-// import { Row, Rows, Table } from "react-native-table-component";
+import * as Animatable from "react-native-animatable";
+
+const customerImageIn = {
+  from: {
+    width: 26,
+    height: 32,
+    opacity: 1,
+    translateX: -200,
+    translateY: -200,
+    borderRadius: 15,
+    // rotate: "40deg",
+  },
+  to: {
+    width: 260,
+    height: 320,
+    opacity: 0.3,
+    translateX: 0,
+    translateY: 0,
+    borderRadius: 15,
+    // rotate: "0deg",
+  },
+};
 
 class CatDetailScreen extends Component {
   constructor(props) {
@@ -27,6 +48,9 @@ class CatDetailScreen extends Component {
       temperament: "",
       origin: "",
       life_span: "",
+      tableBoardColor: "#D6D0C6",
+      tableCellColor: "#F7F6E7",
+      tableCellColorDark: "#D6D0C6",
     };
   }
 
@@ -73,27 +97,27 @@ class CatDetailScreen extends Component {
   render() {
     const CHARACS = [
       {
-        type: "dog friendly",
+        type: "Dog Friendly",
         level: this.state.dogFriendly === 0 ? 0.01 : this.state.dogFriendly,
       },
       {
-        type: "child friendly",
+        type: "Child Friendly",
         level: this.state.childFriendly === 0 ? 0.01 : this.state.childFriendly,
       },
       {
-        type: "energyLevel",
+        type: "Energy Level",
         level: this.state.energyLevel === 0 ? 0.01 : this.state.energyLevel,
       },
       {
-        type: "grooming",
+        type: "Grooming",
         level: this.state.grooming === 0 ? 0.01 : this.state.grooming,
       },
       {
-        type: "adaptability",
+        type: "Adaptability",
         level: this.state.adaptability === 0 ? 0.01 : this.state.adaptability,
       },
       {
-        type: "affectionLevel",
+        type: "AffectionLevel",
         level:
           this.state.affectionLevel === 0 ? 0.01 : this.state.affectionLevel,
       },
@@ -110,35 +134,38 @@ class CatDetailScreen extends Component {
         <View style={styles.topContainer}>
           {/* picture block */}
           <View style={styles.topMiddleContainer1}>
-            <Image
+            <Animatable.Image
               style={styles.image}
               source={{
                 uri: this.state.img,
               }}
+              animation={customerImageIn}
+              duration={5000}
             />
           </View>
 
           {/* description block */}
           <View style={styles.topMiddleContainer2}>
-            <Text>Description</Text>
-            <Text>{this.state.description}</Text>
+            <Text style={styles.headText}>Description</Text>
+            <Text style={styles.text}>{this.state.description}</Text>
           </View>
         </View>
 
         <View style={styles.bottomContainer}>
           {/* details block */}
           <View style={styles.bottomMiddleContainer1}>
-            <Text>Introduction</Text>
-            <Grid>
+            <Text style={styles.headText}>Introduction</Text>
+            <Grid style={{ borderRadius: 100 }}>
               <Row
                 style={{
                   borderWidth: 0.3,
-                  borderColor: "#C1C0B9",
-                  backgroundColor: "#F7F6E7",
+                  borderColor: this.state.tableBoardColor,
+                  backgroundColor: this.state.tableCellColorDark,
+                  height: "10%",
                 }}
               >
                 <Col>
-                  <Text style={styles.tableHead}>origin</Text>
+                  <Text style={styles.tableHead}>Origin</Text>
                 </Col>
                 <Col>
                   <Text style={styles.tableText}>{this.state.origin}</Text>
@@ -148,27 +175,31 @@ class CatDetailScreen extends Component {
               <Row
                 style={{
                   borderWidth: 0.3,
-                  borderColor: "#C1C0B9",
-                  backgroundColor: "#C1C0B9",
+                  borderColor: this.state.tableBoardColor,
+                  backgroundColor: this.state.tableCellColor,
+                  height: "10%",
                 }}
               >
                 <Col>
-                  <Text style={styles.tableHead}>life_span</Text>
+                  <Text style={styles.tableHead}>Life Span</Text>
                 </Col>
                 <Col>
-                  <Text style={styles.tableText}>{this.state.life_span}</Text>
+                  <Text style={styles.tableText}>
+                    {this.state.life_span} years
+                  </Text>
                 </Col>
               </Row>
 
               <Row
                 style={{
                   borderWidth: 0.3,
-                  borderColor: "#C1C0B9",
-                  backgroundColor: "#F7F6E7",
+                  borderColor: this.state.tableBoardColor,
+                  backgroundColor: this.state.tableCellColorDark,
+                  height: "22%",
                 }}
               >
                 <Col>
-                  <Text style={styles.tableHead}>temperament</Text>
+                  <Text style={styles.tableHead}>Temperament</Text>
                 </Col>
                 <Col>
                   <Text style={styles.tableText}>{this.state.temperament}</Text>
@@ -179,7 +210,7 @@ class CatDetailScreen extends Component {
 
           {/* characteristics block */}
           <View style={styles.bottomMiddleContainer2}>
-            <PropBar hue="300" saturation="40" characs={CHARACS} />
+            <PropBar hue="25" saturation="85.5" characs={CHARACS} />
           </View>
         </View>
       </View>
@@ -192,61 +223,68 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+    backgroundColor: "#ECEBE4",
   },
   image: {
     height: 160,
     width: 130,
-  },
-  bar_group__bar_thin: {
-    width: "0%",
-    height: 4,
-    borderRadius: 2,
-    backgroundColor: "#ddd",
-
-    // margin-bottom: 10px;
-    // -webkit-transition: width 1s;
-    // transition: width 1s;
   },
 
   topContainer: {
     flexDirection: "row",
     height: 300,
     width: "100%",
-    padding: 7,
+    marginTop: "50%",
+    backgroundColor: "#ECEBE4",
   },
 
   topMiddleContainer1: {
     flex: 1,
     marginRight: 2,
+    marginLeft: "5%",
   },
   topMiddleContainer2: {
     flex: 2,
-    marginRight: 2,
+    marginRight: "5%",
   },
   bottomContainer: {
     flexDirection: "row",
     height: 500,
-    width: "100%",
     padding: 7,
-    marginRight: 2,
+    marginRight: 1,
     marginBottom: 2,
+    marginTop: "10%",
   },
 
   bottomMiddleContainer1: {
-    flex: 1,
-    padding: 7,
+    flex: 1.4,
+    marginLeft: "3%",
     marginBottom: 2,
+    borderRadius: 15,
   },
   bottomMiddleContainer2: {
     flex: 1,
-    padding: 7,
+    marginTop: "5%",
     marginBottom: 2,
   },
-  tableText: { textAlign: "center", fontWeight: "100" },
-  tableHead: { textAlign: "center", fontWeight: "400" },
+  tableText: { textAlign: "justify", color: "#54514B", fontWeight: "100" },
+  tableHead: {
+    textAlign: "left",
+    color: "#54514B",
+    fontWeight: "800",
+  },
+  headText: {
+    color: "#54514B",
+    fontWeight: "bold",
+    fontSize: 20,
+    marginBottom: "5%",
+  },
+  text: {
+    color: "#54514B",
+    fontSize: 15,
+    textAlign: "justify",
+    marginRight: "5%",
+  },
 });
-
-
-
 
 export default CatDetailScreen;
