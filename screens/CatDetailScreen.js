@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { View, Text, Image, StyleSheet } from "react-native";
 import PropBar from "./PropBar.js";
+
 import { Col, Row, Grid } from "react-native-easy-grid";
 // import { Row, Rows, Table } from "react-native-table-component";
 
@@ -244,5 +245,8 @@ const styles = StyleSheet.create({
   tableText: { textAlign: "center", fontWeight: "100" },
   tableHead: { textAlign: "center", fontWeight: "400" },
 });
+
+
+
 
 export default CatDetailScreen;

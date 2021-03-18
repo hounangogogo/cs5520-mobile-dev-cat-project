@@ -42,6 +42,7 @@ export default class PropBar extends Component {
                   <View tyle={styles.span}>
                     <Text style={styles.spanText}>{charac.level}</Text>
                   </View>
+
                 </View>
               </View>
             </View>
@@ -85,6 +86,7 @@ const styles = StyleSheet.create({
   },
   pText: {
     fontWeight: "400",
+
   },
   span: {
     right: 10,
