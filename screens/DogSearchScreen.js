@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { useState, useEffect } from 'react';
 import { View, Text, TextInput, Button, FlatList, Image, TouchableOpacity, StyleSheet } from 'react-native';
 import Colors from '../constants/Colors';
-
+import LoadDogAnimation from '../Animation/LoadDogAnimation';
 
 class DogSearchScreen extends Component {
 
@@ -10,7 +10,8 @@ class DogSearchScreen extends Component {
         super(props);
         this.state = {
             breeds: [],
-            input: ''
+            input: '',
+            isAnimationTimeOut: false
         }
     }
 
@@ -24,9 +25,15 @@ class DogSearchScreen extends Component {
                     breeds: res
                 })
             })
+
+        this.counterTimer = setInterval(() => this.setState({
+            isAnimationTimeOut: true
+        }), 2300)
     }
 
-
+    componentWillUnmount = () => {
+        clearInterval(this.counterTimer);
+    }
 
     renderGridItem = (itemData) => {
         let dogImage = itemData.item.image ? itemData.item.image.url :
@@ -42,7 +49,7 @@ class DogSearchScreen extends Component {
                         breed_id: itemData.item.id,
                     }
                     )}>
-                <View style ={styles.dogInfo}>
+                <View style={styles.dogInfo}>
                     {itemData.item.image ?
                         <Image
                             style={styles.image}
@@ -56,7 +63,7 @@ class DogSearchScreen extends Component {
                                 uri: dogImage
                             }} />
                     }
-                    <Text style = {styles.text}>{itemData.item.name}</Text>
+                    <Text style={styles.text}>{itemData.item.name}</Text>
                 </View>
             </TouchableOpacity>
         )
@@ -68,23 +75,33 @@ class DogSearchScreen extends Component {
     render() {
         console.log(this.state.breeds)
         return (
-            <View style={styles.screen}>
-                <View style={styles.formContainer}>
-                    <TextInput
-                        style={styles.input}
-                        value={this.state.input}
-                        onChange={(e) => this.setState(
-                            {
-                                input: e.target.value
-                            })}
-                    />
-                    <Button title='Search Dog' />
-                </View>
-                <FlatList
-                    keyExtractor={(item, index) => index}
-                    data={this.state.breeds}
-                    renderItem={this.renderGridItem}
-                    numColumns={2} />
+
+            <View style={this.state.isAnimationTimeOut ? styles.screen : styles.animationScreen}>
+                {
+                    this.state.isAnimationTimeOut ?
+                        <View>
+                            <View style={styles.formContainer}>
+                                <TextInput
+                                    style={styles.input}
+                                    value={this.state.input}
+                                    onChange={(e) => this.setState(
+                                        {
+                                            input: e.target.value
+                                        })}
+                                />
+                                <Button title='Search Dog' />
+                            </View>
+                            <FlatList
+                                keyExtractor={(item, index) => index}
+                                data={this.state.breeds}
+                                renderItem={this.renderGridItem}
+                                numColumns={2} />
+                        </View>
+                        :
+                        <LoadDogAnimation />
+
+                }
+
             </View>
         )
     }
@@ -94,7 +111,14 @@ class DogSearchScreen extends Component {
 
 const styles = StyleSheet.create({
     screen: {
-        margin: 35
+        flex: 1,
+        margin: 35,
+    },
+    animationScreen: {
+        flex: 1,
+        margin: 35,
+        alignItems: 'center',
+        justifyContent: 'center'
     },
     input: {
         paddingHorizontal: 2,
@@ -116,7 +140,7 @@ const styles = StyleSheet.create({
         borderRadius: 15,
         shadowColor: 'black',
         shadowOpacity: 0.26,
-        shadowOffset: {width:0 , height: 2},
+        shadowOffset: { width: 0, height: 2 },
         shadowRadius: 10,
     },
     dogInfo: {

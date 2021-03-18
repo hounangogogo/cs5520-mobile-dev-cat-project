@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import { useState, useEffect } from 'react';
 import { View, Text, TextInput, Button, FlatList, Image, TouchableOpacity, StyleSheet } from 'react-native';
 import Colors from '../constants/Colors';
+import LoadCatAnimation from '../Animation/LoadCatAnimation';
+
+
 
 class CatSearchScreen extends Component {
 
@@ -9,7 +12,9 @@ class CatSearchScreen extends Component {
         super(props);
         this.state = {
             breeds: [],
-            input: ''
+            input: '',
+            isAnimationTimeOut: false
+
         }
     }
 
@@ -21,12 +26,15 @@ class CatSearchScreen extends Component {
                     breeds: res
                 })
             })
+        this.counterTimer = setInterval(() => this.setState({
+            isAnimationTimeOut: true
+        }), 2300)
     }
 
-
-    searchCat = (breeds) => {
-
+    componentWillUnmount = () => {
+        clearInterval(this.counterTimer);
     }
+
 
 
     renderGridItem = (itemData) => {
@@ -66,23 +74,31 @@ class CatSearchScreen extends Component {
 
     render() {
         return (
-            <View style={styles.screen}>
-                <View style={styles.formContainer}>
-                    <TextInput
-                        style={styles.input}
-                        value={this.state.input}
-                        onChange={(e) => this.setState(
-                            {
-                                input: e.target.value
-                            })}
-                    />
-                    <Button title='Search Cat' />
-                </View>
-                <FlatList
-                    keyExtractor={(item, index) => index}
-                    data={this.state.breeds}
-                    renderItem={this.renderGridItem}
-                    numColumns={2} />
+            <View style={this.state.isAnimationTimeOut ? styles.screen : styles.animationScreen}>
+                {
+                    this.state.isAnimationTimeOut ?
+                        <View>
+                            <View style={styles.formContainer}>
+                                <TextInput
+                                    style={styles.input}
+                                    value={this.state.input}
+                                    onChange={(e) => this.setState(
+                                        {
+                                            input: e.target.value
+                                        })}
+                                />
+                                <Button title='Search Cat' />
+                            </View>
+                            <FlatList
+                                keyExtractor={(item, index) => index}
+                                data={this.state.breeds}
+                                renderItem={this.renderGridItem}
+                                numColumns={2} />
+                        </View>
+                        :
+                        <LoadCatAnimation />
+                }
+
             </View>
         )
     }
@@ -102,6 +118,12 @@ CatSearchScreen.navigationOptions = {
 const styles = StyleSheet.create({
     screen: {
         margin: 35
+    },
+    animationScreen: {
+        flex: 1,
+        margin: 35,
+        alignItems: 'center',
+        justifyContent: 'center'
     },
     input: {
         paddingHorizontal: 2,
@@ -123,11 +145,11 @@ const styles = StyleSheet.create({
         borderRadius: 15,
         shadowColor: 'black',
         shadowOpacity: 0.26,
-        shadowOffset: {width:0 , height: 2},
+        shadowOffset: { width: 0, height: 2 },
         shadowRadius: 10,
     },
     imageContainer: {
-        
+
     },
     catInfo: {
         justifyContent: 'center',
