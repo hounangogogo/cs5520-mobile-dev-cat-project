@@ -108,9 +108,9 @@ class CatDetailScreen extends Component {
         return (
             <View style={styles.screen}>
 
-                <View style={styles.topMiddleContainer1}>
+                <View style={styles.topContainer}>
                     {/* picture block */}
-                    <View style={styles.topContainer}>
+                    <View style={styles.topMiddleContainer1}>
                         <View id="picture" style={styles.picture}>
                             <Image
                                 style={styles.image}
@@ -137,6 +137,7 @@ class CatDetailScreen extends Component {
                             {/* <Table borderStyle={{ borderWidth: 1, borderColor: "#ddd" }}>
             <Rows data={DETAILS.tableData} />
           </Table> */}
+                            <Text>just testing</Text>
                         </View>
                     </View>
 
@@ -164,9 +165,9 @@ const styles = StyleSheet.create({
     },
     bar_group__bar_thin: {
         width: "0%",
-        height: "4px",
-        border_radius: "2px",
-        background: "#ddd",
+        height: 4,
+        borderRadius: 2,
+        backgroundColor: "#ddd",
 
         // margin-bottom: 10px;
         // -webkit-transition: width 1s;
@@ -175,27 +176,13 @@ const styles = StyleSheet.create({
     text: {},
     details: {},
 
-    bottomContainer: {
-        flexDirection: "row",
-        height: 300
-    },
-
-    bottomMiddleContainer1: {
-        flex: 1,
-        padding: 7,
-        marginRight: 2,
-        marginBottom: 2
-    },
-    bottomMiddleContainer2: {
-        flex: 2,
-        padding: 7,
-        marginRight: 2,
-        marginBottom: 2
-    },
-
     topContainer: {
         flexDirection: "row",
-        height: 150
+        height: 300,
+        width: "100%",
+        padding: 7,
+        marginRight: 2,
+        marginBottom: 2
     },
 
     topMiddleContainer1: {
@@ -209,7 +196,32 @@ const styles = StyleSheet.create({
         padding: 7,
         marginRight: 2,
         marginBottom: 2
-    }
+    },
+
+    bottomContainer: {
+        flexDirection: "row",
+        height: 500,
+        width: "100%",
+        padding: 7,
+        marginRight: 2,
+        marginBottom: 2
+    },
+
+    bottomMiddleContainer1: {
+        flex: 1,
+        padding: 7,
+        marginRight: 2,
+        marginBottom: 2
+    },
+    bottomMiddleContainer2: {
+        flex: 3,
+        padding: 7,
+        marginRight: 2,
+        marginBottom: 2
+    },
+
+
+
 });
 
 

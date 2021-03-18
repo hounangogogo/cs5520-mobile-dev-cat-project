@@ -216,7 +216,7 @@ const styles = StyleSheet.create({
         // flex: 0.1,
         bottom: -45,
         height: 50,
-        width: 10000,
+        width: "100%",
         backgroundColor: '#ddd',
         alignItems: 'center',
         justifyContent: 'center'
@@ -235,5 +235,7 @@ const styles = StyleSheet.create({
         fontSize: 18,
     }
 })
+
+
 
 export default HomeScreen;

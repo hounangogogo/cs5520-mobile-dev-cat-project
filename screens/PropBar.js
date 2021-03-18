@@ -53,14 +53,14 @@ export default class PropBar extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    maxWidth: "100px",
+    maxWidth: 100,
     margin: "auto",
-    padding: "20px",
+    padding: 20,
   },
   collapsed: {
-    maxWidth: "100px",
+    maxWidth: 100,
     margin: "auto",
-    padding: "20px",
+    padding: 20,
   },
   image: {
     height: 160,
@@ -86,11 +86,11 @@ const styles = StyleSheet.create({
     color: "white",
   },
   span: {
-    right: "10px",
-    width: "30px",
-    top: "11px",
+    right: 10,
+    width: 30,
+    top: 11,
     color: "#fff",
-    fontSize: "11px",
+    fontSize: 11,
   },
   spanText: {
     color: "white",
