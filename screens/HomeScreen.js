@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, TouchableOpacity, Image, StyleSheet, Button } from 'react-native';
 import * as Animatable from 'react-native-animatable';
-
+import { IconButton, Colors } from 'react-native-paper';
 
 
 class HomeScreen extends Component {
@@ -14,7 +14,13 @@ class HomeScreen extends Component {
     componentDidMount = () => {
         this.props.navigation.setOptions({
             headerLeft: () => (
-                <Button title='dd' onPress={() => this.props.navigation.toggleDrawer()} />
+                <IconButton
+                    icon="menu"
+                    color={'black'}
+                    size={40}
+                    onPress={() => this.props.navigation.toggleDrawer()}
+                />
+
             )
         })
     }
@@ -23,6 +29,7 @@ class HomeScreen extends Component {
     render() {
         return (
             <View style={styles.screen}>
+
                 <View style={styles.dgScreen}>
                     <Animatable.View animation={dogAnimation}>
                         <TouchableOpacity onPress={() => this.props.navigation.navigate('DogSearch')}>

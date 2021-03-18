@@ -27,15 +27,16 @@ export default class PropBar extends Component {
         <View>
           {characs.map((charac, index) => (
             <View>
-              <Text style={styles.pText}>{charac.type}</Text>
+              <View >
+                <Text style={styles.pText}>{charac.type}</Text>
+              </View>
               <View
                 style={styles.li}
                 key={charac.type}
                 style={{
                   width: `${charac.level * 50}%`,
-                  backgroundColor: `hsl(${hue}, ${saturation}%, ${
-                    100 / (index + 3.5)
-                  }%)`,
+                  backgroundColor: `hsl(${hue}, ${saturation}%, ${100 / (index + 3.5)
+                    }%)`,
                 }}
               >
                 <View tyle={styles.p}>
@@ -55,7 +56,7 @@ export default class PropBar extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    maxWidth: 100,
+    maxWidth: 150,
     margin: "auto",
     padding: 20,
   },

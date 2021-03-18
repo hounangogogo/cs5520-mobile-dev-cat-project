@@ -58,10 +58,10 @@ const Navigator = () => {
                     name="Home"
                     component={HomeNav}
                 />
-                <Drawer.Screen name="Cat" component={CatSearchScreen} />
-                <Drawer.Screen name="Dog" component={DogSearchScreen} />
-                <Drawer.Screen name="Adopt" component={AdoptScreen} />
-                <Drawer.Screen name="LostPet" component={LostPetScreen} />
+                <Drawer.Screen name="Cat 🐱" component={CatSearchScreen} />
+                <Drawer.Screen name="Dog 🐶" component={DogSearchScreen} />
+                <Drawer.Screen name="Adopt 🦮" component={AdoptScreen} />
+                <Drawer.Screen name="LostPet 🙀" component={LostPetScreen} />
             </Drawer.Navigator>
         </NavigationContainer>
     )
