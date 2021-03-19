@@ -1,3 +1,5 @@
+# HiPet!
+
 ## Problems to solve
 Our application is an online, searchable database of animals who need homes/lost pets. 
 It is a directory of nearly 239 cat/dog breeds across the world.
