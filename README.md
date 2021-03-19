@@ -14,9 +14,9 @@ To use Internet technology and the resources it can generate to:
 There are routers in our application:
 1. Home Page
 2. Cat Search Page  
-  |-----2.1 Cat Details Page
+  |----2.1 Cat Details Page
 3. Dog Search Page  
-  |-----3.1 Dog Details Page
+  |----3.1 Dog Details Page
 4. Report Lost Pets Page
 5. Adopt Page
 6. About me Page
