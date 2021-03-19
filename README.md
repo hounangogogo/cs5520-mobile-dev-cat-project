@@ -21,3 +21,8 @@ There are six routers with two subRouters in our application:
 5. Adopt Page
 6. About me Page
 
+
+### Collaborative filtering
+https://en.wikipedia.org/wiki/Collaborative_filtering
+- store the preference in the database
+- comparision with other people
