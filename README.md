@@ -11,7 +11,7 @@ To use Internet technology and the resources it can generate to:
 4. Users could report their lost pets in our website. Hopes these lovely gugys could find their home as soon as possible. 
 
 ## Routers
-There are routers in our application:
+There are six routers with two subRouters in our application:
 1. Home Page
 2. Cat Search Page  
   |----2.1 Cat Details Page
