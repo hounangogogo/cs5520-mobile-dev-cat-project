@@ -49,6 +49,19 @@ const HomeNav = () => (
 
 
 
+const LostPetNav = () => (
+    <Stack.Navigator>
+        <Stack.Screen
+            name="LostPet 🙀"
+            component={LostPetScreen}
+        />
+    
+    </Stack.Navigator>
+)
+
+
+
+
 
 const Navigator = () => {
     return (
@@ -61,7 +74,7 @@ const Navigator = () => {
                 <Drawer.Screen name="Cat 🐱" component={CatSearchScreen} />
                 <Drawer.Screen name="Dog 🐶" component={DogSearchScreen} />
                 <Drawer.Screen name="Adopt 🦮" component={AdoptScreen} />
-                <Drawer.Screen name="LostPet 🙀" component={LostPetScreen} />
+                <Drawer.Screen name="LostPet 🙀" component={LostPetNav} />
             </Drawer.Navigator>
         </NavigationContainer>
     )
