@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View, Text, Image, TextInput, StyleSheet, Button } from 'react-native';
-
+import { connect } from 'react-redux';
 
 
 class NewLostPetScreen extends Component {
@@ -102,4 +102,9 @@ const styles = StyleSheet.create({
 })
 
 
-export default NewLostPetScreen;
+const stateToPropertyMapper = (state) => {
+
+}
+
+
+export default connect(stateToPropertyMapper)(NewLostPetScreen);

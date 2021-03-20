@@ -2,14 +2,16 @@ import React, { Component } from 'react';
 import { View, Text, TouchableOpacity, Image, StyleSheet, Button, FlatList } from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import { IconButton, Colors } from 'react-native-paper';
+import { connect } from 'react-redux';
 
 class LostPetScreen extends Component {
     constructor(props) {
-        console.log("sdfsdf")
         super(props);
         this.state = {
             accessToken: '',
-            lostCats: []
+            lostCats: [],
+            // from db
+            lostAnimal: []
         }
     }
 
@@ -87,7 +89,7 @@ class LostPetScreen extends Component {
 
 
     renderGridItem = (itemData) => {
-        console.log(itemData.item)
+        //console.log(itemData.item)
         return (
             <TouchableOpacity>
                 <View>
@@ -111,7 +113,7 @@ class LostPetScreen extends Component {
 
 
     render() {
-        console.log(this.state.lostCats)
+        console.log(this.props)
         return (
             <View>
                 <Text>LostPetScreen</Text>
@@ -140,5 +142,11 @@ const styles = StyleSheet.create({
 
 })
 
+const stateToPropertyMapper = (state) => {
+    return {
+        lostAnimalFromDB: state.lostAnimalReducer.lostAnimals
+    }
+}
 
-export default LostPetScreen;
+
+export default connect(stateToPropertyMapper)(LostPetScreen);

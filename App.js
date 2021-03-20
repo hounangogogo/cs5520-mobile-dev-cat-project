@@ -5,15 +5,14 @@ import Navigator from './navigation/Navigator';
 import { createStore, combineReducers, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import ReduxThunk from 'redux-thunk';
-import LostAnimalReducer from './store/lostpet/lostpet-reducer';
-
+import lostAnimalReducer from './store/lostpet/lostpet-reducer';
 
 
 const rootReducer = combineReducers({
-  lostAnimal: LostAnimalReducer
+  lostAnimalReducer
 })
 
-const store = createStore(rootReducer, applyMiddleware(ReduxThunk));
+const store = createStore(rootReducer);
 
 const fetchFonts = () => {
   return Font.loadAsync({

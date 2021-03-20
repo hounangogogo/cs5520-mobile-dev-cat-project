@@ -1,4 +1,3 @@
-import {ADD_LOST_ANIMAL} from './lostpet-action';
 import Animal from '../../models/animal';
 
 
@@ -7,15 +6,17 @@ const initialState = {
 };
 
 
-export default (state = initialState, action) => {
+const lostAnimalReducer = (prevState = initialState, action) => {
     switch(action.type) {
-        case ADD_LOST_ANIMAL:
+        case 'ADD_LOST_ANIMAL':
             const newAnimal = new Animal(new Date().toString(), action.animalData.name)
             return {
-                lostAnimals: state.lostAnimals.concat(newAnimal)
+                lostAnimals: prevState.lostAnimals.concat(newAnimal)
             }
 
         default:
-            return state;
+            return prevState;
     }
 };
+
+export default lostAnimalReducer;
