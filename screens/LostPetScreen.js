@@ -24,6 +24,15 @@ class LostPetScreen extends Component {
                     onPress={() => this.props.navigation.navigate('Home')}
                 />
 
+            ),
+            headerRight: () => (
+                <IconButton
+                    icon="bullhorn"
+                    color={'black'}
+                    size={40}
+                    onPress={() => this.props.navigation.navigate('NewLost')}
+                />
+
             )
         })
         this.getToken();
