@@ -15,7 +15,14 @@ class NewLostPetScreen extends Component {
         }
     }
 
+
+    addNewLost = () => {
+        this.props.addNewLostAnimal(this.state.name);
+    }
+
+
     render() {
+        console.log(this.props)
         return (
             <View style={styles.form}>
                 <Text style={styles.label}>Pet name</Text>
@@ -77,7 +84,7 @@ class NewLostPetScreen extends Component {
                     }}
                     placeholder="Phone" />
 
-                <Button title='Submit' onPress={() => { }} />
+                <Button title='Submit' onPress={this.addNewLost} />
             </View>
 
         );
@@ -103,8 +110,19 @@ const styles = StyleSheet.create({
 
 
 const stateToPropertyMapper = (state) => {
-
+    return {
+        lostAnimalFromDB: state.lostAnimalReducer.lostAnimals
+    }
 }
 
 
-export default connect(stateToPropertyMapper)(NewLostPetScreen);
+const propertyToDispatchMapper = (dispatch) => {
+    return {
+        addNewLostAnimal: (animalName) => {
+            dispatch({type: 'ADD_LOST_ANIMAL', name: animalName})
+        }
+    }
+}
+
+
+export default connect(stateToPropertyMapper, propertyToDispatchMapper)(NewLostPetScreen);
