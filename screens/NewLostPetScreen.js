@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, Image, TextInput, StyleSheet, Button } from 'react-native';
 import { connect } from 'react-redux';
-
+import ImageSelectorComponent from '../components/ImageSelectorComponent';
 
 class NewLostPetScreen extends Component {
     constructor(props) {
@@ -83,6 +83,7 @@ class NewLostPetScreen extends Component {
                         })
                     }}
                     placeholder="Phone" />
+                <ImageSelectorComponent />
 
                 <Button title='Submit' onPress={this.addNewLost} />
             </View>
@@ -119,7 +120,7 @@ const stateToPropertyMapper = (state) => {
 const propertyToDispatchMapper = (dispatch) => {
     return {
         addNewLostAnimal: (animalName) => {
-            dispatch({type: 'ADD_LOST_ANIMAL', name: animalName})
+            dispatch({ type: 'ADD_LOST_ANIMAL', name: animalName })
         }
     }
 }

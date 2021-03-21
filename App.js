@@ -7,7 +7,6 @@ import { Provider } from 'react-redux';
 import ReduxThunk from 'redux-thunk';
 import lostAnimalReducer from './store/lostpet/lostpet-reducer';
 
-
 const rootReducer = combineReducers({
   lostAnimalReducer
 })
