@@ -12,6 +12,8 @@ import DogSearchScreen from '../screens/DogSearchScreen';
 import DogDetailScreen from '../screens/DogDetailScreen';
 import AdoptScreen from '../screens/AdoptScreen'
 import LostPetScreen from '../screens/LostPetScreen';
+import NewLostPetScreen from '../screens/NewLostPetScreen';
+
 
 
 const Stack = createStackNavigator();
@@ -49,6 +51,23 @@ const HomeNav = () => (
 
 
 
+const LostPetNav = () => (
+    <Stack.Navigator>
+        <Stack.Screen
+            name="LostPet 🙀"
+            component={LostPetScreen}
+        />
+        <Stack.Screen
+            name="NewLost"
+            component = {NewLostPetScreen}
+        />
+
+    </Stack.Navigator>
+)
+
+
+
+
 
 const Navigator = () => {
     return (
@@ -61,7 +80,7 @@ const Navigator = () => {
                 <Drawer.Screen name="Cat 🐱" component={CatSearchScreen} />
                 <Drawer.Screen name="Dog 🐶" component={DogSearchScreen} />
                 <Drawer.Screen name="Adopt 🦮" component={AdoptScreen} />
-                <Drawer.Screen name="LostPet 🙀" component={LostPetScreen} />
+                <Drawer.Screen name="LostPet 🙀" component={LostPetNav} />
             </Drawer.Navigator>
         </NavigationContainer>
     )

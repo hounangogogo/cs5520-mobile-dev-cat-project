@@ -1,19 +1,223 @@
 import React, { Component } from 'react';
-import {View, Button, Text, Image} from 'react-native';
-
+import { View, Text, TouchableOpacity, Image, StyleSheet, Button, FlatList } from 'react-native';
+import * as Animatable from 'react-native-animatable';
+import { IconButton, Colors } from 'react-native-paper';
+import { connect } from 'react-redux';
 
 class LostPetScreen extends Component {
     constructor(props) {
         super(props);
-        this.state = {  }
+        this.state = {
+            accessToken: '',
+            lostCats: [],
+            // from db
+            lostAnimal: []
+        }
     }
-    render() { 
-        return ( 
-            <View>
-                <Text>LostPetScreen</Text>
+
+
+    componentDidMount = () => {
+        this.props.navigation.setOptions({
+            headerLeft: () => (
+                <IconButton
+                    icon="home"
+                    color={'black'}
+                    size={40}
+                    onPress={() => this.props.navigation.navigate('Home')}
+                />
+
+            ),
+            headerRight: () => (
+                <IconButton
+                    icon="bullhorn"
+                    color={'black'}
+                    size={40}
+                    onPress={() => this.props.navigation.navigate('NewLost')}
+                />
+
+            )
+        })
+        this.getToken();
+
+
+    }
+
+
+
+    getToken = () => {
+        fetch('https://api.petfinder.com/v2/oauth2/token', {
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                "grant_type": "client_credentials",
+                "client_id": 'A7O634I1AYU18NP1aqqyedhc6Z7VbJVHHDKwOOMBEcYIGyawDU',
+                "client_secret": 'anavA0L8rN65ll1YELbh9NzIqLIDKjakuS3C9inU'
+            })
+        }).then((res) => res.json())
+            .then((res) => {
+                console.log(res)
+                this.setState({
+                    accessToken: res.access_token
+                })
+                this.getLostCat();
+            })
+    }
+
+
+
+    getLostCat = () => {
+        let token = this.state.accessToken;
+        fetch('https://api.petfinder.com/v2/animals?type=cat&page=5', {
+            method: 'GET',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+                Authorization: 'Bearer ' + token
+            },
+        }).then((res) => res.json())
+            .then((res) => {
+                this.setState({
+                    lostCats: res.animals
+                })
+            })
+    }
+
+
+
+
+    renderGridItem = (itemData) => {
+        console.log(itemData.item)
+        return (
+            // <TouchableOpacity>
+            //     <View>
+            //         <Text>Age: {itemData.item.age}</Text>
+            //         <Text>Name: {itemData.item.name}</Text>
+            //         {
+            //             itemData.item.photos.length !== 0 && 
+            //             <Image
+            //                 style={styles.image}
+            //                 source={{
+            //                     uri: itemData.item.photos[0].full
+            //                 }} />
+            //         }
+
+            //     </View>
+            // </TouchableOpacity>
+
+            <TouchableOpacity
+                style={styles.gridItem}>
+                <View style={styles.lostBox}>
+                    {itemData.item.photos.length !== 0 ?
+                        <Image
+                            style={styles.image}
+                            source={{
+                                uri: itemData.item.photos[0].full
+                            }}
+                        /> :
+                        <Image
+                            style={styles.image}
+                            source={{
+                                uri: "https://picsum.photos/id/237/200/300"
+                            }} />
+                    }
+                    {itemData.item.gender === "Female" ?
+                        <Text style={styles.text1}>👧 {itemData.item.name}</Text>
+                        :
+                        <Text style={styles.text1}>👦 {itemData.item.name}</Text>
+                                    }
+                    <Text style={styles.text2}>{itemData.item.age}</Text>
+                </View>
+            </TouchableOpacity>
+        )
+    }
+
+
+    render() {
+        console.log(this.props)
+        return (
+            <View style={styles.screen}>
+                {/* <Text>LostPetScreen</Text> */}
+                <FlatList
+                    keyExtractor={(item, index) => index}
+                    data={this.state.lostCats}
+                    renderItem={this.renderGridItem}
+                    numColumns={2} />
             </View>
-         );
+        );
     }
 }
- 
-export default LostPetScreen;
+
+
+
+const styles = StyleSheet.create({
+    screen: {
+        flex: 1,
+        // margin: 35,
+        // justifyContent: 'center',
+        // alignItems: 'center',
+        backgroundColor: "#ddd"
+    },
+
+    gridItem: {
+        flex: 1,
+        margin: 22,
+        height: 230,
+        // width: 160
+    },
+
+    image: {
+        // height: "75%",
+        // width: "100%",
+        height: 160,
+        width: 160,
+        justifyContent: 'center',
+        alignItems: 'center',
+        // borderRadius: 15,
+        borderBottomLeftRadius: 30,
+        borderBottomRightRadius: 30,
+        borderTopLeftRadius: 10,
+        borderTopRightRadius: 10,
+        shadowColor: 'black',
+        shadowOpacity: 0.26,
+        shadowOffset: { width: 0, height: 2 },
+        shadowRadius: 10,
+        marginTop: -15
+    },
+    lostBox: {
+        // height: 230,
+        width: 160,
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 10,
+        shadowColor: 'black',
+        shadowOpacity: 0.26,
+        shadowOffset: { width: 0, height: 2 },
+        shadowRadius: 10,
+        backgroundColor: "white"
+    },
+    text1: {
+        fontFamily: 'open-sans-bold',
+        color: "green",
+        textAlign: 'center',
+        fontSize: 15
+    },
+    text2: {
+        fontFamily: 'open-sans',
+        color: "black",
+        textAlign: 'center',
+        fontSize: 13
+    }
+
+})
+
+const stateToPropertyMapper = (state) => {
+    return {
+        lostAnimalFromDB: state.lostAnimalReducer.lostAnimals
+    }
+}
+
+
+export default connect(stateToPropertyMapper)(LostPetScreen);

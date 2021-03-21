@@ -1,8 +1,18 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import * as Font from 'expo-font';
 import AppLoading from 'expo-app-loading';
 import Navigator from './navigation/Navigator';
+import { createStore, combineReducers, applyMiddleware } from 'redux';
+import { Provider } from 'react-redux';
+import ReduxThunk from 'redux-thunk';
+import lostAnimalReducer from './store/lostpet/lostpet-reducer';
 
+
+const rootReducer = combineReducers({
+  lostAnimalReducer
+})
+
+const store = createStore(rootReducer);
 
 const fetchFonts = () => {
   return Font.loadAsync({
@@ -29,7 +39,9 @@ export default function App() {
 
 
   return (
-    <Navigator />
+    <Provider store={store}>
+      <Navigator />
+    </Provider>
   );
 }
 
