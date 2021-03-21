@@ -1,10 +1,10 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
-const FavoriteScreen = props => {
+const MyPostScreen = props => {
     return (
         <View style={styles.screen}>
-            <Text>Favorite Screen</Text>
+            <Text>MyPost Screen</Text>
         </View>
     )
 }
@@ -18,4 +18,4 @@ const styles = StyleSheet.create({
     }
 })
 
-export default FavoriteScreen;
+export default MyPostScreen;
