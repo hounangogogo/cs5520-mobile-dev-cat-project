@@ -89,34 +89,57 @@ class LostPetScreen extends Component {
 
 
     renderGridItem = (itemData) => {
-        //console.log(itemData.item)
+        console.log(itemData.item)
         return (
-            <TouchableOpacity>
-                <View>
-                    <Text>Age: {itemData.item.age}</Text>
-                    <Text>Name: {itemData.item.name}</Text>
-                    {
-                        itemData.item.photos.length !== 0 && 
+            // <TouchableOpacity>
+            //     <View>
+            //         <Text>Age: {itemData.item.age}</Text>
+            //         <Text>Name: {itemData.item.name}</Text>
+            //         {
+            //             itemData.item.photos.length !== 0 && 
+            //             <Image
+            //                 style={styles.image}
+            //                 source={{
+            //                     uri: itemData.item.photos[0].full
+            //                 }} />
+            //         }
+
+            //     </View>
+            // </TouchableOpacity>
+
+            <TouchableOpacity
+                style={styles.gridItem}>
+                <View style={styles.lostBox}>
+                    {itemData.item.photos.length !== 0 ?
                         <Image
                             style={styles.image}
                             source={{
                                 uri: itemData.item.photos[0].full
+                            }}
+                        /> :
+                        <Image
+                            style={styles.image}
+                            source={{
+                                uri: "https://picsum.photos/id/237/200/300"
                             }} />
                     }
-
+                    {itemData.item.gender === "Female" ?
+                        <Text style={styles.text1}>👧 {itemData.item.name}</Text>
+                        :
+                        <Text style={styles.text1}>👦 {itemData.item.name}</Text>
+                                    }
+                    <Text style={styles.text2}>{itemData.item.age}</Text>
                 </View>
             </TouchableOpacity>
         )
     }
 
 
-
-
     render() {
         console.log(this.props)
         return (
-            <View>
-                <Text>LostPetScreen</Text>
+            <View style={styles.screen}>
+                {/* <Text>LostPetScreen</Text> */}
                 <FlatList
                     keyExtractor={(item, index) => index}
                     data={this.state.lostCats}
@@ -132,13 +155,61 @@ class LostPetScreen extends Component {
 const styles = StyleSheet.create({
     screen: {
         flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
+        // margin: 35,
+        // justifyContent: 'center',
+        // alignItems: 'center',
+        backgroundColor: "#ddd"
     },
+
+    gridItem: {
+        flex: 1,
+        margin: 22,
+        height: 230,
+        // width: 160
+    },
+
     image: {
+        // height: "75%",
+        // width: "100%",
         height: 160,
         width: 160,
+        justifyContent: 'center',
+        alignItems: 'center',
+        // borderRadius: 15,
+        borderBottomLeftRadius: 30,
+        borderBottomRightRadius: 30,
+        borderTopLeftRadius: 10,
+        borderTopRightRadius: 10,
+        shadowColor: 'black',
+        shadowOpacity: 0.26,
+        shadowOffset: { width: 0, height: 2 },
+        shadowRadius: 10,
+        marginTop: -15
     },
+    lostBox: {
+        // height: 230,
+        width: 160,
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 10,
+        shadowColor: 'black',
+        shadowOpacity: 0.26,
+        shadowOffset: { width: 0, height: 2 },
+        shadowRadius: 10,
+        backgroundColor: "white"
+    },
+    text1: {
+        fontFamily: 'open-sans-bold',
+        color: "green",
+        textAlign: 'center',
+        fontSize: 15
+    },
+    text2: {
+        fontFamily: 'open-sans',
+        color: "black",
+        textAlign: 'center',
+        fontSize: 13
+    }
 
 })
 
