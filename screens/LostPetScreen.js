@@ -86,10 +86,28 @@ class LostPetScreen extends Component {
     }
 
 
+    renderDBLost = (itemData) => {
+        let image = itemData.item.imageUri;
+        return (
+            <View>
+                <Text>PetName: {itemData.item.name}</Text>
+                
+                <Image
+                    style={{width: 100, height: 100}}
+                    source={{
+                        uri: image
+                    }}
+                     />
+
+            </View>
+        )
+    }
+
+
 
 
     renderGridItem = (itemData) => {
-        console.log(itemData.item)
+        //console.log(itemData.item)
         return (
             // <TouchableOpacity>
             //     <View>
@@ -127,7 +145,7 @@ class LostPetScreen extends Component {
                         <Text style={styles.text1}>👧 {itemData.item.name}</Text>
                         :
                         <Text style={styles.text1}>👦 {itemData.item.name}</Text>
-                                    }
+                    }
                     <Text style={styles.text2}>{itemData.item.age}</Text>
                 </View>
             </TouchableOpacity>
@@ -139,7 +157,22 @@ class LostPetScreen extends Component {
         console.log(this.props)
         return (
             <View style={styles.screen}>
-                {/* <Text>LostPetScreen</Text> */}
+                <Text>Data from db</Text>
+                <View>
+                    <Text>
+                        {this.props.lostAnimalFromDB.length}
+
+                    </Text>
+                    {this.props.lostAnimalFromDB.length !== 0 ?
+                        <FlatList
+                            keyExtractor={(item, index) => index}
+                            data={this.props.lostAnimalFromDB}
+                            renderItem={this.renderDBLost}
+                            numColumns={1}
+                        /> : <View />}
+                </View>
+                <Text>----------------------</Text>
+
                 <FlatList
                     keyExtractor={(item, index) => index}
                     data={this.state.lostCats}
