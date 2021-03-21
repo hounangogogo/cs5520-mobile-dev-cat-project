@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, Image, TextInput, StyleSheet, Button } from 'react-native';
+import { View, Text, Image, TextInput, StyleSheet, Button, ScrollView } from 'react-native';
 import { connect } from 'react-redux';
 import ImageSelectorComponent from '../components/ImageSelectorComponent';
 
@@ -11,27 +11,35 @@ class NewLostPetScreen extends Component {
             breeds: '',
             color: '',
             species: '',
-            phone: ''
+            phone: '',
+            image: '',
         }
+    }
+
+    imageChosenHandler = (imagePath) => {
+        this.setState({
+            image: imagePath
+        })
     }
 
 
     addNewLost = () => {
-        this.props.addNewLostAnimal(this.state.name);
+        this.props.addNewLostAnimal(this.state.name, this.state.image);
     }
 
 
     render() {
         console.log(this.props)
         return (
-            <View style={styles.form}>
+
+            <ScrollView style={styles.form}>
                 <Text style={styles.label}>Pet name</Text>
                 <TextInput
                     style={styles.textInput}
                     value={this.state.name}
-                    onChange={(e) => {
+                    onChangeText={(e) => {
                         this.setState({
-                            name: e.target.value
+                            name: e
                         })
                     }}
                     placeholder="Pet Name" />
@@ -40,9 +48,9 @@ class NewLostPetScreen extends Component {
                 <TextInput
                     style={styles.textInput}
                     value={this.state.color}
-                    onChange={(e) => {
+                    onChangeText={(e) => {
                         this.setState({
-                            color: e.target.value
+                            color: e
                         })
                     }}
                     placeholder="Pet Color" />
@@ -52,9 +60,9 @@ class NewLostPetScreen extends Component {
                 <TextInput
                     style={styles.textInput}
                     value={this.state.breeds}
-                    onChange={(e) => {
+                    onChangeText={(e) => {
                         this.setState({
-                            breeds: e.target.value
+                            breeds: e
                         })
                     }}
                     placeholder="Pet Breeds" />
@@ -64,9 +72,9 @@ class NewLostPetScreen extends Component {
                 <TextInput
                     style={styles.textInput}
                     value={this.state.species}
-                    onChange={(e) => {
+                    onChangeText={(e) => {
                         this.setState({
-                            species: e.target.value
+                            species: e
                         })
                     }}
                     placeholder="Pet Species" />
@@ -77,16 +85,16 @@ class NewLostPetScreen extends Component {
                 <TextInput
                     style={styles.textInput}
                     value={this.state.phone}
-                    onChange={(e) => {
+                    onChangeText={(e) => {
                         this.setState({
-                            phone: e.target.value
+                            phone: e
                         })
                     }}
                     placeholder="Phone" />
-                <ImageSelectorComponent />
+                <ImageSelectorComponent onImageChoosen = {this.imageChosenHandler}/>
 
                 <Button title='Submit' onPress={this.addNewLost} />
-            </View>
+            </ScrollView>
 
         );
     }
@@ -119,8 +127,8 @@ const stateToPropertyMapper = (state) => {
 
 const propertyToDispatchMapper = (dispatch) => {
     return {
-        addNewLostAnimal: (animalName) => {
-            dispatch({ type: 'ADD_LOST_ANIMAL', name: animalName })
+        addNewLostAnimal: (animalName, animalImage) => {
+            dispatch({ type: 'ADD_LOST_ANIMAL', name: animalName, image: animalImage})
         }
     }
 }
