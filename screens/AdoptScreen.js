@@ -51,6 +51,7 @@ class AdoptScreen extends Component {
               icon="bullhorn"
               color={'black'}
               size={40}
+              onPress={() => this.props.navigation.navigate('NewAdpot')}
           />
 
       )

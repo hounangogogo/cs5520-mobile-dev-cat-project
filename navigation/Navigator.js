@@ -14,7 +14,7 @@ import AdoptScreen from '../screens/AdoptScreen'
 import LostPetScreen from '../screens/LostPetScreen';
 import NewLostPetScreen from '../screens/NewLostPetScreen';
 import MyPostScreen from '../screens/MyPostScreen';
-
+import NewAdoptPetScreen from '../screens/NewAdoptPetScreen';
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -71,6 +71,10 @@ const AdoptPetNav = () => (
         <Stack.Screen
             name="Adopt 🦮"
             component={AdoptScreen}
+        />
+        <Stack.Screen
+            name="NewAdpot"
+            component={NewAdoptPetScreen}
         />
     </Stack.Navigator>
 )
