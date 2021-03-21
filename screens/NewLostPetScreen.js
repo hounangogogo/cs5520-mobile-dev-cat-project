@@ -24,7 +24,15 @@ class NewLostPetScreen extends Component {
 
 
     addNewLost = () => {
-        this.props.addNewLostAnimal(this.state.name, this.state.image);
+        this.props.addNewLostAnimal(
+            this.state.name,
+            this.state.breeds,
+            this.state.color,
+            this.state.species,
+            this.state.phone,
+            this.state.image
+        );
+        this.props.navigation.navigate('LostPet 🙀')
     }
 
 
@@ -91,7 +99,7 @@ class NewLostPetScreen extends Component {
                         })
                     }}
                     placeholder="Phone" />
-                <ImageSelectorComponent onImageChoosen = {this.imageChosenHandler}/>
+                <ImageSelectorComponent onImageChoosen={this.imageChosenHandler} />
 
                 <Button title='Submit' onPress={this.addNewLost} />
             </ScrollView>
@@ -127,8 +135,22 @@ const stateToPropertyMapper = (state) => {
 
 const propertyToDispatchMapper = (dispatch) => {
     return {
-        addNewLostAnimal: (animalName, animalImage) => {
-            dispatch({ type: 'ADD_LOST_ANIMAL', name: animalName, image: animalImage})
+        addNewLostAnimal: (
+            animalName,
+            animalBreeds,
+            animalColor,
+            animalSpecies,
+            phone,
+            animalImage) => {
+            dispatch({
+                type: 'ADD_LOST_ANIMAL',
+                name: animalName,
+                breeds: animalBreeds,
+                color: animalColor,
+                species: animalSpecies,
+                phone: phone,
+                image: animalImage
+            })
         }
     }
 }

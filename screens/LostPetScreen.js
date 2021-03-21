@@ -91,7 +91,11 @@ class LostPetScreen extends Component {
         return (
             <View>
                 <Text>PetName: {itemData.item.name}</Text>
-                
+                <Text>PetBreeds: {itemData.item.breeds}</Text>
+                <Text>Petcolor: {itemData.item.color}</Text>
+                <Text>Petspecies: {itemData.item.species}</Text>
+                <Text>Contact: {itemData.item.phone}</Text>
+
                 <Image
                     style={{width: 100, height: 100}}
                     source={{
@@ -102,7 +106,6 @@ class LostPetScreen extends Component {
             </View>
         )
     }
-
 
 
 
