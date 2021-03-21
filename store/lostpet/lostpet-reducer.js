@@ -7,9 +7,15 @@ const initialState = {
 
 
 const lostAnimalReducer = (prevState = initialState, action) => {
-    switch(action.type) {
+    switch (action.type) {
         case 'ADD_LOST_ANIMAL':
-            const newAnimal = new Animal(new Date().toString(), action.name, action.image)
+            const newAnimal = new Animal(new Date().toString(),
+                action.name,
+                action.breeds,
+                action.color,
+                action.species,
+                action.phone,
+                action.image)
             return {
                 lostAnimals: prevState.lostAnimals.concat(newAnimal)
             }
