@@ -95,6 +95,7 @@ class CatDetailScreen extends Component {
   };
 
   render() {
+    console.log("this is the res of dog", this.state.cat[0]);
     const CHARACS = [
       {
         type: "Dog Friendly",
@@ -267,11 +268,18 @@ const styles = StyleSheet.create({
     marginTop: "5%",
     marginBottom: 2,
   },
-  tableText: { textAlign: "justify", color: "#54514B", fontWeight: "100" },
+  tableText: {
+    textAlign: "auto",
+    color: "#54514B",
+    fontWeight: "200",
+    fontFamily: "Arial",
+    fontSize: 12.5,
+  },
   tableHead: {
     textAlign: "left",
     color: "#54514B",
-    fontWeight: "800",
+    fontWeight: "500",
+    fontSize: 13,
   },
   headText: {
     color: "#54514B",

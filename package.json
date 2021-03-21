@@ -15,6 +15,7 @@
     "expo": "~40.0.0",
     "expo-app-loading": "^1.0.1",
     "expo-font": "~8.4.0",
+    "expo-image-picker": "~9.2.0",
     "expo-status-bar": "~1.0.3",
     "react": "16.13.1",
     "react-dom": "16.13.1",
@@ -23,6 +24,7 @@
     "react-native-css-file": "0.0.6",
     "react-native-data-table": "^0.2.1",
     "react-native-easy-grid": "^0.2.2",
+    "react-native-elements": "^3.3.2",
     "react-native-exception-handler": "^2.10.9",
     "react-native-gesture-handler": "^1.8.0",
     "react-native-paper": "^4.7.2",
@@ -37,8 +39,7 @@
     "react-redux": "^7.2.2",
     "react-skillbars": "^1.6.1",
     "redux": "^4.0.5",
-    "redux-thunk": "^2.3.0",
-    "expo-image-picker": "~9.2.0"
+    "redux-thunk": "^2.3.0"
   },
   "devDependencies": {
     "@babel/core": "~7.9.0"
