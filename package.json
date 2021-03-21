@@ -41,11 +41,7 @@
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0",
     "expo-constants": "~9.3.3",
-
-    "expo-permissions": "~10.0.0",
-
-    "redux-thunk": "^2.3.0"
-
+    "expo-permissions": "~10.0.0"
   },
   "devDependencies": {
     "@babel/core": "~7.9.0"
