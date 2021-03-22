@@ -13,7 +13,7 @@ class ImageSelectorComponent extends Component {
     }
 
 
-    verifyPermissions = async() => {
+    verifyAlbumPermissions = async() => {
         const result = await Permissions.askAsync(Permissions.MEDIA_LIBRARY)
         if(result.status !== 'granted') {
             Alert.alert('Need albumn permission');
@@ -22,8 +22,42 @@ class ImageSelectorComponent extends Component {
         return true;
     }
 
+
+
+    verifyCameraPermissions = async() => {
+        const result = await Permissions.askAsync(Permissions.CAMERA)
+        if(result.status !== 'granted') {
+            Alert.alert('Need albumn permission');
+            return false;
+        }
+        return true;
+    }
+
+
+
     takeImageHandler = async() => {
-        const hasPermission = await this.verifyPermissions();
+        const hasPermission = await this.verifyCameraPermissions();
+        if(!hasPermission) {
+            return;
+        }
+        const image = await ImagePicker.launchCameraAsync({
+            allowsEditing: true,
+            aspect: [16, 9],
+            quality: 0.5
+        });
+        console.log(image)
+        this.setState({
+            pickedImg: image.uri
+        })
+
+        this.props.onImageChoosen(image.uri)
+    }
+
+
+
+
+    chooseImageHandler = async() => {
+        const hasPermission = await this.verifyAlbumPermissions();
         if(!hasPermission) {
             return;
         }
@@ -53,7 +87,13 @@ class ImageSelectorComponent extends Component {
 
                     }
                 </View>
-                <Button title='Select an Image' onPress={this.takeImageHandler} />
+                <Button title='Select an Image' onPress={this.chooseImageHandler} />
+                {
+                    this.props.useCamera ? 
+                    <Button title='Take a photo' onPress={this.takeImageHandler} />
+                    :
+                    <View />
+                }
             </View>
         );
     }

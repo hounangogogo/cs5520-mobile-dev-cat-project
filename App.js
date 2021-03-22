@@ -6,9 +6,11 @@ import { createStore, combineReducers, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import ReduxThunk from 'redux-thunk';
 import lostAnimalReducer from './store/lostpet/lostpet-reducer';
+import adoptAnimalReducer from './store/adoptpet/adoptpet-reducer';
 
 const rootReducer = combineReducers({
-  lostAnimalReducer
+  lostAnimalReducer,
+  adoptAnimalReducer
 })
 
 const store = createStore(rootReducer);
