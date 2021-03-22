@@ -126,34 +126,27 @@ const styles = StyleSheet.create({
 })
 
 
-const stateToPropertyMapper = (state) => {
-    return {
-        lostAnimalFromDB: state.lostAnimalReducer.lostAnimals
-    }
-}
+const stateToPropertyMapper = (state) => ({
+
+    lostAnimalFromDB: state.lostAnimalReducer.lostAnimals
+
+})
 
 
-const propertyToDispatchMapper = (dispatch) => {
-    return {
-        addNewLostAnimal: (
-            animalName,
-            animalBreeds,
-            animalColor,
-            animalSpecies,
-            phone,
-            animalImage) => {
-            dispatch({
-                type: 'ADD_LOST_ANIMAL',
-                name: animalName,
-                breeds: animalBreeds,
-                color: animalColor,
-                species: animalSpecies,
-                phone: phone,
-                image: animalImage
-            })
-        }
+const propertyToDispatchMapper = (dispatch) => ({
+    addNewLostAnimal: (animalName,
+        animalBreeds, animalColor, animalSpecies, phone, animalImage) => {
+        dispatch({
+            type: 'ADD_LOST_ANIMAL',
+            name: animalName,
+            breeds: animalBreeds,
+            color: animalColor,
+            species: animalSpecies,
+            phone: phone,
+            image: animalImage
+        })
     }
-}
+})
 
 
 export default connect(stateToPropertyMapper, propertyToDispatchMapper)(NewLostPetScreen);

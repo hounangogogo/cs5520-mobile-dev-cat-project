@@ -97,11 +97,11 @@ class LostPetScreen extends Component {
                 <Text>Contact: {itemData.item.phone}</Text>
 
                 <Image
-                    style={{width: 100, height: 100}}
+                    style={{ width: 100, height: 100 }}
                     source={{
                         uri: image
                     }}
-                     />
+                />
 
             </View>
         )
@@ -249,11 +249,9 @@ const styles = StyleSheet.create({
 
 })
 
-const stateToPropertyMapper = (state) => {
-    return {
-        lostAnimalFromDB: state.lostAnimalReducer.lostAnimals
-    }
-}
+const stateToPropertyMapper = (state) => ({
+    lostAnimalFromDB: state.lostAnimalReducer.lostAnimals
+})
 
 
 export default connect(stateToPropertyMapper)(LostPetScreen);
