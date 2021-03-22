@@ -8,8 +8,15 @@ const initialState = {
 
 const lostAnimalReducer = (prevState = initialState, action) => {
     switch (action.type) {
+
+        case 'ALL_LOST_ANIMAL':
+            return {
+                lostAnimals: action.allLost
+            }
+
         case 'ADD_LOST_ANIMAL':
-            const newAnimal = new Animal(new Date().toString(),
+            const newAnimal = new Animal(
+                action.id,
                 action.name,
                 action.breeds,
                 action.color,

@@ -3,6 +3,8 @@ import { View, Text, TouchableOpacity, Image, StyleSheet, Button, FlatList } fro
 import * as Animatable from 'react-native-animatable';
 import { IconButton, Colors } from 'react-native-paper';
 import { connect } from 'react-redux';
+import Animal from '../models/animal';
+import { getAllLostAnimalService } from '../services/LostAnimalService';
 
 class LostPetScreen extends Component {
     constructor(props) {
@@ -17,6 +19,7 @@ class LostPetScreen extends Component {
 
 
     componentDidMount = () => {
+        this.props.getAllLostAnimal();
         this.props.navigation.setOptions({
             headerLeft: () => (
                 <IconButton
@@ -254,4 +257,29 @@ const stateToPropertyMapper = (state) => ({
 })
 
 
-export default connect(stateToPropertyMapper)(LostPetScreen);
+const propertyToDispatchMapper = (dispatch) => ({
+    getAllLostAnimal: () =>
+        getAllLostAnimalService()
+            .then(data => {
+                console.log(data)
+                const loadedLostAnimal = [];
+                for(const key in data) {
+                    loadedLostAnimal.push(new Animal(
+                        key, 
+                        data[key].animalName,
+                        data[key].animalBreeds,
+                        data[key].animalColor,
+                        data[key].animalSpecies,
+                        data[key].phone,
+                        data[key].animalImage
+                    ))
+                }
+                dispatch({
+                    type: 'ALL_LOST_ANIMAL',
+                    allLost: loadedLostAnimal
+                })
+            })
+})
+
+
+export default connect(stateToPropertyMapper, propertyToDispatchMapper)(LostPetScreen);

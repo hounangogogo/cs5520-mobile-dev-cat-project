@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { View, Text, Image, TextInput, StyleSheet, Button, ScrollView } from 'react-native';
 import { connect } from 'react-redux';
 import ImageSelectorComponent from '../components/ImageSelectorComponent';
+import { addNewLostAnimal } from '../services/LostAnimalService';
+
 
 class NewLostPetScreen extends Component {
     constructor(props) {
@@ -37,7 +39,7 @@ class NewLostPetScreen extends Component {
 
 
     render() {
-        console.log(this.props)
+        //console.log(this.props)
         return (
 
             <ScrollView style={styles.form}>
@@ -135,17 +137,22 @@ const stateToPropertyMapper = (state) => ({
 
 const propertyToDispatchMapper = (dispatch) => ({
     addNewLostAnimal: (animalName,
-        animalBreeds, animalColor, animalSpecies, phone, animalImage) => {
-        dispatch({
-            type: 'ADD_LOST_ANIMAL',
-            name: animalName,
-            breeds: animalBreeds,
-            color: animalColor,
-            species: animalSpecies,
-            phone: phone,
-            image: animalImage
-        })
-    }
+        animalBreeds, animalColor, animalSpecies, phone, animalImage) => 
+            addNewLostAnimal(animalName,
+                animalBreeds, animalColor, animalSpecies, phone, animalImage)
+                .then(data => {
+                    console.log(data)
+                    dispatch({
+                        type: 'ADD_LOST_ANIMAL',
+                        id: data.name,
+                        name: animalName,
+                        breeds: animalBreeds,
+                        color: animalColor,
+                        species: animalSpecies,
+                        phone: phone,
+                        image: animalImage
+                    })
+                })
 })
 
 
