@@ -12,6 +12,7 @@ import DogSearchScreen from '../screens/DogSearchScreen';
 import DogDetailScreen from '../screens/DogDetailScreen';
 import AdoptScreen from '../screens/AdoptScreen'
 import LostPetScreen from '../screens/LostPetScreen';
+import LostPetDetailScreen from '../screens/LostPetDetailScreen';
 import NewLostPetScreen from '../screens/NewLostPetScreen';
 import MyPostScreen from '../screens/MyPostScreen';
 import NewAdoptPetScreen from '../screens/NewAdoptPetScreen';
@@ -56,6 +57,10 @@ const LostPetNav = () => (
         <Stack.Screen
             name="LostPet 🙀"
             component={LostPetScreen}
+        />
+        <Stack.Screen 
+            name="LostPetDetail"
+            component = {LostPetDetailScreen}
         />
         <Stack.Screen
             name="NewLost"

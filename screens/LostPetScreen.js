@@ -132,6 +132,10 @@ class LostPetScreen extends Component {
             // </TouchableOpacity>
 
             <TouchableOpacity
+                onPress={() => this.props.navigation.navigate("LostPetDetail", {
+                    animalId: itemData.item.id,
+                    token: this.state.accessToken
+                })}
                 style={styles.gridItem}>
                 <View style={styles.lostBox}>
                     {itemData.item.photos.length !== 0 ?
@@ -263,9 +267,9 @@ const propertyToDispatchMapper = (dispatch) => ({
             .then(data => {
                 console.log(data)
                 const loadedLostAnimal = [];
-                for(const key in data) {
+                for (const key in data) {
                     loadedLostAnimal.push(new Animal(
-                        key, 
+                        key,
                         data[key].animalName,
                         data[key].animalBreeds,
                         data[key].animalColor,
