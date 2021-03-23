@@ -3,7 +3,7 @@ import { View, Text, Image, TextInput, StyleSheet, Button, ScrollView } from 're
 import { connect } from 'react-redux';
 import ImageSelectorComponent from '../components/ImageSelectorComponent';
 import { addNewAdoptAnimal } from '../services/AdoptAnimalService';
-
+import LocationSelectorComponent from '../components/LocationSelectorComponent';
 
 
 class NewAdoptPetScreen extends Component {
@@ -106,7 +106,7 @@ class NewAdoptPetScreen extends Component {
                     onImageChoosen={this.imageChosenHandler}
                     useCamera={true}
                 />
-
+                <LocationSelectorComponent />
                 <Button title='Submit' onPress={this.addNewAdopt} />
             </ScrollView>
 
