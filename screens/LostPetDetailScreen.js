@@ -57,7 +57,6 @@ class LostPetDetailScreen extends Component {
                                 uri: fechedAnimal.photos[0].full
                             }}
                         />
-
                     </View>
                 }
             </View>
