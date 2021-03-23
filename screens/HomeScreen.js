@@ -106,7 +106,7 @@ class HomeScreen extends Component {
           <View style={styles.divider}></View>
 
           <Text style={styles.lostPets1}>Pets Available for Adoption</Text>
-
+          <Text>adopt number: {adoptPet.length}</Text>
           {adoptPet && (
             <View style={styles.bottomContainer}>
               <View style={styles.middleContainer1}>
@@ -290,7 +290,6 @@ const stateToPropertyMapper = (state) => ({
 const propertyToDispatchMapper = (dispatch) => ({
   getAllAdoptAnimal: () =>
     getAllAdoptAnimalService().then((data) => {
-      console.log(data);
       const loadedAdoptAnimal = [];
       for (const key in data) {
         loadedAdoptAnimal.push(
