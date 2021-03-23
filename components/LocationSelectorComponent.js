@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { View, Button, StyleSheet, Text, ActivityIndicator, Alert } from 'react-native';
 import * as Location from 'expo-location';
 import * as Permissions from 'expo-permissions';
+import MapPreviewComponent from './MapPreviewComponent';
 
 class LocationSelectorComponent extends Component {
     constructor(props) {
@@ -33,9 +34,10 @@ class LocationSelectorComponent extends Component {
             const location = await Location.getCurrentPositionAsync({
                 timeout: 5000
             });
+            console.log(location)
             this.setState({
                 pickedLocation: {
-                    lat: location.coords.altitude,
+                    lat: location.coords.latitude,
                     long: location.coords.longitude
                 }
             })
@@ -51,14 +53,21 @@ class LocationSelectorComponent extends Component {
 
 
     render() {
-        console.log(this.state.pickedLocation)
+        // console.log('dddd')
+        // console.log(this.state.pickedLocation)
         return (
             <View style={styles.locationPicker}>
-                <View style={styles.mapPreview}>
-                    {this.isFetchingLocation 
-                    ? <ActivityIndicator /> 
-                    : <Text>No Location Yet</Text>}
-                </View>
+                {
+                    this.state.pickedLocation !== null
+                        ? <MapPreviewComponent
+                            styles={styles.mapPreview}
+                            location={this.state.pickedLocation}>
+                            {this.isFetchingLocation
+                                ? <ActivityIndicator />
+                                : <Text>No Location Yet</Text>}
+                        </MapPreviewComponent>
+                        : <View />
+                }
 
                 <Button title='Get user location'
                     onPress={this.getLocationHandler} />
@@ -78,8 +87,7 @@ const styles = StyleSheet.create({
         height: 150,
         borderColor: '#ccc',
         borderWidth: 1,
-        justifyContent: 'center',
-        alignItems: 'center'
+
     }
 
 })
