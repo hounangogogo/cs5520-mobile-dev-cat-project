@@ -2,10 +2,11 @@ import React, { Component } from 'react';
 import { View, Text, Image, TextInput, StyleSheet, Button, ScrollView } from 'react-native';
 import { connect } from 'react-redux';
 import ImageSelectorComponent from '../components/ImageSelectorComponent';
-import { addNewLostAnimal } from '../services/LostAnimalService';
+import { addNewAdoptAnimal } from '../services/AdoptAnimalService';
 
 
-class NewLostPetScreen extends Component {
+
+class NewAdoptPetScreen extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -25,8 +26,8 @@ class NewLostPetScreen extends Component {
     }
 
 
-    addNewLost = () => {
-        this.props.addNewLostAnimal(
+    addNewAdopt = () => {
+        this.props.addNewAdoptAnimal(
             this.state.name,
             this.state.breeds,
             this.state.color,
@@ -34,7 +35,7 @@ class NewLostPetScreen extends Component {
             this.state.phone,
             this.state.image
         );
-        this.props.navigation.navigate('LostPet 🙀')
+        this.props.navigation.navigate('Adopt 🦮')
     }
 
 
@@ -103,10 +104,10 @@ class NewLostPetScreen extends Component {
                     placeholder="Phone" />
                 <ImageSelectorComponent
                     onImageChoosen={this.imageChosenHandler}
-                    useCamera = {false}
+                    useCamera={true}
                 />
 
-                <Button title='Submit' onPress={this.addNewLost} />
+                <Button title='Submit' onPress={this.addNewAdopt} />
             </ScrollView>
 
         );
@@ -139,14 +140,14 @@ const stateToPropertyMapper = (state) => ({
 
 
 const propertyToDispatchMapper = (dispatch) => ({
-    addNewLostAnimal: (animalName,
+    addNewAdoptAnimal: (animalName,
         animalBreeds, animalColor, animalSpecies, phone, animalImage) =>
-        addNewLostAnimal(animalName,
+        addNewAdoptAnimal(animalName,
             animalBreeds, animalColor, animalSpecies, phone, animalImage)
             .then(data => {
                 console.log(data)
                 dispatch({
-                    type: 'ADD_LOST_ANIMAL',
+                    type: 'ADD_ADOPT_ANIMAL',
                     id: data.name,
                     name: animalName,
                     breeds: animalBreeds,
@@ -159,4 +160,4 @@ const propertyToDispatchMapper = (dispatch) => ({
 })
 
 
-export default connect(stateToPropertyMapper, propertyToDispatchMapper)(NewLostPetScreen);
+export default connect(stateToPropertyMapper, propertyToDispatchMapper)(NewAdoptPetScreen);

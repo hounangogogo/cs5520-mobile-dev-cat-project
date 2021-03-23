@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 import { View, Text, TouchableOpacity, Image, StyleSheet, Button } from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import { IconButton, Colors } from 'react-native-paper';
-
+import { connect } from 'react-redux';
+import { getAllAdoptAnimalService } from '../services/AdoptAnimalService'
+import Animal from '../models/animal';
 
 class HomeScreen extends Component {
     constructor(props) {
@@ -22,10 +24,15 @@ class HomeScreen extends Component {
 
             )
         })
+
+        this.props.getAllAdoptAnimal();
+
     }
 
 
     render() {
+        console.log(this.props.AdoptAnimalFromDB)
+        let adoptPet = this.props.AdoptAnimalFromDB;
         return (
             <View style={styles.screen}>
 
@@ -59,48 +66,38 @@ class HomeScreen extends Component {
 
                 <Text style={styles.lostPets1}>Pets Available for Adoption</Text>
 
-                <View style={styles.bottomContainer}>
-                    <View style={styles.middleContainer1}>
-                        <Image
-                            style={styles.lostPetsImage}
-                            source={{
-                                uri: "https://picsum.photos/id/237/200/300"
-                            }} />
-                        <Text style={styles.lostPets2}>Alice</Text>
-                    </View>
 
-                    <View style={styles.middleContainer2}>
-                        <Image
-                            style={styles.lostPetsImage}
-                            source={{
-                                uri: "https://picsum.photos/id/237/200/300"
-                            }} />
-                        <Text style={styles.lostPets2}>Bob</Text>
 
-                    </View>
+                {
+                    adoptPet &&
+                    <View style={styles.bottomContainer}>
+                        <View style={styles.middleContainer1}>
+                            <Image
+                                style={styles.lostPetsImage}
+                                source={{
+                                    uri: "https://picsum.photos/id/237/200/300"
+                                }} />
+                            <Text style={styles.lostPets2}>aa</Text>
+                        </View>
 
-                    <View style={styles.middleContainer3}>
-                        <Image
-                            style={styles.lostPetsImage}
-                            source={{
-                                uri: "https://picsum.photos/id/237/200/300"
-                            }} />
-                        <Text style={styles.lostPets2}>Cindy</Text>
-                    </View>
 
-                    <View style={styles.middleContainer4}>
-                        <Image
-                            style={styles.lostPetsImage}
-                            source={require('../assets/more.png')}
-                            resizeMode="contain"
-                        />
-                        <Text style={styles.lostPets2}>Meet More!~</Text>
+
+                        <View style={styles.middleContainer4}>
+                            <Image
+                                style={styles.lostPetsImage}
+                                source={require('../assets/more.png')}
+                                resizeMode="contain"
+                            />
+                            <Text style={styles.lostPets2}>Meet More!~</Text>
+                        </View>
                     </View>
-                </View>
+                }
+
+
 
                 <View style={styles.footer}>
                     <Text style={styles.footerText}>
-                        @5200 Mobile
+                        @5520 Mobile
                     </Text>
                     <Text style={styles.footerText}>
                         Author: Haonan Zhao, Ying Tuo, Junyan Ling
@@ -244,4 +241,39 @@ const styles = StyleSheet.create({
 
 
 
-export default HomeScreen;
+
+
+const stateToPropertyMapper = (state) => ({
+    AdoptAnimalFromDB: state.adoptAnimalReducer.adoptAnimals
+})
+
+
+const propertyToDispatchMapper = (dispatch) => ({
+    getAllAdoptAnimal: () =>
+        getAllAdoptAnimalService()
+            .then(data => {
+                console.log(data)
+                const loadedAdoptAnimal = [];
+                for (const key in data) {
+                    loadedAdoptAnimal.push(new Animal(
+                        key,
+                        data[key].animalName,
+                        data[key].animalBreeds,
+                        data[key].animalColor,
+                        data[key].animalSpecies,
+                        data[key].phone,
+                        data[key].animalImage
+                    ))
+                }
+                dispatch({
+                    type: 'ALL_ADOPT_ANIMAL',
+                    allAdopt: loadedAdoptAnimal
+                })
+            })
+})
+
+
+export default connect(stateToPropertyMapper, propertyToDispatchMapper)(HomeScreen);
+
+
+
