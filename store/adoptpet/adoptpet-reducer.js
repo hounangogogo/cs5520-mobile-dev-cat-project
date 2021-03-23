@@ -1,20 +1,19 @@
 import Animal from '../../models/animal';
 
-
 const initialState = {
-    lostAnimals: []
+    adoptAnimals: []
 };
 
 
-const lostAnimalReducer = (prevState = initialState, action) => {
+const adoptAnimalReducer = (prevState = initialState, action) => {
     switch (action.type) {
 
-        case 'ALL_LOST_ANIMAL':
+        case 'ALL_ADOPT_ANIMAL':
             return {
-                lostAnimals: action.allLost
+                adoptAnimals: action.allAdopt
             }
 
-        case 'ADD_LOST_ANIMAL':
+        case 'ADD_ADOPT_ANIMAL':
             const newAnimal = new Animal(
                 action.id,
                 action.name,
@@ -24,7 +23,7 @@ const lostAnimalReducer = (prevState = initialState, action) => {
                 action.phone,
                 action.image)
             return {
-                lostAnimals: prevState.lostAnimals.concat(newAnimal)
+                adoptAnimals: prevState.adoptAnimals.concat(newAnimal)
             }
 
         default:
@@ -32,4 +31,4 @@ const lostAnimalReducer = (prevState = initialState, action) => {
     }
 };
 
-export default lostAnimalReducer;
+export default adoptAnimalReducer;

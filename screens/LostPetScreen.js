@@ -3,6 +3,8 @@ import { View, Text, TouchableOpacity, Image, StyleSheet, Button, FlatList } fro
 import * as Animatable from 'react-native-animatable';
 import { IconButton, Colors } from 'react-native-paper';
 import { connect } from 'react-redux';
+import Animal from '../models/animal';
+import { getAllLostAnimalService } from '../services/LostAnimalService';
 
 class LostPetScreen extends Component {
     constructor(props) {
@@ -17,6 +19,7 @@ class LostPetScreen extends Component {
 
 
     componentDidMount = () => {
+        this.props.getAllLostAnimal();
         this.props.navigation.setOptions({
             headerLeft: () => (
                 <IconButton
@@ -86,10 +89,31 @@ class LostPetScreen extends Component {
     }
 
 
+    renderDBLost = (itemData) => {
+        let image = itemData.item.imageUri;
+        return (
+            <View>
+                <Text>PetName: {itemData.item.name}</Text>
+                <Text>PetBreeds: {itemData.item.breeds}</Text>
+                <Text>Petcolor: {itemData.item.color}</Text>
+                <Text>Petspecies: {itemData.item.species}</Text>
+                <Text>Contact: {itemData.item.phone}</Text>
+
+                <Image
+                    style={{ width: 100, height: 100 }}
+                    source={{
+                        uri: image
+                    }}
+                />
+
+            </View>
+        )
+    }
+
 
 
     renderGridItem = (itemData) => {
-        console.log(itemData.item)
+        //console.log(itemData.item)
         return (
             // <TouchableOpacity>
             //     <View>
@@ -127,7 +151,7 @@ class LostPetScreen extends Component {
                         <Text style={styles.text1}>👧 {itemData.item.name}</Text>
                         :
                         <Text style={styles.text1}>👦 {itemData.item.name}</Text>
-                                    }
+                    }
                     <Text style={styles.text2}>{itemData.item.age}</Text>
                 </View>
             </TouchableOpacity>
@@ -139,7 +163,22 @@ class LostPetScreen extends Component {
         console.log(this.props)
         return (
             <View style={styles.screen}>
-                {/* <Text>LostPetScreen</Text> */}
+                <Text>Data from db</Text>
+                <View>
+                    <Text>
+                        {this.props.lostAnimalFromDB.length}
+
+                    </Text>
+                    {this.props.lostAnimalFromDB.length !== 0 ?
+                        <FlatList
+                            keyExtractor={(item, index) => index}
+                            data={this.props.lostAnimalFromDB}
+                            renderItem={this.renderDBLost}
+                            numColumns={1}
+                        /> : <View />}
+                </View>
+                <Text>----------------------</Text>
+
                 <FlatList
                     keyExtractor={(item, index) => index}
                     data={this.state.lostCats}
@@ -213,11 +252,34 @@ const styles = StyleSheet.create({
 
 })
 
-const stateToPropertyMapper = (state) => {
-    return {
-        lostAnimalFromDB: state.lostAnimalReducer.lostAnimals
-    }
-}
+const stateToPropertyMapper = (state) => ({
+    lostAnimalFromDB: state.lostAnimalReducer.lostAnimals
+})
 
 
-export default connect(stateToPropertyMapper)(LostPetScreen);
+const propertyToDispatchMapper = (dispatch) => ({
+    getAllLostAnimal: () =>
+        getAllLostAnimalService()
+            .then(data => {
+                console.log(data)
+                const loadedLostAnimal = [];
+                for(const key in data) {
+                    loadedLostAnimal.push(new Animal(
+                        key, 
+                        data[key].animalName,
+                        data[key].animalBreeds,
+                        data[key].animalColor,
+                        data[key].animalSpecies,
+                        data[key].phone,
+                        data[key].animalImage
+                    ))
+                }
+                dispatch({
+                    type: 'ALL_LOST_ANIMAL',
+                    allLost: loadedLostAnimal
+                })
+            })
+})
+
+
+export default connect(stateToPropertyMapper, propertyToDispatchMapper)(LostPetScreen);

@@ -10,10 +10,10 @@ import {
   Animated,
   ScrollView
 } from "react-native";
-import { Slider, Icon } from "react-native-elements";
+import { Slider, Icon, CheckBox } from "react-native-elements";
 import { connect } from "react-redux";
 import * as Animatable from "react-native-animatable";
-import { CheckBox } from 'react-native-elements';
+import { IconButton, Colors } from 'react-native-paper';
 
 const AnimatableTouch = Animatable.createAnimatableComponent(TouchableOpacity);
 
@@ -50,6 +50,29 @@ class AdoptScreen extends Component {
     };
   }
 
+  componentDidMount = () => {
+    this.props.navigation.setOptions({
+      headerLeft: () => (
+          <IconButton
+              icon="home"
+              color={'black'}
+              size={40}
+              onPress={() => this.props.navigation.navigate('Home')}
+          />
+
+      ),
+      headerRight: () => (
+          <IconButton
+              icon="bullhorn"
+              color={'black'}
+              size={40}
+              onPress={() => this.props.navigation.navigate('NewAdpot')}
+          />
+
+      )
+  })
+  }
+  
   render() {
     let s = this.state.size;
 
