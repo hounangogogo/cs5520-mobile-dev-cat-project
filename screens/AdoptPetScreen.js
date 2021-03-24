@@ -3,7 +3,7 @@ import { View, Text, TouchableOpacity, Image, StyleSheet, Button, FlatList } fro
 import { IconButton, Colors } from 'react-native-paper';
 import { connect } from 'react-redux';
 import Animal from '../models/animal';
-import { getAllLostAnimalService } from '../services/LostAnimalService';
+import { getAllAdoptAnimalService } from '../services/AdoptAnimalService';
 
 class AdoptPetScreen extends Component {
     constructor(props) {
@@ -18,7 +18,7 @@ class AdoptPetScreen extends Component {
 
 
     componentDidMount = () => {
-        this.props.getAllLostAnimal();
+        this.props.getAllAdoptAnimal();
         this.props.navigation.setOptions({
             headerLeft: () => (
                 <IconButton
@@ -31,7 +31,7 @@ class AdoptPetScreen extends Component {
             ),
             headerRight: () => (
                 <IconButton
-                    icon="bullhorn"
+                    icon="file-document-edit"
                     color={'black'}
                     size={40}
                     onPress={() => this.props.navigation.navigate('NewAdopt')}
@@ -64,13 +64,13 @@ class AdoptPetScreen extends Component {
                 this.setState({
                     accessToken: res.access_token
                 })
-                this.getLostCat();
+                this.getAdoptCat();
             })
     }
 
 
 
-    getLostCat = () => {
+    getAdoptCat = () => {
         let token = this.state.accessToken;
         fetch('https://api.petfinder.com/v2/animals?type=cat&page=5', {
             method: 'GET',
@@ -169,13 +169,13 @@ class AdoptPetScreen extends Component {
                 <Text>Data from db</Text>
                 <View>
                     <Text>
-                        {this.props.lostAnimalFromDB.length}
+                        {this.props.adoptAnimalFromDB.length}
 
                     </Text>
-                    {this.props.lostAnimalFromDB.length !== 0 ?
+                    {this.props.adoptAnimalFromDB.length !== 0 ?
                         <FlatList
                             keyExtractor={(item, index) => index}
-                            data={this.props.lostAnimalFromDB}
+                            data={this.props.adoptAnimalFromDB}
                             renderItem={this.renderDBLost}
                             numColumns={1}
                         /> : <View />}
@@ -256,18 +256,18 @@ const styles = StyleSheet.create({
 })
 
 const stateToPropertyMapper = (state) => ({
-    lostAnimalFromDB: state.lostAnimalReducer.lostAnimals
+    adoptAnimalFromDB: state.adoptAnimalReducer.adoptAnimals
 })
 
 
 const propertyToDispatchMapper = (dispatch) => ({
-    getAllLostAnimal: () =>
-        getAllLostAnimalService()
+    getAllAdoptAnimal: () =>
+        getAllAdoptAnimalService()
             .then(data => {
                 console.log(data)
-                const loadedLostAnimal = [];
+                const loadedAdoptAnimal = [];
                 for (const key in data) {
-                    loadedLostAnimal.push(new Animal(
+                    loadedAdoptAnimal.push(new Animal(
                         key,
                         data[key].animalName,
                         data[key].animalBreeds,
@@ -278,8 +278,8 @@ const propertyToDispatchMapper = (dispatch) => ({
                     ))
                 }
                 dispatch({
-                    type: 'ALL_LOST_ANIMAL',
-                    allLost: loadedLostAnimal
+                    type: 'ALL_ADOPT_ANIMAL',
+                    allAdopt: loadedAdoptAnimal
                 })
             })
 })
