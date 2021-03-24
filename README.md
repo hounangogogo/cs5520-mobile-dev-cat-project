@@ -10,6 +10,11 @@ To use Internet technology and the resources it can generate to:
 3. Elevate the status of pets to that of family member and recommand pets for pet lovers. Pet lovers can search for a pet that best matches their needs. 
 4. Users could report their lost pets in our website. Hopes these lovely gugys could find their home as soon as possible. 
 
+## Three Features:
+1. Search 
+2. Adoption Recommendation
+3. Post
+
 ## API：
 We have four APIs:
 1. https://api.thedogapi.com/v1/breeds/
@@ -26,7 +31,8 @@ There are six routers with two subRouters in our application:
   |----3.1 Dog Details Page
 4. Report Lost Pets Page
 6. Adopt Page
-7. Post Page [Firebase]
+7. Available for Adoption
+8. Post Page [Firebase]
     Pets onwers could also post their pets to find a potential adopter  
 8. My Post
     User can check their favorite
@@ -43,4 +49,15 @@ Purposes:
 1. Help pet lovers find their most suitable pet type.
 2. After pet lovers decided their favorite pet type, they could  be redirected to another detailed page find available pets to be adpted. 
 3. Accelate the process of pets lovers to find their pets
+
+
+Summary:
+1. Lost 无所谓
+2. Search Page好看
+3. Adoption: 改名 - help you balabala
+4. Available for adoption 新建
+5. Adoption Recommendation为了
+6. . Available for adoption 修改
+7. Available for adoption 新建
+8. Weighted 计算
 
