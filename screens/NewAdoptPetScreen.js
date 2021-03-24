@@ -42,7 +42,6 @@ class NewAdoptPetScreen extends Component {
     render() {
         //console.log(this.props)
         return (
-
             <ScrollView style={styles.form}>
                 <Text style={styles.label}>Pet name</Text>
                 <TextInput
@@ -132,11 +131,11 @@ const styles = StyleSheet.create({
 })
 
 
+
 const stateToPropertyMapper = (state) => ({
-
-    lostAnimalFromDB: state.lostAnimalReducer.lostAnimals
-
+    adoptAnimalFromDB: state.adoptAnimalReducer.adoptAnimals
 })
+
 
 
 const propertyToDispatchMapper = (dispatch) => ({
