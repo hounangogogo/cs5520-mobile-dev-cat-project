@@ -10,6 +10,13 @@ To use Internet technology and the resources it can generate to:
 3. Elevate the status of pets to that of family member and recommand pets for pet lovers. Pet lovers can search for a pet that best matches their needs. 
 4. Users could report their lost pets in our website. Hopes these lovely gugys could find their home as soon as possible. 
 
+## API：
+We have four APIs:
+1. https://api.thedogapi.com/v1/breeds/
+2. https://api.thecatapi.com/v1/breeds
+3. Google Maps.
+4. PetFinder: https://api.petfinder.com/v2/oauth2/token
+
 ## Routers
 There are six routers with two subRouters in our application:
 1. Home Page
@@ -18,11 +25,22 @@ There are six routers with two subRouters in our application:
 3. Dog Search Page  
   |----3.1 Dog Details Page
 4. Report Lost Pets Page
-5. Adopt Page
-6. About me Page
+6. Adopt Page
+7. Post Page [Firebase]
+    Pets onwers could also post their pets to find a potential adopter  
+8. My Post
+    User can check their favorite
+10. About Page
 
+## Adoption Recommendation
+Pet lovers can input their perference for pets' characteristics in our questionnaires.  
+Our questionnaires has the following question types:  
+`<Slider>`: to get the weights of each pets' characteristic.  
+`<CheckBox>`: to choose temperaments adn help us locate the target users.  
+Our server will calculate the weighted scores of each pet type.  
+  
+Purposes:  
+1. Help pet lovers find their most suitable pet type.
+2. After pet lovers decided their favorite pet type, they could  be redirected to another detailed page find available pets to be adpted. 
+3. Accelate the process of pets lovers to find their pets
 
-### Collaborative filtering
-https://en.wikipedia.org/wiki/Collaborative_filtering
-- store the preference in the database
-- comparision with other people
