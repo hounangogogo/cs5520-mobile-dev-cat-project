@@ -35,7 +35,7 @@ class NewAdoptPetScreen extends Component {
             this.state.phone,
             this.state.image
         );
-        this.props.navigation.navigate('Adopt 🦮')
+        this.props.navigation.navigate('AdoptPet 🦮')
     }
 
 

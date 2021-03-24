@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
 import { View, Text, TouchableOpacity, Image, StyleSheet, Button, FlatList } from 'react-native';
-import * as Animatable from 'react-native-animatable';
 import { IconButton, Colors } from 'react-native-paper';
 import { connect } from 'react-redux';
 import Animal from '../models/animal';
 import { getAllLostAnimalService } from '../services/LostAnimalService';
 
-class LostPetScreen extends Component {
+class AdoptPetScreen extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -35,7 +34,7 @@ class LostPetScreen extends Component {
                     icon="bullhorn"
                     color={'black'}
                     size={40}
-                    onPress={() => this.props.navigation.navigate('NewLost')}
+                    onPress={() => this.props.navigation.navigate('NewAdopt')}
                 />
 
             )
@@ -132,7 +131,7 @@ class LostPetScreen extends Component {
             // </TouchableOpacity>
 
             <TouchableOpacity
-                onPress={() => this.props.navigation.navigate("LostPetDetail", {
+                onPress={() => this.props.navigation.navigate("AdoptPetDetail", {
                     animalId: itemData.item.id,
                     token: this.state.accessToken
                 })}
@@ -286,4 +285,4 @@ const propertyToDispatchMapper = (dispatch) => ({
 })
 
 
-export default connect(stateToPropertyMapper, propertyToDispatchMapper)(LostPetScreen);
+export default connect(stateToPropertyMapper, propertyToDispatchMapper)(AdoptPetScreen);

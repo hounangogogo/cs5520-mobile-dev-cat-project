@@ -26,14 +26,13 @@ class HomeScreen extends Component {
       ),
     });
 
-    this.props.getAllAdoptAnimal();
   };
 
   render() {
     console.log(this.props.AdoptAnimalFromDB);
     let adoptPet = this.props.AdoptAnimalFromDB;
     return (
-      <ScrollView>
+     
         <View style={styles.screen}>
           <View style={styles.logo}>
             <Animatable.Image
@@ -70,32 +69,7 @@ class HomeScreen extends Component {
               </TouchableOpacity>
             </Animatable.View>
           </View>
-          <View style={styles.divider}></View>
-
-          <Text style={styles.lostPets1}>Pets Available for Adoption</Text>
-          <Text>adopt number: {adoptPet.length}</Text>
-          {adoptPet && (
-            <View style={styles.bottomContainer}>
-              <View style={styles.middleContainer1}>
-                <Image
-                  style={styles.lostPetsImage}
-                  source={{
-                    uri: "https://picsum.photos/id/237/200/300",
-                  }}
-                />
-                <Text style={styles.lostPets2}>aa</Text>
-              </View>
-
-              <View style={styles.middleContainer4}>
-                <Image
-                  style={styles.lostPetsImage}
-                  source={require("../assets/more.png")}
-                  resizeMode="contain"
-                />
-                <Text style={styles.lostPets2}>Meet More!~</Text>
-              </View>
-            </View>
-          )}
+          <View style={styles.divider}></View> 
 
           <View style={styles.footer}>
             <Text style={styles.footerText}>
@@ -107,7 +81,6 @@ class HomeScreen extends Component {
             </Text>
           </View>
         </View>
-      </ScrollView>
     );
   }
 }
@@ -229,36 +202,4 @@ const styles = StyleSheet.create({
 });
 
 
-
-const stateToPropertyMapper = (state) => ({
-  AdoptAnimalFromDB: state.adoptAnimalReducer.adoptAnimals,
-});
-
-const propertyToDispatchMapper = (dispatch) => ({
-  getAllAdoptAnimal: () =>
-    getAllAdoptAnimalService().then((data) => {
-      const loadedAdoptAnimal = [];
-      for (const key in data) {
-        loadedAdoptAnimal.push(
-          new Animal(
-            key,
-            data[key].animalName,
-            data[key].animalBreeds,
-            data[key].animalColor,
-            data[key].animalSpecies,
-            data[key].phone,
-            data[key].animalImage
-          )
-        );
-      }
-      dispatch({
-        type: "ALL_ADOPT_ANIMAL",
-        allAdopt: loadedAdoptAnimal,
-      });
-    }),
-});
-
-export default connect(
-  stateToPropertyMapper,
-  propertyToDispatchMapper
-)(HomeScreen);
+export default HomeScreen;

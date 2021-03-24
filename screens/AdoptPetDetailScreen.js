@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, Button, StyleSheet, Image } from 'react-native';
 
-class LostPetDetailScreen extends Component {
+class AdoptPetDetailScreen extends Component {
     constructor(props) {
         super(props);
         console.log(props.route.params);
@@ -64,4 +64,4 @@ class LostPetDetailScreen extends Component {
     }
 }
 
-export default LostPetDetailScreen;
+export default AdoptPetDetailScreen;

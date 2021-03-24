@@ -10,11 +10,9 @@ import CatSearchScreen from '../screens/CatSearchScreen';
 import CatDetailScreen from '../screens/CatDetailScreen';
 import DogSearchScreen from '../screens/DogSearchScreen';
 import DogDetailScreen from '../screens/DogDetailScreen';
-import AdoptScreen from '../screens/AdoptScreen'
-import LostPetScreen from '../screens/LostPetScreen';
-import LostPetDetailScreen from '../screens/LostPetDetailScreen';
-import NewLostPetScreen from '../screens/NewLostPetScreen';
-import MyPostScreen from '../screens/MyPostScreen';
+import AdoptFormScreen from '../screens/AdoptFormScreen'
+import AdoptPetScreen from '../screens/AdoptPetScreen';
+import AdoptPetDetailScreen from '../screens/AdoptPetDetailScreen';
 import NewAdoptPetScreen from '../screens/NewAdoptPetScreen';
 import AvailableAdopt from '../screens/AvailableAdopt';
 
@@ -57,37 +55,37 @@ const HomeNav = () => (
 
 
 
-const LostPetNav = () => (
-    <Stack.Navigator>
-        <Stack.Screen
-            name="LostPet 🙀"
-            component={LostPetScreen}
-        />
-        <Stack.Screen
-            name="LostPetDetail"
-            component={LostPetDetailScreen}
-        />
-        <Stack.Screen
-            name="NewLost"
-            component={NewLostPetScreen}
-        />
-
-    </Stack.Navigator>
-)
-
-
 const AdoptPetNav = () => (
     <Stack.Navigator>
         <Stack.Screen
-            name="Adopt 🦮"
-            component={AdoptScreen}
+            name="AdoptPet 🦮"
+            component={AdoptPetScreen}
         />
         <Stack.Screen
-            name="NewAdpot"
+            name="AdoptPetDetail"
+            component={AdoptPetDetailScreen}
+        />
+        <Stack.Screen
+            name="NewAdopt"
             component={NewAdoptPetScreen}
         />
+
     </Stack.Navigator>
 )
+
+
+const AdoptFormScreenPetNav = () => (
+    <Stack.Navigator>
+        <Stack.Screen
+            name="AdoptForm 📋"
+            component={AdoptFormScreen}
+        />
+
+    </Stack.Navigator>
+)
+
+
+
 
 
 
@@ -101,9 +99,8 @@ const Navigator = () => {
                 />
                 <Drawer.Screen name="Cat 🐱" component={CatSearchScreen} />
                 <Drawer.Screen name="Dog 🐶" component={DogSearchScreen} />
-                <Drawer.Screen name="Adopt 🦮" component={AdoptPetNav} />
-                <Drawer.Screen name="LostPet 🙀" component={LostPetNav} />
-                <Drawer.Screen name="MyPost 🦖" component={MyPostScreen} />
+                <Drawer.Screen name="Help you choose 📋" component={AdoptFormScreenPetNav} />
+                <Drawer.Screen name="AdoptPet 🦮" component={AdoptPetNav} />
             </Drawer.Navigator>
         </NavigationContainer>
     )
