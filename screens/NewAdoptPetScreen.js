@@ -42,7 +42,9 @@ class NewAdoptPetScreen extends Component {
     render() {
         //console.log(this.props)
         return (
-            <ScrollView style={styles.form}>
+            <ScrollView 
+            // style={styles.form}
+            >
                 <Text style={styles.label}>Pet name</Text>
                 <TextInput
                     style={styles.textInput}
@@ -115,7 +117,9 @@ class NewAdoptPetScreen extends Component {
 
 const styles = StyleSheet.create({
     form: {
-        margin: 30
+        // margin: 30
+        height: "100%",
+        marginBottom: 200,
     },
     label: {
         fontSize: 18,

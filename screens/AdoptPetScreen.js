@@ -91,21 +91,39 @@ class AdoptPetScreen extends Component {
     renderDBLost = (itemData) => {
         let image = itemData.item.imageUri;
         return (
-            <View>
-                <Text>PetName: {itemData.item.name}</Text>
-                <Text>PetBreeds: {itemData.item.breeds}</Text>
-                <Text>Petcolor: {itemData.item.color}</Text>
-                <Text>Petspecies: {itemData.item.species}</Text>
-                <Text>Contact: {itemData.item.phone}</Text>
+            // <View>
+            //     <Text>PetName: {itemData.item.name}</Text>
+            //     <Text>PetBreeds: {itemData.item.breeds}</Text>
+            //     <Text>Petcolor: {itemData.item.color}</Text>
+            //     <Text>Petspecies: {itemData.item.species}</Text>
+            //     <Text>Contact: {itemData.item.phone}</Text>
 
-                <Image
-                    style={{ width: 100, height: 100 }}
-                    source={{
-                        uri: image
-                    }}
-                />
+            // <Image
+            //     style={{ width: 100, height: 100 }}
+            //     source={{
+            //         uri: image
+            //     }}
+            // />
+            // </View>
 
-            </View>
+            <TouchableOpacity
+                style={styles.gridItem}>
+                <View style={styles.lostBox}>
+                    <Image
+                        style={styles.image}
+                        source={{
+                            uri: image
+                        }}
+                    />
+                    {/* {itemData.item.gender === "Female" ?
+                        <Text style={styles.text1}>👧 {itemData.item.name}</Text>
+                        :
+                        <Text style={styles.text1}>👦 {itemData.item.name}</Text>
+                    } */}
+                    <Text style={styles.text1}>{itemData.item.name}</Text>
+                    <Text style={styles.text2}>{itemData.item.breeds}</Text>
+                </View>
+            </TouchableOpacity>
         )
     }
 
@@ -114,22 +132,6 @@ class AdoptPetScreen extends Component {
     renderGridItem = (itemData) => {
         //console.log(itemData.item)
         return (
-            // <TouchableOpacity>
-            //     <View>
-            //         <Text>Age: {itemData.item.age}</Text>
-            //         <Text>Name: {itemData.item.name}</Text>
-            //         {
-            //             itemData.item.photos.length !== 0 && 
-            //             <Image
-            //                 style={styles.image}
-            //                 source={{
-            //                     uri: itemData.item.photos[0].full
-            //                 }} />
-            //         }
-
-            //     </View>
-            // </TouchableOpacity>
-
             <TouchableOpacity
                 onPress={() => this.props.navigation.navigate("AdoptPetDetail", {
                     animalId: itemData.item.id,
@@ -166,10 +168,13 @@ class AdoptPetScreen extends Component {
         console.log(this.props)
         return (
             <View style={styles.screen}>
-                <Text>Data from db</Text>
+                <Text style={styles.header}>
+                    {this.props.adoptAnimalFromDB.length} pet
+                    {
+                        this.props.adoptAnimalFromDB.length >= 2 ? "s" : ""
+                    } posted by our own users. </Text>
                 <View>
                     <Text>
-                        {this.props.adoptAnimalFromDB.length}
 
                     </Text>
                     {this.props.adoptAnimalFromDB.length !== 0 ?
@@ -177,10 +182,15 @@ class AdoptPetScreen extends Component {
                             keyExtractor={(item, index) => index}
                             data={this.props.adoptAnimalFromDB}
                             renderItem={this.renderDBLost}
-                            numColumns={1}
+                            numColumns={2}
                         /> : <View />}
                 </View>
-                <Text>----------------------</Text>
+
+                <Text style={styles.header}>
+                    {this.state.lostCats.length} pet
+                    {
+                        this.state.lostCats.length >= 2 ? "s" : ""
+                    } posted by users on other platforms. </Text>
 
                 <FlatList
                     keyExtractor={(item, index) => index}
@@ -211,8 +221,6 @@ const styles = StyleSheet.create({
     },
 
     image: {
-        // height: "75%",
-        // width: "100%",
         height: 160,
         width: 160,
         justifyContent: 'center',
@@ -251,6 +259,18 @@ const styles = StyleSheet.create({
         color: "black",
         textAlign: 'center',
         fontSize: 13
+    },
+    header: {
+        fontFamily: 'open-sans-bold',
+        color: "black",
+        textAlign: 'center',
+        fontSize: 20
+    },
+    number: {
+        fontFamily: 'open-sans-bold',
+        color: "red",
+        textAlign: 'center',
+        fontSize: 25
     }
 
 })
@@ -258,7 +278,6 @@ const styles = StyleSheet.create({
 const stateToPropertyMapper = (state) => ({
     adoptAnimalFromDB: state.adoptAnimalReducer.adoptAnimals
 })
-
 
 const propertyToDispatchMapper = (dispatch) => ({
     getAllAdoptAnimal: () =>
@@ -283,6 +302,5 @@ const propertyToDispatchMapper = (dispatch) => ({
                 })
             })
 })
-
 
 export default connect(stateToPropertyMapper, propertyToDispatchMapper)(AdoptPetScreen);

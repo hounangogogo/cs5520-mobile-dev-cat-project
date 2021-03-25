@@ -69,7 +69,7 @@ class HomeScreen extends Component {
               </TouchableOpacity>
             </Animatable.View>
           </View>
-          <View style={styles.divider}></View> 
+          {/* <View style={styles.divider}></View>  */}
 
           <View style={styles.footer}>
             <Text style={styles.footerText}>
