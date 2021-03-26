@@ -21,6 +21,9 @@ const adoptAnimalReducer = (prevState = initialState, action) => {
                 action.color,
                 action.species,
                 action.phone,
+                action.email,
+                action.address,
+                action.description,
                 action.image)
             return {
                 adoptAnimals: prevState.adoptAnimals.concat(newAnimal)

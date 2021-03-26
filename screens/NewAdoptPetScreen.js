@@ -4,7 +4,15 @@ import { connect } from 'react-redux';
 import ImageSelectorComponent from '../components/ImageSelectorComponent';
 import { addNewAdoptAnimal } from '../services/AdoptAnimalService';
 import LocationSelectorComponent from '../components/LocationSelectorComponent';
+import PropTypes from 'prop-types';
+import emailPropType from 'email-prop-type';
 
+
+// NewAdoptPetScreen.propTypes = {
+//     name: PropTypes.string.isRequired,
+//     // 加
+//     email: emailPropType.isRequired, // can also specify emailPropType if it is not required
+//   };
 
 class NewAdoptPetScreen extends Component {
     constructor(props) {
@@ -15,7 +23,11 @@ class NewAdoptPetScreen extends Component {
             color: '',
             species: '',
             phone: '',
-            image: '',
+            
+            email: '',
+            address: '',
+            description: '',
+            image: ''
         }
     }
 
@@ -33,7 +45,11 @@ class NewAdoptPetScreen extends Component {
             this.state.color,
             this.state.species,
             this.state.phone,
-            this.state.image
+            
+            this.state.email,
+            this.state.address,
+            this.state.description,
+            this.state.image,
         );
         this.props.navigation.navigate('AdoptPet 🦮')
     }
@@ -42,9 +58,7 @@ class NewAdoptPetScreen extends Component {
     render() {
         //console.log(this.props)
         return (
-            <ScrollView 
-            // style={styles.form}
-            >
+            <ScrollView style={styles.form}>
                 <Text style={styles.label}>Pet name</Text>
                 <TextInput
                     style={styles.textInput}
@@ -80,7 +94,7 @@ class NewAdoptPetScreen extends Component {
                     placeholder="Pet Breeds" />
 
 
-                <Text style={styles.label}>Pet Species</Text>
+                <Text style={styles.label}>Pet Type</Text>
                 <TextInput
                     style={styles.textInput}
                     value={this.state.species}
@@ -89,9 +103,7 @@ class NewAdoptPetScreen extends Component {
                             species: e
                         })
                     }}
-                    placeholder="Pet Species" />
-
-
+                    placeholder="Pet Type" />
 
                 <Text style={styles.label}>Contact</Text>
                 <TextInput
@@ -103,11 +115,43 @@ class NewAdoptPetScreen extends Component {
                         })
                     }}
                     placeholder="Phone" />
+                <TextInput
+                    style={styles.textInput}
+                    value={this.state.email}
+                    onChangeText={(e) => {
+                        this.setState({
+                            email: e
+                        })
+                    }}
+                    placeholder="email" />
+                <TextInput
+                    style={styles.textInput}
+                    value={this.state.address}
+                    onChangeText={(e) => {
+                        this.setState({
+                            address: e
+                        })
+                    }}
+                    placeholder="address" />
+
+                <Text style={styles.label}>Description</Text>
+                <TextInput
+                    style={styles.textInput}
+                    value={this.state.description}
+                    onChangeText={(e) => {
+                        this.setState({
+                            description: e
+                        })
+                    }}
+                    placeholder="Please describe your pet or your thoughts" />
+
                 <ImageSelectorComponent
                     onImageChoosen={this.imageChosenHandler}
                     useCamera={true}
                 />
-                <LocationSelectorComponent />
+
+                {/* <LocationSelectorComponent /> */}
+
                 <Button title='Submit' onPress={this.addNewAdopt} />
             </ScrollView>
 
@@ -117,9 +161,7 @@ class NewAdoptPetScreen extends Component {
 
 const styles = StyleSheet.create({
     form: {
-        // margin: 30
-        height: "100%",
-        marginBottom: 200,
+        margin: 30
     },
     label: {
         fontSize: 18,
@@ -141,12 +183,11 @@ const stateToPropertyMapper = (state) => ({
 })
 
 
-
 const propertyToDispatchMapper = (dispatch) => ({
     addNewAdoptAnimal: (animalName,
-        animalBreeds, animalColor, animalSpecies, phone, animalImage) =>
+        animalBreeds, animalColor, animalSpecies, phone, email, address, description, animalImage) =>
         addNewAdoptAnimal(animalName,
-            animalBreeds, animalColor, animalSpecies, phone, animalImage)
+            animalBreeds, animalColor, animalSpecies, phone, email, address, description, animalImage)
             .then(data => {
                 console.log(data)
                 dispatch({
@@ -157,7 +198,10 @@ const propertyToDispatchMapper = (dispatch) => ({
                     color: animalColor,
                     species: animalSpecies,
                     phone: phone,
-                    image: animalImage
+                    email: email,
+                    address: address,
+                    description: description,
+                    image: animalImage,
                 })
             })
 })
