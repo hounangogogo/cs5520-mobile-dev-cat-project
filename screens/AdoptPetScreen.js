@@ -44,8 +44,6 @@ class AdoptPetScreen extends Component {
 
     }
 
-
-
     getToken = () => {
         fetch('https://api.petfinder.com/v2/oauth2/token', {
             method: 'POST',
@@ -60,15 +58,13 @@ class AdoptPetScreen extends Component {
             })
         }).then((res) => res.json())
             .then((res) => {
-                console.log(res)
+                // console.log(res)
                 this.setState({
                     accessToken: res.access_token
                 })
                 this.getAdoptCat();
             })
     }
-
-
 
     getAdoptCat = () => {
         let token = this.state.accessToken;
@@ -78,7 +74,7 @@ class AdoptPetScreen extends Component {
                 Accept: 'application/json',
                 'Content-Type': 'application/json',
                 Authorization: 'Bearer ' + token
-            },
+            }, 
         }).then((res) => res.json())
             .then((res) => {
                 this.setState({
@@ -87,50 +83,14 @@ class AdoptPetScreen extends Component {
             })
     }
 
-
-    // renderDBLost = (itemData) => {
-    //     let image = itemData.item.imageUri;
-    //     return (
-    //         // <View>
-    //         //     <Text>PetName: {itemData.item.name}</Text>
-    //         //     <Text>PetBreeds: {itemData.item.breeds}</Text>
-    //         //     <Text>Petcolor: {itemData.item.color}</Text>
-    //         //     <Text>Petspecies: {itemData.item.species}</Text>
-    //         //     <Text>Contact: {itemData.item.phone}</Text>
-
-    //         // <Image
-    //         //     style={{ width: 100, height: 100 }}
-    //         //     source={{
-    //         //         uri: image
-    //         //     }}
-    //         // />
-    //         // </View>
-
-    //         <TouchableOpacity
-    //             style={styles.gridItem}>
-    //             <View style={styles.lostBox}>
-    //                 <Image
-    //                     style={styles.image}
-    //                     source={{
-    //                         uri: image
-    //                     }}
-    //                 />
-    //                 <Text style={styles.text1}>{itemData.item.name}</Text>
-    //                 <Text style={styles.text2}>{itemData.item.breeds}</Text>
-    //             </View>
-    //         </TouchableOpacity>
-    //     )
-    // }
-
-
-
     renderGridItem = (itemData) => {
         console.log(itemData.item)
         return (
             <TouchableOpacity
                 onPress={() => this.props.navigation.navigate("AdoptPetDetail", {
                     animalId: itemData.item.id,
-                    token: this.state.accessToken
+                    token: this.state.accessToken,
+                    isFromApi: itemData.item.organization_id ? true : false
                 })}
                 style={styles.gridItem}>
                 <View style={styles.lostBox}>
@@ -185,7 +145,7 @@ class AdoptPetScreen extends Component {
 
 
     render() {
-        console.log(this.props)
+        // console.log(this.props)
         return (
             <View style={styles.screen}>
                 <Text style={styles.header}>
@@ -292,7 +252,7 @@ const propertyToDispatchMapper = (dispatch) => ({
     getAllAdoptAnimal: () =>
         getAllAdoptAnimalService()
             .then(data => {
-                console.log(data)
+                // console.log(data)
                 const loadedAdoptAnimal = [];
                 for (const key in data) {
                     loadedAdoptAnimal.push(new Animal(
@@ -300,6 +260,9 @@ const propertyToDispatchMapper = (dispatch) => ({
                         data[key].animalName,
                         data[key].animalBreeds,
                         data[key].animalColor,
+                        data[key].animalAge,
+                        data[key].animalSize,
+                        data[key].animalGender,
                         data[key].animalSpecies,
                         data[key].phone,
                         data[key].email,

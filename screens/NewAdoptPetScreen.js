@@ -4,15 +4,10 @@ import { connect } from 'react-redux';
 import ImageSelectorComponent from '../components/ImageSelectorComponent';
 import { addNewAdoptAnimal } from '../services/AdoptAnimalService';
 import LocationSelectorComponent from '../components/LocationSelectorComponent';
-import PropTypes from 'prop-types';
-import emailPropType from 'email-prop-type';
 
 
-// NewAdoptPetScreen.propTypes = {
-//     name: PropTypes.string.isRequired,
-//     // 加
-//     email: emailPropType.isRequired, // can also specify emailPropType if it is not required
-//   };
+
+
 
 class NewAdoptPetScreen extends Component {
     constructor(props) {
@@ -21,15 +16,20 @@ class NewAdoptPetScreen extends Component {
             name: '',
             breeds: '',
             color: '',
+            age: '',
+            size: '',
+            gender: '',
             species: '',
             phone: '',
-            
             email: '',
             address: '',
             description: '',
             image: ''
         }
     }
+
+
+
 
     imageChosenHandler = (imagePath) => {
         this.setState({
@@ -43,9 +43,11 @@ class NewAdoptPetScreen extends Component {
             this.state.name,
             this.state.breeds,
             this.state.color,
+            this.state.age,
+            this.state.size,
+            this.state.gender,
             this.state.species,
             this.state.phone,
-            
             this.state.email,
             this.state.address,
             this.state.description,
@@ -53,6 +55,10 @@ class NewAdoptPetScreen extends Component {
         );
         this.props.navigation.navigate('AdoptPet 🦮')
     }
+
+    // checkTetxtInput = () => {
+    //     if (!)
+    // }
 
 
     render() {
@@ -81,6 +87,38 @@ class NewAdoptPetScreen extends Component {
                     }}
                     placeholder="Pet Color" />
 
+                <Text style={styles.label}>Pet Age: Young, Adult, or Senior?</Text>
+                <TextInput
+                    style={styles.textInput}
+                    value={this.state.age}
+                    onChangeText={(e) => {
+                        this.setState({
+                            age: e
+                        })
+                    }}
+                    placeholder="Pet Age" />
+
+                <Text style={styles.label}>Pet Size: Small, Medium, or Large?</Text>
+                <TextInput
+                    style={styles.textInput}
+                    value={this.state.size}
+                    onChangeText={(e) => {
+                        this.setState({
+                            size: e
+                        })
+                    }}
+                    placeholder="Pet Size" />
+
+                <Text style={styles.label}>Pet Gender: Female or Male?</Text>
+                <TextInput
+                    style={styles.textInput}
+                    value={this.state.gender}
+                    onChangeText={(e) => {
+                        this.setState({
+                            gender: e
+                        })
+                    }}
+                    placeholder="Pet Gender" />
 
                 <Text style={styles.label}>Pet Breeds</Text>
                 <TextInput
@@ -185,9 +223,9 @@ const stateToPropertyMapper = (state) => ({
 
 const propertyToDispatchMapper = (dispatch) => ({
     addNewAdoptAnimal: (animalName,
-        animalBreeds, animalColor, animalSpecies, phone, email, address, description, animalImage) =>
+        animalBreeds, animalColor, animalAge, animalSize, animalGender, animalSpecies, phone, email, address, description, animalImage) =>
         addNewAdoptAnimal(animalName,
-            animalBreeds, animalColor, animalSpecies, phone, email, address, description, animalImage)
+            animalBreeds, animalColor, animalAge, animalSize, animalGender, animalSpecies, phone, email, address, description, animalImage)
             .then(data => {
                 console.log(data)
                 dispatch({
@@ -196,6 +234,9 @@ const propertyToDispatchMapper = (dispatch) => ({
                     name: animalName,
                     breeds: animalBreeds,
                     color: animalColor,
+                    age: animalAge,
+                    size: animalSize,
+                    gender: animalGender,
                     species: animalSpecies,
                     phone: phone,
                     email: email,
