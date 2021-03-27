@@ -10,8 +10,8 @@ class AdoptPetDetailScreen extends Component {
         console.log(props);
         console.log(props.route.params);
         this.state = {
-            animal: '',
-            dbAnimal: '',
+            animal: null,
+            dbAnimal: null,
             animalId: props.route.params.animalId,
             accessToken: props.route.params.token,
             isFromApi: props.route.params.isFromApi,
@@ -23,10 +23,9 @@ class AdoptPetDetailScreen extends Component {
 
 
     componentDidMount = () => {
+        console.log()
         console.log(this.state.isFromApi)
         this.state.isFromApi ? this.getAnimalById() : this.getAnimalFromDB()
-
-
     }
 
     getAnimalFromDB = () => {
@@ -36,11 +35,11 @@ class AdoptPetDetailScreen extends Component {
         console.log(tmpAnimal)
         this.setState({
             dbAnimal: tmpAnimal
-
         })
     }
 
     getAnimalById = () => {
+        console.log("here:")
         let token = this.state.accessToken;
         let animalId = this.state.animalId;
         fetch(`https://api.petfinder.com/v2/animals/${animalId}`, {
@@ -61,15 +60,16 @@ class AdoptPetDetailScreen extends Component {
             })
     }
 
-
     render() {
         console.log(this.state.dbAnimal)
         console.log(this.state.animal)
         let apiAnimal = this.state.animal;
         let dbAnimal = this.state.dbAnimal;
+        let isFromApi = this.state.isFromApi;
         return (
             <View>
-                {
+                {isFromApi
+                    ?
                     apiAnimal &&
                     <View>
                         <View style={styles.topContainer}>
@@ -95,21 +95,26 @@ class AdoptPetDetailScreen extends Component {
                         <View style={styles.outsideContainer}>
                             <Text style={styles.headText}>More about this cute {apiAnimal.species}! </Text>
 
+                            <Text></Text>
+
                             <View style={styles.tableContainer}>
                                 <Grid style={{ borderRadius: 100 }}>
                                     <Row
                                         style={{
                                             borderColor: this.state.tableBoardColor,
                                             backgroundColor: this.state.tableCellColorDark,
-                                            // height: "300%",
-                                            // width: "100%"
+                                            height: 20,
+                                            borderWidth: 0.3,
                                         }}
                                     >
                                         <Col>
                                             <Text style={styles.tableHead}>Type</Text>
                                         </Col>
                                         <Col>
-                                            <Text style={styles.tableText}>{apiAnimal.species}</Text>
+                                            {apiAnimal.species ?
+                                                <Text style={styles.tableText}>{apiAnimal.species}</Text> :
+                                                <Text style={styles.tableText}>No data available</Text>
+                                            }
                                         </Col>
                                     </Row>
 
@@ -117,15 +122,18 @@ class AdoptPetDetailScreen extends Component {
                                         style={{
                                             borderColor: this.state.tableBoardColor,
                                             backgroundColor: this.state.tableCellColor,
-                                            // height: "300%",
-                                            // width: "100%"
+                                            height: 20,
+                                            borderWidth: 0.3,
                                         }}
                                     >
                                         <Col>
                                             <Text style={styles.tableHead}>Breeds</Text>
                                         </Col>
                                         <Col>
-                                            <Text style={styles.tableText}>{apiAnimal.breeds["primary"]}</Text>
+                                            {apiAnimal.breeds["primary"] ?
+                                                <Text style={styles.tableText}>{apiAnimal.breeds["primary"]}</Text> :
+                                                <Text style={styles.tableText}>No data available</Text>
+                                            }
                                         </Col>
                                     </Row>
                                     <Row
@@ -133,16 +141,18 @@ class AdoptPetDetailScreen extends Component {
 
                                             borderColor: this.state.tableBoardColor,
                                             backgroundColor: this.state.tableCellColorDark,
-                                            // height: "300%",
-                                            borderWidth: 3,
-                                            width: "100%"
+                                            height: 20,
+                                            borderWidth: 0.3,
                                         }}
                                     >
                                         <Col>
                                             <Text style={styles.tableHead}>Name</Text>
                                         </Col>
                                         <Col>
-                                            <Text style={styles.tableText}>{apiAnimal.name}</Text>
+                                            {apiAnimal.name ?
+                                                <Text style={styles.tableText}>{apiAnimal.name}</Text> :
+                                                <Text style={styles.tableText}>No data available</Text>
+                                            }
                                         </Col>
                                     </Row>
 
@@ -150,13 +160,18 @@ class AdoptPetDetailScreen extends Component {
                                         style={{
                                             borderColor: this.state.tableBoardColor,
                                             backgroundColor: this.state.tableCellColor,
+                                            height: 20,
+                                            borderWidth: 0.3,
                                         }}
                                     >
                                         <Col>
                                             <Text style={styles.tableHead}>Age</Text>
                                         </Col>
                                         <Col>
-                                            <Text style={styles.tableText}>{apiAnimal.age}</Text>
+                                            {apiAnimal.age ?
+                                                <Text style={styles.tableText}>{apiAnimal.age}</Text> :
+                                                <Text style={styles.tableText}>No data available</Text>
+                                            }
                                         </Col>
                                     </Row>
 
@@ -164,13 +179,18 @@ class AdoptPetDetailScreen extends Component {
                                         style={{
                                             borderColor: this.state.tableBoardColor,
                                             backgroundColor: this.state.tableCellColorDark,
+                                            height: 20,
+                                            borderWidth: 0.3,
                                         }}
                                     >
                                         <Col>
                                             <Text style={styles.tableHead}>Gender</Text>
                                         </Col>
                                         <Col>
-                                            <Text style={styles.tableText}>{dbAnimal.gender}</Text>
+                                            {apiAnimal.gender ?
+                                                <Text style={styles.tableText}>{apiAnimal.gender}</Text> :
+                                                <Text style={styles.tableText}>No data available</Text>
+                                            }
                                         </Col>
                                     </Row>
 
@@ -178,13 +198,18 @@ class AdoptPetDetailScreen extends Component {
                                         style={{
                                             borderColor: this.state.tableBoardColor,
                                             backgroundColor: this.state.tableCellColor,
+                                            height: 20,
+                                            borderWidth: 0.3,
                                         }}
                                     >
                                         <Col>
                                             <Text style={styles.tableHead}>Size</Text>
                                         </Col>
                                         <Col>
-                                            <Text style={styles.tableText}>{apiAnimal.size}</Text>
+                                            {apiAnimal.size ?
+                                                <Text style={styles.tableText}>{apiAnimal.size}</Text> :
+                                                <Text style={styles.tableText}>No data available</Text>
+                                            }
                                         </Col>
                                     </Row>
 
@@ -192,13 +217,18 @@ class AdoptPetDetailScreen extends Component {
                                         style={{
                                             borderColor: this.state.tableBoardColor,
                                             backgroundColor: this.state.tableCellColorDark,
+                                            height: 20,
+                                            borderWidth: 0.3,
                                         }}
                                     >
                                         <Col>
                                             <Text style={styles.tableHead}>Phone</Text>
                                         </Col>
                                         <Col>
-                                            <Text style={styles.tableText}>{apiAnimal.contact["phone"]}</Text>
+                                            {apiAnimal.contact["phone"] ?
+                                                <Text style={styles.tableText}>{apiAnimal.contact["phone"]}</Text> :
+                                                <Text style={styles.tableText}>No data available</Text>
+                                            }
                                         </Col>
                                     </Row>
 
@@ -206,13 +236,18 @@ class AdoptPetDetailScreen extends Component {
                                         style={{
                                             borderColor: this.state.tableBoardColor,
                                             backgroundColor: this.state.tableCellColor,
+                                            height: 20,
+                                            borderWidth: 0.3,
                                         }}
                                     >
                                         <Col>
                                             <Text style={styles.tableHead}>Email</Text>
                                         </Col>
                                         <Col>
-                                            <Text style={styles.tableText}>{apiAnimal.contact["email"]}</Text>
+                                            {apiAnimal.contact["email"] ?
+                                                <Text style={styles.tableText}>{apiAnimal.contact["email"]}</Text> :
+                                                <Text style={styles.tableText}>No data available</Text>
+                                            }
                                         </Col>
                                     </Row>
 
@@ -220,6 +255,8 @@ class AdoptPetDetailScreen extends Component {
                                         style={{
                                             borderColor: this.state.tableBoardColor,
                                             backgroundColor: this.state.tableCellColorDark,
+                                            height: 20,
+                                            borderWidth: 0.3,
                                         }}
                                     >
                                         <Col>
@@ -233,13 +270,13 @@ class AdoptPetDetailScreen extends Component {
                                 </Grid>
                             </View>
                         </View>
+
                     </View>
-                }
-                {
+                    :
                     dbAnimal &&
                     <View>
                         <View style={styles.topContainer}>
-                            {dbAnimal.imageUri ?
+                            {dbAnimal.imageUri !== null ?
                                 <Animatable.Image
                                     style={styles.image}
                                     source={{
@@ -258,8 +295,11 @@ class AdoptPetDetailScreen extends Component {
                             }
                         </View>
 
+
                         <View style={styles.outsideContainer}>
                             <Text style={styles.headText}>More about this cute {dbAnimal.species}! </Text>
+
+                            <Text></Text>
 
                             <View style={styles.tableContainer}>
                                 <Grid style={{ borderRadius: 100 }}>
@@ -267,15 +307,18 @@ class AdoptPetDetailScreen extends Component {
                                         style={{
                                             borderColor: this.state.tableBoardColor,
                                             backgroundColor: this.state.tableCellColorDark,
-                                            // height: "300%",
-                                            // width: "100%"
+                                            height: 20,
+                                            borderWidth: 0.3,
                                         }}
                                     >
                                         <Col>
                                             <Text style={styles.tableHead}>Type</Text>
                                         </Col>
                                         <Col>
-                                            <Text style={styles.tableText}>{dbAnimal.species}</Text>
+                                            {dbAnimal.species ?
+                                                <Text style={styles.tableText}>{dbAnimal.species}</Text> :
+                                                <Text style={styles.tableText}>No data available</Text>
+                                            }
                                         </Col>
                                     </Row>
 
@@ -283,32 +326,36 @@ class AdoptPetDetailScreen extends Component {
                                         style={{
                                             borderColor: this.state.tableBoardColor,
                                             backgroundColor: this.state.tableCellColor,
-                                            // height: "300%",
-                                            // width: "100%"
+                                            height: 20,
+                                            borderWidth: 0.3,
                                         }}
                                     >
                                         <Col>
                                             <Text style={styles.tableHead}>Breeds</Text>
                                         </Col>
                                         <Col>
-                                            <Text style={styles.tableText}>{dbAnimal.breeds}</Text>
+                                            {dbAnimal.breeds ?
+                                                <Text style={styles.tableText}>{dbAnimal.breeds}</Text> :
+                                                <Text style={styles.tableText}>No data available</Text>
+                                            }
                                         </Col>
                                     </Row>
                                     <Row
                                         style={{
-
                                             borderColor: this.state.tableBoardColor,
                                             backgroundColor: this.state.tableCellColorDark,
-                                            // height: "300%",
-                                            borderWidth: 3,
-                                            width: "100%"
+                                            height: 20,
+                                            borderWidth: 0.3,
                                         }}
                                     >
                                         <Col>
                                             <Text style={styles.tableHead}>Name</Text>
                                         </Col>
                                         <Col>
-                                            <Text style={styles.tableText}>{dbAnimal.name}</Text>
+                                            {dbAnimal.name ?
+                                                <Text style={styles.tableText}>{dbAnimal.name}</Text> :
+                                                <Text style={styles.tableText}>No data available</Text>
+                                            }
                                         </Col>
                                     </Row>
 
@@ -316,13 +363,18 @@ class AdoptPetDetailScreen extends Component {
                                         style={{
                                             borderColor: this.state.tableBoardColor,
                                             backgroundColor: this.state.tableCellColor,
+                                            height: 20,
+                                            borderWidth: 0.3,
                                         }}
                                     >
                                         <Col>
                                             <Text style={styles.tableHead}>Age</Text>
                                         </Col>
                                         <Col>
-                                            <Text style={styles.tableText}>{dbAnimal.age}</Text>
+                                            {dbAnimal.age ?
+                                                <Text style={styles.tableText}>{dbAnimal.age}</Text> :
+                                                <Text style={styles.tableText}>No data available</Text>
+                                            }
                                         </Col>
                                     </Row>
 
@@ -330,13 +382,18 @@ class AdoptPetDetailScreen extends Component {
                                         style={{
                                             borderColor: this.state.tableBoardColor,
                                             backgroundColor: this.state.tableCellColorDark,
+                                            height: 20,
+                                            borderWidth: 0.3,
                                         }}
                                     >
                                         <Col>
                                             <Text style={styles.tableHead}>Gender</Text>
                                         </Col>
                                         <Col>
-                                            <Text style={styles.tableText}>{dbAnimal.gender}</Text>
+                                            {dbAnimal.gender ?
+                                                <Text style={styles.tableText}>{dbAnimal.gender}</Text> :
+                                                <Text style={styles.tableText}>No data available</Text>
+                                            }
                                         </Col>
                                     </Row>
 
@@ -344,13 +401,18 @@ class AdoptPetDetailScreen extends Component {
                                         style={{
                                             borderColor: this.state.tableBoardColor,
                                             backgroundColor: this.state.tableCellColor,
+                                            height: 20,
+                                            borderWidth: 0.3,
                                         }}
                                     >
                                         <Col>
                                             <Text style={styles.tableHead}>Size</Text>
                                         </Col>
                                         <Col>
-                                            <Text style={styles.tableText}>{dbAnimal.size}</Text>
+                                            {dbAnimal.size ?
+                                                <Text style={styles.tableText}>{dbAnimal.size}</Text> :
+                                                <Text style={styles.tableText}>No data available</Text>
+                                            }
                                         </Col>
                                     </Row>
 
@@ -358,13 +420,18 @@ class AdoptPetDetailScreen extends Component {
                                         style={{
                                             borderColor: this.state.tableBoardColor,
                                             backgroundColor: this.state.tableCellColorDark,
+                                            height: 20,
+                                            borderWidth: 0.3,
                                         }}
                                     >
                                         <Col>
                                             <Text style={styles.tableHead}>Phone</Text>
                                         </Col>
                                         <Col>
-                                            <Text style={styles.tableText}>{dbAnimal.phone}</Text>
+                                            {dbAnimal.phone ?
+                                                <Text style={styles.tableText}>{dbAnimal.phone}</Text> :
+                                                <Text style={styles.tableText}>No data available</Text>
+                                            }
                                         </Col>
                                     </Row>
 
@@ -372,13 +439,18 @@ class AdoptPetDetailScreen extends Component {
                                         style={{
                                             borderColor: this.state.tableBoardColor,
                                             backgroundColor: this.state.tableCellColor,
+                                            height: 20,
+                                            borderWidth: 0.3,
                                         }}
                                     >
                                         <Col>
                                             <Text style={styles.tableHead}>Email</Text>
                                         </Col>
                                         <Col>
-                                            <Text style={styles.tableText}>{dbAnimal.email}</Text>
+                                            {dbAnimal.email ?
+                                                <Text style={styles.tableText}>{dbAnimal.email}</Text> :
+                                                <Text style={styles.tableText}>No data available</Text>
+                                            }
                                         </Col>
                                     </Row>
 
@@ -386,13 +458,18 @@ class AdoptPetDetailScreen extends Component {
                                         style={{
                                             borderColor: this.state.tableBoardColor,
                                             backgroundColor: this.state.tableCellColorDark,
+                                            height: 20,
+                                            borderWidth: 0.3,
                                         }}
                                     >
                                         <Col>
                                             <Text style={styles.tableHead}>Address</Text>
                                         </Col>
                                         <Col>
-                                            <Text style={styles.tableText}>{dbAnimal.address}</Text>
+                                            {dbAnimal.address ?
+                                                <Text style={styles.tableText}>{dbAnimal.address}</Text> :
+                                                <Text style={styles.tableText}>No data available</Text>
+                                            }
                                         </Col>
                                     </Row>
 
@@ -402,9 +479,12 @@ class AdoptPetDetailScreen extends Component {
                     </View>
                 }
             </View>
+
+
         )
     }
 }
+
 
 const styles = StyleSheet.create({
     screen: {
@@ -417,14 +497,12 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
     },
-    tableContainer: {
-        // flex: 1.4,
-        // marginLeft: "3%",
-        // marginBottom: 2,
-        borderRadius: 15,
-        width: "100%",
-        padding: 10,
+    container: {
         flex: 1,
+        // marginTop: 50,
+        // marginBottom: 50,
+        backgroundColor: 'white',
+
     },
     bottomContainer: {
         flexDirection: "column",
@@ -473,6 +551,13 @@ const styles = StyleSheet.create({
         fontSize: 15,
         textAlign: "justify",
         marginRight: "5%",
+    },
+    row: {
+        flexDirection: "row",
+        justifyContent: "center",
+        // padding: 16,
+        backgroundColor: '#ddd',
+        marginBottom: 3
     },
 })
 
