@@ -21,19 +21,20 @@ class DogSearchScreen extends Component {
         fetch(`https://api.thedogapi.com/v1/breeds?api_key=28d63f2d-2529-4a36-9bca-af21c9266759`)
             .then(res => res.json())
             .then((res) => {
+                console.log('dddddddd')
                 this.setState({
                     breeds: res
                 })
             })
 
-        this.counterTimer = setInterval(() => this.setState({
+        this.counterTimer = setTimeout(() => this.setState({
             isAnimationTimeOut: true
         }), 2300)
     }
 
-    componentWillUnmount = () => {
-        clearInterval(this.counterTimer);
-    }
+    // componentWillUnmount = () => {
+    //     clearInterval(this.counterTimer);
+    // }
 
     renderGridItem = (itemData) => {
         let dogImage = itemData.item.image ? itemData.item.image.url :
@@ -84,9 +85,9 @@ class DogSearchScreen extends Component {
                                 <TextInput
                                     style={styles.input}
                                     value={this.state.input}
-                                    onChange={(e) => this.setState(
+                                    onChangeText={(e) => this.setState(
                                         {
-                                            input: e.target.value
+                                            input: e
                                         })}
                                 />
                                 <Button title='Search Dog' />

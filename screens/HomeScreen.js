@@ -1,45 +1,12 @@
 import React, { Component } from "react";
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  Image,
-  StyleSheet,
-  Button,
-  ScrollView,
-} from "react-native";
+import { View, Text, TouchableOpacity, Image, StyleSheet, ScrollView } from "react-native";
 import * as Animatable from "react-native-animatable";
-import { IconButton, Colors } from "react-native-paper";
+import { IconButton } from "react-native-paper";
 import { connect } from "react-redux";
 import { getAllAdoptAnimalService } from "../services/AdoptAnimalService";
 import Animal from "../models/animal";
+import { catAnimation, dogAnimation, logoAnimation } from "../effect/HomeEffect";
 
-const logoAnimation = {
-  0: {
-    width: 65,
-    height: 32,
-    opacity: 0.3,
-    rotate: "0deg",
-  },
-  0.33: {
-    width: 180,
-    height: 100,
-    opacity: 0.6,
-    rotate: "20deg",
-  },
-  0.66: {
-    width: 180,
-    height: 100,
-    opacity: 1,
-    rotate: "-20deg",
-  },
-  1: {
-    width: 180,
-    height: 100,
-    opacity: 1,
-    rotate: "0deg",
-  },
-};
 
 class HomeScreen extends Component {
   constructor(props) {
@@ -59,14 +26,13 @@ class HomeScreen extends Component {
       ),
     });
 
-    this.props.getAllAdoptAnimal();
   };
 
   render() {
     console.log(this.props.AdoptAnimalFromDB);
     let adoptPet = this.props.AdoptAnimalFromDB;
     return (
-      <ScrollView>
+     
         <View style={styles.screen}>
           <View style={styles.logo}>
             <Animatable.Image
@@ -103,32 +69,7 @@ class HomeScreen extends Component {
               </TouchableOpacity>
             </Animatable.View>
           </View>
-          <View style={styles.divider}></View>
-
-          <Text style={styles.lostPets1}>Pets Available for Adoption</Text>
-
-          {adoptPet && (
-            <View style={styles.bottomContainer}>
-              <View style={styles.middleContainer1}>
-                <Image
-                  style={styles.lostPetsImage}
-                  source={{
-                    uri: "https://picsum.photos/id/237/200/300",
-                  }}
-                />
-                <Text style={styles.lostPets2}>aa</Text>
-              </View>
-
-              <View style={styles.middleContainer4}>
-                <Image
-                  style={styles.lostPetsImage}
-                  source={require("../assets/more.png")}
-                  resizeMode="contain"
-                />
-                <Text style={styles.lostPets2}>Meet More!~</Text>
-              </View>
-            </View>
-          )}
+          <View style={styles.divider}></View> 
 
           <View style={styles.footer}>
             <Text style={styles.footerText}>
@@ -140,34 +81,11 @@ class HomeScreen extends Component {
             </Text>
           </View>
         </View>
-      </ScrollView>
     );
   }
 }
 
-const dogAnimation = {
-  0: {
-    translateX: -200,
-  },
-  0.5: {
-    translateX: -30,
-  },
-  1: {
-    translateX: 0,
-  },
-};
 
-const catAnimation = {
-  0: {
-    translateX: 200,
-  },
-  0.5: {
-    translateX: 30,
-  },
-  1: {
-    translateX: 0,
-  },
-};
 
 const styles = StyleSheet.create({
   screen: {
@@ -283,36 +201,5 @@ const styles = StyleSheet.create({
   },
 });
 
-const stateToPropertyMapper = (state) => ({
-  AdoptAnimalFromDB: state.adoptAnimalReducer.adoptAnimals,
-});
 
-const propertyToDispatchMapper = (dispatch) => ({
-  getAllAdoptAnimal: () =>
-    getAllAdoptAnimalService().then((data) => {
-      console.log(data);
-      const loadedAdoptAnimal = [];
-      for (const key in data) {
-        loadedAdoptAnimal.push(
-          new Animal(
-            key,
-            data[key].animalName,
-            data[key].animalBreeds,
-            data[key].animalColor,
-            data[key].animalSpecies,
-            data[key].phone,
-            data[key].animalImage
-          )
-        );
-      }
-      dispatch({
-        type: "ALL_ADOPT_ANIMAL",
-        allAdopt: loadedAdoptAnimal,
-      });
-    }),
-});
-
-export default connect(
-  stateToPropertyMapper,
-  propertyToDispatchMapper
-)(HomeScreen);
+export default HomeScreen;

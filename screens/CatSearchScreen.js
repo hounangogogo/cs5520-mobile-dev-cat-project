@@ -26,14 +26,14 @@ class CatSearchScreen extends Component {
                     breeds: res
                 })
             })
-        this.counterTimer = setInterval(() => this.setState({
+        this.counterTimer = setTimeout(() => this.setState({
             isAnimationTimeOut: true
         }), 2300)
     }
 
-    componentWillUnmount = () => {
-        clearInterval(this.counterTimer);
-    }
+    // componentWillUnmount = () => {
+    //     clearInterval(this.counterTimer);
+    // }
 
 
 
@@ -82,9 +82,9 @@ class CatSearchScreen extends Component {
                                 <TextInput
                                     style={styles.input}
                                     value={this.state.input}
-                                    onChange={(e) => this.setState(
+                                    onChangeText={(e) => this.setState(
                                         {
-                                            input: e.target.value
+                                            input: e
                                         })}
                                 />
                                 <Button title='Search Cat' />

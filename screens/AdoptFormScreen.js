@@ -8,17 +8,19 @@ import {
   Button,
   TouchableOpacity,
   Animated,
+  ScrollView
 } from "react-native";
-import { Slider, Icon } from "react-native-elements";
+import { Slider, Icon, CheckBox } from "react-native-elements";
 import { connect } from "react-redux";
 import * as Animatable from "react-native-animatable";
 import { IconButton, Colors } from 'react-native-paper';
 
 const AnimatableTouch = Animatable.createAnimatableComponent(TouchableOpacity);
 
-class AdoptScreen extends Component {
+class AdoptFormScreen extends Component {
   constructor(props) {
     super(props);
+
     this.state = {
       chooseDog: true,
 
@@ -32,36 +34,44 @@ class AdoptScreen extends Component {
       hairless: 5,
 
       // for dog
+      size: 2,
+      checkedWorking: false,
+      checkedSporting: false,
+      checkedNonSporting: false,
+      checkedHound: false,
+      checkedToy: false,
+      checkedTerrier: false,
+      checkedMixed: false,
+      checkedCurious: false,
+      checkedIndependent: false,
+      checkedIntelligent: false,
+      checkedStubborn: false,
+      checkedEnergetic: false
     };
   }
 
   componentDidMount = () => {
     this.props.navigation.setOptions({
       headerLeft: () => (
-          <IconButton
-              icon="home"
-              color={'black'}
-              size={40}
-              onPress={() => this.props.navigation.navigate('Home')}
-          />
-
-      ),
-      headerRight: () => (
-          <IconButton
-              icon="bullhorn"
-              color={'black'}
-              size={40}
-              onPress={() => this.props.navigation.navigate('NewAdpot')}
-          />
+        <IconButton
+          icon="home"
+          color={'black'}
+          size={40}
+          onPress={() => this.props.navigation.navigate('Home')}
+        />
 
       )
-  })
+    })
   }
-  
+
   render() {
+    let s = this.state.size;
+
     console.log(this.state);
     return (
+
       <View style={styles.screen}>
+
         <View style={styles.choose}>
           <AnimatableTouch
             onPress={() => {
@@ -70,6 +80,7 @@ class AdoptScreen extends Component {
               });
             }}
           >
+
             <Animatable.Image
               animation={{
                 from: {
@@ -109,76 +120,204 @@ class AdoptScreen extends Component {
           </AnimatableTouch>
         </View>
 
-        <View style={styles.form}>
-          {this.state.chooseDog ? (
-            <View>
-              <Text>Dog Form</Text>
-              <View style={styles.form}>
-                <Text style={styles.label}>Pet name</Text>
-                <TextInput
-                  style={styles.textInput}
-                  value={this.state.name}
-                  onChange={(e) => {
-                    this.setState({
-                      name: e.target.value,
-                    });
-                  }}
-                  placeholder="Pet Name"
-                />
+        {this.state.chooseDog ? (
+          // <View style={styles.scroll}>
+          <ScrollView
+            ref={(scrollView) => this.scrollView = scrollView}
+            scrollEnabled={this.state.scrollEnabled}
+            style={{ flex: 1 }}
+          // style={styles.form}
+          >
+            <View style={styles.form}>
 
-                <Text style={styles.label}>Pet Color</Text>
-                <TextInput
-                  style={styles.textInput}
-                  value={this.state.color}
-                  onChange={(e) => {
-                    this.setState({
-                      color: e.target.value,
-                    });
-                  }}
-                  placeholder="Pet Color"
-                />
+              {(s < 0.5) ? <Text style={styles.label}>Choose your favorite size: Extra Small</Text> :
+                (s < 1.5) ? <Text style={styles.label}>Choose your favorite size: Small</Text> :
+                  (s < 2.5) ? <Text style={styles.label}>Choose your favorite size: Medium</Text> :
+                    (s < 3.5) ? <Text style={styles.label}>Choose your favorite size: Large</Text> :
+                      (s >= 3.5) ? <Text style={styles.label}>Choose your favorite size: Extra Large</Text> :
+                        ""
+              }
+              <Slider
+                value={this.state.size}
+                onValueChange={(size) =>
+                  this.setState({ size })
+                }
+                maximumValue={4}
+                thumbStyle={{
+                  height: 20,
+                  width: 20,
+                  backgroundColor: "transparent",
+                }}
+                thumbProps={{
+                  children: (
+                    <Icon
+                      name="pets"
+                      size={10}
+                      reverse
+                      containerStyle={{ bottom: 10, right: 10 }}
+                      color="#54514B"
+                    />
+                  ),
+                }}
+              />
 
-                <Text style={styles.label}>Pet Breeds</Text>
-                <TextInput
-                  style={styles.textInput}
-                  value={this.state.breeds}
-                  onChange={(e) => {
-                    this.setState({
-                      breeds: e.target.value,
-                    });
-                  }}
-                  placeholder="Pet Breeds"
-                />
+              <Text style={styles.label}>Choose breed groups you are interested in:</Text>
+              <CheckBox
+                left
+                title='Working'
+                iconLeft
+                checkedIcon='dot-circle-o'
+                uncheckedIcon='circle-o'
+                checkedColor='green'
+                checked={this.state.checkedWorking}
+                onPress={() => this.setState({ checkedWorking: !this.state.checkedWorking })}
+              />
+              <CheckBox
+                left
+                title='Sporting'
+                iconLeft
+                checkedIcon='dot-circle-o'
+                uncheckedIcon='circle-o'
+                checkedColor='green'
+                checked={this.state.checkedSporting}
+                onPress={() => this.setState({ checkedSporting: !this.state.checkedSporting })}
+              />
+              <CheckBox
+                left
+                title='Non-Sporting'
+                iconLeft
+                checkedIcon='dot-circle-o'
+                uncheckedIcon='circle-o'
+                checkedColor='green'
+                checked={this.state.checkedNonSporting}
+                onPress={() => this.setState({ checkedNonSporting: !this.state.checkedNonSporting })}
+              />
+              <CheckBox
+                left
+                title='Hound'
+                iconLeft
+                checkedIcon='dot-circle-o'
+                uncheckedIcon='circle-o'
+                checkedColor='green'
+                checked={this.state.checkedHound}
+                onPress={() => this.setState({ checkedHound: !this.state.checkedHound })}
+              />
+              <CheckBox
+                left
+                title='Toy'
+                iconLeft
+                checkedIcon='dot-circle-o'
+                uncheckedIcon='circle-o'
+                checkedColor='green'
+                checked={this.state.checkedToy}
+                onPress={() => this.setState({ checkedToy: !this.state.checkedToy })}
+              />
+              <CheckBox
+                left
+                title='Terrier'
+                iconLeft
+                checkedIcon='dot-circle-o'
+                uncheckedIcon='circle-o'
+                checkedColor='green'
+                checked={this.state.checkedTerrier}
+                onPress={() => this.setState({ checkedTerrier: !this.state.checkedTerrier })}
+              />
+              <CheckBox
+                left
+                title='Mixed'
+                iconLeft
+                checkedIcon='dot-circle-o'
+                uncheckedIcon='circle-o'
+                checkedColor='green'
+                checked={this.state.checkedMixed}
+                onPress={() => this.setState({ checkedMixed: !this.state.checkedMixed })}
+              />
 
-                <Text style={styles.label}>Pet Species</Text>
-                <TextInput
-                  style={styles.textInput}
-                  value={this.state.species}
-                  onChange={(e) => {
-                    this.setState({
-                      species: e.target.value,
-                    });
-                  }}
-                  placeholder="Pet Species"
-                />
+              <Text style={styles.label}>Choose the temperaments you like:</Text>
+              <CheckBox
+                left
+                title='Curious'
+                iconLeft
+                checkedIcon='dot-circle-o'
+                uncheckedIcon='circle-o'
+                checkedColor='green'
+                checked={this.state.checkedCurious}
+                onPress={() => this.setState({ checkedCurious: !this.state.checkedCurious })}
+              />
+              <CheckBox
+                left
+                title='Independent'
+                iconLeft
+                checkedIcon='dot-circle-o'
+                uncheckedIcon='circle-o'
+                checkedColor='green'
+                checked={this.state.checkedIndependent}
+                onPress={() => this.setState({ checkedIndependent: !this.state.checkedIndependent })}
+              />
+              <CheckBox
+                left
+                title='Intelligent'
+                iconLeft
+                checkedIcon='dot-circle-o'
+                uncheckedIcon='circle-o'
+                checkedColor='green'
+                checked={this.state.checkedIntelligent}
+                onPress={() => this.setState({ checkedIntelligent: !this.state.checkedIntelligent })}
+              />
+              <CheckBox
+                left
+                title='Stubborn'
+                iconLeft
+                checkedIcon='dot-circle-o'
+                uncheckedIcon='circle-o'
+                checkedColor='green'
+                checked={this.state.checkedStubborn}
+                onPress={() => this.setState({ checkedStubborn: !this.state.checkedStubborn })}
+              />
+              <CheckBox
+                left
+                title='Energetic'
+                iconLeft
+                checkedIcon='dot-circle-o'
+                uncheckedIcon='circle-o'
+                checkedColor='green'
+                checked={this.state.checkedEnergetic}
+                onPress={() => this.setState({ checkedEnergetic: !this.state.checkedEnergetic })}
+              />
+              <CheckBox
+                left
+                title='Wild'
+                iconLeft
+                checkedIcon='dot-circle-o'
+                uncheckedIcon='circle-o'
+                checkedColor='green'
+                checked={this.state.checkedWild}
+                onPress={() => this.setState({ checkedWild: !this.state.checkedWild })}
+              />
+              <CheckBox
+                left
+                title='Alert'
+                iconLeft
+                checkedIcon='dot-circle-o'
+                uncheckedIcon='circle-o'
+                checkedColor='green'
+                checked={this.state.checkedAlert}
+                onPress={() => this.setState({ checkedAlert: !this.state.checkedAlert })}
+              />
 
-                <Text style={styles.label}>Contact</Text>
-                <TextInput
-                  style={styles.textInput}
-                  value={this.state.phone}
-                  onChange={(e) => {
-                    this.setState({
-                      phone: e.target.value,
-                    });
-                  }}
-                  placeholder="Phone"
-                />
 
-                <Button title="Submit" onPress={this.addNewLost} />
-              </View>
+              <Button title="Submit" onPress={this.addNewLost} />
             </View>
-          ) : (
-            <View>
+          </ScrollView>
+          // </View>
+        ) : (
+          <View style={styles.scroll}>
+            <ScrollView
+              ref={(scrollView) => this.scrollView = scrollView}
+              scrollEnabled={this.state.scrollEnabled}
+              style={{ height: "100%" }}
+            // style={styles.screen}
+            >
               {/* Cat Form */}
               <View style={styles.form}>
                 <Text style={styles.label}>
@@ -207,6 +346,7 @@ class AdoptScreen extends Component {
                     ),
                   }}
                 />
+
 
                 <Text style={styles.label}>
                   AffectionLevel: {Math.round(this.state.affectionLevel, 2)}
@@ -343,30 +483,39 @@ class AdoptScreen extends Component {
 
                 <Button title="Submit" onPress={this.addNewLost} />
               </View>
-            </View>
-          )}
-        </View>
+            </ScrollView>
+          </View>
+        )}
       </View>
-    );
+    )
   }
+
 }
 
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
     // margin: 35,
+    padding: 20,
     // justifyContent: 'center',
     // alignItems: 'center',
     backgroundColor: "#ddd",
   },
   choose: {
-    flex: 1,
+    margin: 50,
+    // flex: 1,
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
   },
   form: {
-    margin: 30,
+    // margin: 30,
+    justifyContent: "center",
+    // alignItems: "center",
+  },
+  scroll: {
+    // justifyContent: "center",
+    // alignItems: "center",
   },
   label: {
     fontSize: 18,
@@ -383,6 +532,7 @@ const styles = StyleSheet.create({
     height: 100,
     width: 100,
   },
+
 });
 
-export default AdoptScreen;
+export default AdoptFormScreen;

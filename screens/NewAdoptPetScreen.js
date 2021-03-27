@@ -3,7 +3,7 @@ import { View, Text, Image, TextInput, StyleSheet, Button, ScrollView } from 're
 import { connect } from 'react-redux';
 import ImageSelectorComponent from '../components/ImageSelectorComponent';
 import { addNewAdoptAnimal } from '../services/AdoptAnimalService';
-
+import LocationSelectorComponent from '../components/LocationSelectorComponent';
 
 
 class NewAdoptPetScreen extends Component {
@@ -35,14 +35,13 @@ class NewAdoptPetScreen extends Component {
             this.state.phone,
             this.state.image
         );
-        this.props.navigation.navigate('Adopt 🦮')
+        this.props.navigation.navigate('AdoptPet 🦮')
     }
 
 
     render() {
         //console.log(this.props)
         return (
-
             <ScrollView style={styles.form}>
                 <Text style={styles.label}>Pet name</Text>
                 <TextInput
@@ -106,7 +105,7 @@ class NewAdoptPetScreen extends Component {
                     onImageChoosen={this.imageChosenHandler}
                     useCamera={true}
                 />
-
+                <LocationSelectorComponent />
                 <Button title='Submit' onPress={this.addNewAdopt} />
             </ScrollView>
 
@@ -132,11 +131,11 @@ const styles = StyleSheet.create({
 })
 
 
+
 const stateToPropertyMapper = (state) => ({
-
-    lostAnimalFromDB: state.lostAnimalReducer.lostAnimals
-
+    adoptAnimalFromDB: state.adoptAnimalReducer.adoptAnimals
 })
+
 
 
 const propertyToDispatchMapper = (dispatch) => ({

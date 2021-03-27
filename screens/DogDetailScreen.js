@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { View, Text, Image, StyleSheet } from "react-native";
 import PropBar from "./PropBar.js";
+import { IconButton, Colors } from 'react-native-paper';
 
 import { Col, Row, Grid } from "react-native-easy-grid";
 import * as Animatable from "react-native-animatable";
@@ -45,7 +46,28 @@ class DogDetailScreen extends Component {
     };
   }
 
+
+  setHeaderBar = () => {
+    this.props.navigation.setOptions({
+      headerRight: () => (
+        <IconButton
+          icon="dog"
+          color={'#f2a154'}
+          size={40}
+          onPress={() => this.props.navigation.navigate('AdoptDetail', {
+            type: 'dog',
+            breed: this.state.breed
+          })}
+        />
+
+      )
+    })
+  }
+
+
   componentDidMount = () => {
+    this.setHeaderBar()
+
     // fetch(
     //   `https://api.thedogapi.com/v1/images/search?breed_ids=` +
     //     this.state.breed_id

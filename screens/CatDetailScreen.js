@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { View, Text, Image, StyleSheet } from "react-native";
 import PropBar from "./PropBar.js";
-
+import { IconButton, Colors } from 'react-native-paper';
 import { Col, Row, Grid } from "react-native-easy-grid";
 import * as Animatable from "react-native-animatable";
 
@@ -69,6 +69,28 @@ class CatDetailScreen extends Component {
       });
   };
 
+
+
+  setHeaderBar = () => {
+    this.props.navigation.setOptions({
+      headerRight: () => (
+        <IconButton
+          icon="cat"
+          color={'#ffab73'}
+          size={40}
+          onPress={() => this.props.navigation.navigate('AdoptDetail', {
+              type: 'cat',
+              breed: this.state.breed
+          })}
+        />
+
+      )
+    })
+  }
+
+
+
+
   componentDidMount = () => {
     fetch(`https://api.thecatapi.com/v1/breeds/search?q=` + this.state.breed)
       .then((res) => res.json())
@@ -90,7 +112,7 @@ class CatDetailScreen extends Component {
           life_span: res[0].life_span,
         });
       });
-
+    this.setHeaderBar();
     this.findCatAlbum();
   };
 
