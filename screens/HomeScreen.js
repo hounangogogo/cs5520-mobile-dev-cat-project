@@ -1,13 +1,24 @@
 import React, { Component } from "react";
-import { View, Text, TouchableOpacity, Image, StyleSheet, ScrollView } from "react-native";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  Image,
+  StyleSheet,
+  ScrollView,
+  Dimensions,
+} from "react-native";
 import * as Animatable from "react-native-animatable";
 import { IconButton } from "react-native-paper";
 import { connect } from "react-redux";
 import { getAllAdoptAnimalService } from "../services/AdoptAnimalService";
 import Animal from "../models/animal";
-import { catAnimation, dogAnimation, logoAnimation } from "../effect/HomeEffect";
-
-
+import {
+  catAnimation,
+  dogAnimation,
+  logoAnimation,
+} from "../effect/HomeEffect";
+const dimensions = Dimensions.get("window");
 class HomeScreen extends Component {
   constructor(props) {
     super(props);
@@ -25,14 +36,13 @@ class HomeScreen extends Component {
         />
       ),
     });
-
   };
 
   render() {
     console.log(this.props.AdoptAnimalFromDB);
     let adoptPet = this.props.AdoptAnimalFromDB;
     return (
-     
+      <ScrollView>
         <View style={styles.screen}>
           <View style={styles.logo}>
             <Animatable.Image
@@ -69,23 +79,28 @@ class HomeScreen extends Component {
               </TouchableOpacity>
             </Animatable.View>
           </View>
-          <View style={styles.divider}></View> 
+          {/* <View style={styles.divider}> */}
+          <View>
+            <Image
+              style={styles.footerImage}
+              source={require("../assets/homefooter.png")}
+              resizeMode="contain"
+            />
+          </View>
 
           <View style={styles.footer}>
-            <Text style={styles.footerText}>
-              @CS5520 Mobile App Development
-            </Text>
-            <Text style={styles.footerText}></Text>
+            <Text style={styles.footerText}>@2021 HiPet</Text>
+            <Text style={styles.footerText}>CS5520 Mobile App Development</Text>
+
             <Text style={styles.footerText}>
               Developer: Haonan Zhao, Ying Tuo, Junyan Ling
             </Text>
           </View>
         </View>
+      </ScrollView>
     );
   }
 }
-
-
 
 const styles = StyleSheet.create({
   screen: {
@@ -111,6 +126,11 @@ const styles = StyleSheet.create({
     width: 200,
     height: 200,
     padding: 1,
+    alignSelf: "flex-start",
+  },
+  footerImage: {
+    width: dimensions.width,
+    height: dimensions.height / 4,
     alignSelf: "flex-start",
   },
   logo: {
@@ -184,6 +204,8 @@ const styles = StyleSheet.create({
     backgroundColor: "#ddd",
     alignItems: "center",
     justifyContent: "center",
+    // paddingTop: "5%",
+    // paddingBottom: "8%",
   },
 
   footerText: {
@@ -191,6 +213,8 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontSize: 12,
     fontWeight: "200",
+    paddingBottom: "1%",
+    paddingTop: "1%",
   },
 
   headerText: {
@@ -200,6 +224,5 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
 });
-
 
 export default HomeScreen;
