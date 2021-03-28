@@ -118,7 +118,7 @@ class DogSearchScreen extends Component {
               <TextInput
                 style={styles.input}
                 value={this.state.input}
-                placeholder={" 🔍  Explore Breed (e.g. husky) "}
+                placeholder={"  🔍   Explore Breed (e.g. husky)       "}
                 onChangeText={(e) =>
                   this.setState(
                     {
@@ -163,13 +163,13 @@ const styles = StyleSheet.create({
   input: {
     // paddingHorizontal: 2,
     // paddingVertical: 5,
+    marginBottom: "2%",
     borderBottomWidth: 1,
     borderBottomColor: "#30475e",
   },
   formContainer: {
-    width: "80%",
+    width: "90%",
     alignItems: "center",
-    margin: 20,
   },
   gridItem: {
     flex: 1,

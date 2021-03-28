@@ -22,6 +22,7 @@ export default class FiliterResultScreen extends Component {
     this.state = {
       weight: this.props,
       breeds: [],
+      scores: [],
       filterBreeds: [],
       adaptabilityWeight: result.adaptability,
       childFriendlyWeight: result.childFriendly,
@@ -62,6 +63,13 @@ export default class FiliterResultScreen extends Component {
     this.setState({
       filterBreeds: this.state.filterBreeds.slice(0, 5),
     });
+    let { filterBreeds } = this.state;
+    for (let i = 0; i < filterBreeds.length; i++) {
+      console.log("@ curr filterBreeds: ", filterBreeds[i]);
+      let score = this.calScores(filterBreeds[i]);
+      this.state.scores.push(Math.floor(score * 100) / 100);
+    }
+    // console.log(this.state.filterBreeds);
   };
 
   calScores = (pet) => {
@@ -71,7 +79,6 @@ export default class FiliterResultScreen extends Component {
       pet.dog_friendly * this.state.dogFriendlyWeight +
       pet.energy_level * this.state.energyLevelWeight;
 
-    console.log("@score", score);
     return score;
   };
 
@@ -80,39 +87,67 @@ export default class FiliterResultScreen extends Component {
   // }
 
   renderGridItem = (itemData) => {
+    console.log("@itemData", itemData);
+    console.log("@score", this.state.scores);
     let catImage = itemData.item.image
       ? itemData.item.image.url
       : "https://i.pinimg.com/736x/33/32/6d/33326dcddbf15c56d631e374b62338dc.jpg";
     return (
-      <TouchableOpacity
-        style={styles.gridItem}
-        onPress={() =>
-          this.props.navigation.navigate("CatDetail", {
-            breed: itemData.item.name,
-            img: catImage,
-            breed_id: itemData.item.id,
-          })
-        }
-      >
-        <View style={styles.catInfo}>
-          {itemData.item.image ? (
-            <Image
-              style={styles.image}
-              source={{
-                uri: catImage,
-              }}
-            />
-          ) : (
-            <Image
-              style={styles.image}
-              source={{
-                uri: catImage,
-              }}
-            />
-          )}
+      <View style={{ flexDirection: "row" }}>
+        <TouchableOpacity
+          style={styles.gridItem}
+          onPress={() =>
+            this.props.navigation.navigate("CatDetail", {
+              breed: itemData.item.name,
+              img: catImage,
+              breed_id: itemData.item.id,
+            })
+          }
+        >
+          <View style={styles.catInfo}>
+            {itemData.item.image ? (
+              <Image
+                style={styles.image}
+                source={{
+                  uri: catImage,
+                }}
+              />
+            ) : (
+              <Image
+                style={styles.image}
+                source={{
+                  uri: catImage,
+                }}
+              />
+            )}
+          </View>
+        </TouchableOpacity>
+        <View
+          style={{
+            marginLeft: "8%",
+            marginBottom: "5%",
+            marginTop: "5%",
+            marginRight: "8%",
+          }}
+        >
           <Text style={styles.text}>{itemData.item.name}</Text>
+          <Text style={styles.text}>
+            Adaptability:{itemData.item.adaptability}
+          </Text>
+          <Text style={styles.text}>
+            Child Friendly:{itemData.item.child_friendly}
+          </Text>
+          <Text style={styles.text}>
+            Dog Friendly:{itemData.item.dog_friendly}
+          </Text>
+          <Text style={styles.text}>
+            EnergyLevel:{itemData.item.energy_level}
+          </Text>
+          <Text style={styles.text}>
+            Total Score: {this.state.scores[itemData.index]}
+          </Text>
         </View>
-      </TouchableOpacity>
+      </View>
     );
   };
   render() {
@@ -129,12 +164,21 @@ export default class FiliterResultScreen extends Component {
               source={require("../assets/catSearch.png")}
               resizeMode="contain"
             />
+            <Text
+              style={{
+                fontFamily: "open-sans-bold",
+                marginBottom: "10%",
+                marginTop: "10%",
+                marginLeft: "8%",
+              }}
+            >
+              TOP 5 Cats that most suitable for you!
+            </Text>
 
             <FlatList
               keyExtractor={(item, index) => index}
               data={this.state.filterBreeds}
               renderItem={this.renderGridItem}
-              numColumns={2}
             />
           </View>
         ) : (
@@ -177,6 +221,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.26,
     shadowOffset: { width: 0, height: 2 },
     shadowRadius: 10,
+    marginLeft: "5%",
   },
   imageContainer: {},
   searchImage: {
@@ -187,7 +232,10 @@ const styles = StyleSheet.create({
   },
   catInfo: {
     justifyContent: "center",
-    alignItems: "center",
+    // alignItems: "center",
+  },
+  eachCat: {
+    flexDirection: "row",
   },
   text: {
     fontFamily: "open-sans-bold",
