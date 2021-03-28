@@ -26,8 +26,8 @@ class AdoptFormScreen extends Component {
 
       // for cat
       adaptability: 5,
-      childFriendly: 0,
-      dogFriendly: 0,
+      childFriendly: 5,
+      dogFriendly: 5,
       energyLevel: 5,
       grooming: 5,
       hairless: 5,

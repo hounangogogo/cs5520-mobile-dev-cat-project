@@ -74,11 +74,12 @@ export default class FiliterResultScreen extends Component {
 
   calScores = (pet) => {
     let score =
-      100 +
-      pet.adaptability * this.state.adaptabilityWeight +
-      pet.child_friendly * this.state.childFriendlyWeight +
-      pet.dog_friendly * this.state.dogFriendlyWeight +
-      pet.energy_level * this.state.energyLevelWeight;
+      (100 +
+        pet.adaptability * this.state.adaptabilityWeight +
+        pet.child_friendly * this.state.childFriendlyWeight +
+        pet.dog_friendly * this.state.dogFriendlyWeight +
+        pet.energy_level * this.state.energyLevelWeight) /
+      2;
 
     return score;
   };
@@ -142,7 +143,7 @@ export default class FiliterResultScreen extends Component {
             Dog Friendly:{itemData.item.dog_friendly}
           </Text>
           <Text style={styles.text}>
-            EnergyLevel:{itemData.item.energy_level}
+            Energy Level:{itemData.item.energy_level}
           </Text>
           <Text style={styles.text}>
             Total Score: {this.state.scores[itemData.index]}
