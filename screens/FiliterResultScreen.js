@@ -24,10 +24,10 @@ export default class FiliterResultScreen extends Component {
       breeds: [],
       scores: [],
       filterBreeds: [],
-      adaptabilityWeight: result.adaptability,
-      childFriendlyWeight: result.childFriendly,
-      dogFriendlyWeight: result.dogFriendly,
-      energyLevelWeight: result.energyLevel,
+      adaptabilityWeight: result.adaptability - 5,
+      childFriendlyWeight: result.childFriendly - 5,
+      dogFriendlyWeight: result.dogFriendly - 5,
+      energyLevelWeight: result.energyLevel - 5,
     };
   }
 
@@ -74,6 +74,7 @@ export default class FiliterResultScreen extends Component {
 
   calScores = (pet) => {
     let score =
+      100 +
       pet.adaptability * this.state.adaptabilityWeight +
       pet.child_friendly * this.state.childFriendlyWeight +
       pet.dog_friendly * this.state.dogFriendlyWeight +
