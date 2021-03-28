@@ -1,27 +1,32 @@
 import React, { Component } from "react";
-import { useState, useEffect } from "react";
 import {
   View,
   Text,
-  TextInput,
-  Button,
-  FlatList,
   Image,
-  TouchableOpacity,
+  TextInput,
   StyleSheet,
+  Button,
+  TouchableOpacity,
+  FlatList,
+  Animated,
+  ScrollView,
   Dimensions,
 } from "react-native";
-import Colors from "../constants/Colors";
 import LoadCatAnimation from "../Animation/LoadCatAnimation";
 const dimensions = Dimensions.get("window");
-class CatSearchScreen extends Component {
+export default class FiliterResultScreen extends Component {
   constructor(props) {
     super(props);
+    let result = this.props.route.params.rules;
+    console.log(result);
     this.state = {
+      weight: this.props,
       breeds: [],
       filterBreeds: [],
-      input: "",
-      isAnimationTimeOut: false,
+      adaptabilityWeight: result.adaptability,
+      childFriendlyWeight: result.childFriendly,
+      dogFriendlyWeight: result.dogFriendly,
+      energyLevelWeight: result.energyLevel,
     };
   }
 
@@ -35,6 +40,9 @@ class CatSearchScreen extends Component {
           breeds: res,
           filterBreeds: res,
         });
+        //console.log(this.state.filterBreeds);
+
+        this.sortPets();
       });
     this.counterTimer = setTimeout(
       () =>
@@ -43,6 +51,28 @@ class CatSearchScreen extends Component {
         }),
       2300
     );
+  };
+
+  sortPets = () => {
+    console.log("@ before this.state.filterBreeds", this.state.filterBreeds);
+    this.state.filterBreeds.sort((pet1, pet2) => {
+      return this.calScores(pet2) - this.calScores(pet1);
+    });
+    console.log("@this.state.filterBreeds", this.state.filterBreeds);
+    this.setState({
+      filterBreeds: this.state.filterBreeds.slice(0, 5),
+    });
+  };
+
+  calScores = (pet) => {
+    let score =
+      pet.adaptability * this.state.adaptabilityWeight +
+      pet.child_friendly * this.state.childFriendlyWeight +
+      pet.dog_friendly * this.state.dogFriendlyWeight +
+      pet.energy_level * this.state.energyLevelWeight;
+
+    console.log("@score", score);
+    return score;
   };
 
   // componentWillUnmount = () => {
@@ -85,17 +115,6 @@ class CatSearchScreen extends Component {
       </TouchableOpacity>
     );
   };
-  handleSearch = () => {
-    let { breeds, input } = this.state;
-
-    let newBreeds = breeds.filter(function (e) {
-      return e.name.toLowerCase().includes(input.toLowerCase());
-    });
-    this.setState({
-      filterBreeds: newBreeds,
-    });
-  };
-
   render() {
     return (
       <View
@@ -110,22 +129,7 @@ class CatSearchScreen extends Component {
               source={require("../assets/catSearch.png")}
               resizeMode="contain"
             />
-            <View style={styles.formContainer}>
-              <TextInput
-                style={styles.input}
-                placeholder={"Explore Breed (e.g. british)"}
-                onChangeText={(e) =>
-                  this.setState(
-                    {
-                      input: e,
-                    },
-                    this.handleSearch
-                  )
-                }
-                value={this.state.input}
-              />
-              <Button title="Search Cat" onPress={this.handleSearch} />
-            </View>
+
             <FlatList
               keyExtractor={(item, index) => index}
               data={this.state.filterBreeds}
@@ -140,14 +144,6 @@ class CatSearchScreen extends Component {
     );
   }
 }
-
-// CatSearchScreen.navigationOptions = {
-//   headerTitle: "Cat",
-//   headerStyle: {
-//     backgroundColor: Colors.orange,
-//   },
-//   headerTintColor: "white",
-// };
 
 const styles = StyleSheet.create({
   screen: {
@@ -197,5 +193,3 @@ const styles = StyleSheet.create({
     fontFamily: "open-sans-bold",
   },
 });
-
-export default CatSearchScreen;

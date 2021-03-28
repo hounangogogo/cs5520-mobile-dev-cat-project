@@ -118,7 +118,7 @@ class DogSearchScreen extends Component {
               <TextInput
                 style={styles.input}
                 value={this.state.input}
-                placeholder={"Explore Breed (e.g. husky)"}
+                placeholder={" 🔍  Explore Breed (e.g. husky) "}
                 onChangeText={(e) =>
                   this.setState(
                     {
@@ -128,7 +128,11 @@ class DogSearchScreen extends Component {
                   )
                 }
               />
-              <Button title="Search Dog" onPress={this.handleSearch} />
+              <Button
+                style={{ marginTop: 100 }}
+                title="Search Dog"
+                onPress={this.handleSearch}
+              />
             </View>
             <FlatList
               keyExtractor={(item, index) => index}
@@ -163,7 +167,9 @@ const styles = StyleSheet.create({
     borderBottomColor: "#30475e",
   },
   formContainer: {
-    width: "100%",
+    width: "80%",
+    alignItems: "center",
+    margin: 20,
   },
   gridItem: {
     flex: 1,
@@ -181,7 +187,7 @@ const styles = StyleSheet.create({
   },
   searchImage: {
     width: dimensions.width,
-    height: dimensions.height / 4,
+    height: dimensions.height / 5,
     marginTop: "-5%",
     alignSelf: "flex-start",
   },
