@@ -66,9 +66,5 @@ Purposes:
 Summary:
 
 1. return none 没 API 的
-2. render 推荐
-3. details 排版
-4. Available for adoption 修改
-5. Available for adoption 新建
-6. 推荐狗？—————— 和老师约 meeting
-7. 和老师约 meeting 问要不要 slides
+4. 推荐狗？—————— 和老师约 meeting
+5. 和老师约 meeting 问pre要不要 slides
