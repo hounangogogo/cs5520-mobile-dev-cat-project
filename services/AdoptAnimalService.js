@@ -17,7 +17,7 @@ export const getAllAdoptAnimalService = () => {
 
 
 export const addNewAdoptAnimal = (animalName,
-    animalBreeds, animalColor, animalSpecies, phone, animalImage) => {
+    animalBreeds, animalColor, animalAge, animalSize, animalGender, animalSpecies, phone, email, address, description, animalImage) => {
     return fetch(`${url}/adopt.json`, {
         method: 'POST',
         headers: {
@@ -27,8 +27,14 @@ export const addNewAdoptAnimal = (animalName,
             animalName,
             animalBreeds,
             animalColor,
+            animalAge,
+            animalSize,
+            animalGender,
             animalSpecies,
             phone,
+            email,
+            address,
+            description,
             animalImage
         })
     }).then(response => response.json())

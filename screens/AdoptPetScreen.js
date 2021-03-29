@@ -44,8 +44,6 @@ class AdoptPetScreen extends Component {
 
     }
 
-
-
     getToken = () => {
         fetch('https://api.petfinder.com/v2/oauth2/token', {
             method: 'POST',
@@ -60,15 +58,13 @@ class AdoptPetScreen extends Component {
             })
         }).then((res) => res.json())
             .then((res) => {
-                console.log(res)
+                // console.log(res)
                 this.setState({
                     accessToken: res.access_token
                 })
                 this.getAdoptCat();
             })
     }
-
-
 
     getAdoptCat = () => {
         let token = this.state.accessToken;
@@ -78,7 +74,7 @@ class AdoptPetScreen extends Component {
                 Accept: 'application/json',
                 'Content-Type': 'application/json',
                 Authorization: 'Bearer ' + token
-            },
+            }, 
         }).then((res) => res.json())
             .then((res) => {
                 this.setState({
@@ -87,75 +83,61 @@ class AdoptPetScreen extends Component {
             })
     }
 
-
-    renderDBLost = (itemData) => {
-        let image = itemData.item.imageUri;
-        return (
-            <View>
-                <Text>PetName: {itemData.item.name}</Text>
-                <Text>PetBreeds: {itemData.item.breeds}</Text>
-                <Text>Petcolor: {itemData.item.color}</Text>
-                <Text>Petspecies: {itemData.item.species}</Text>
-                <Text>Contact: {itemData.item.phone}</Text>
-
-                <Image
-                    style={{ width: 100, height: 100 }}
-                    source={{
-                        uri: image
-                    }}
-                />
-
-            </View>
-        )
-    }
-
-
-
     renderGridItem = (itemData) => {
-        //console.log(itemData.item)
+        console.log(itemData.item)
         return (
-            // <TouchableOpacity>
-            //     <View>
-            //         <Text>Age: {itemData.item.age}</Text>
-            //         <Text>Name: {itemData.item.name}</Text>
-            //         {
-            //             itemData.item.photos.length !== 0 && 
-            //             <Image
-            //                 style={styles.image}
-            //                 source={{
-            //                     uri: itemData.item.photos[0].full
-            //                 }} />
-            //         }
-
-            //     </View>
-            // </TouchableOpacity>
-
             <TouchableOpacity
                 onPress={() => this.props.navigation.navigate("AdoptPetDetail", {
                     animalId: itemData.item.id,
-                    token: this.state.accessToken
+                    token: this.state.accessToken,
+                    isFromApi: itemData.item.organization_id ? true : false
                 })}
                 style={styles.gridItem}>
                 <View style={styles.lostBox}>
-                    {itemData.item.photos.length !== 0 ?
-                        <Image
-                            style={styles.image}
-                            source={{
-                                uri: itemData.item.photos[0].full
-                            }}
-                        /> :
-                        <Image
-                            style={styles.image}
-                            source={{
-                                uri: "https://picsum.photos/id/237/200/300"
-                            }} />
+                    {
+                        itemData.item.photos && itemData.item.photos.length !== 0 ?
+                            <Image
+                                style={styles.image}
+                                source={{
+                                    uri: itemData.item.photos[0].full
+                                }}
+                            />
+                            :
+                            itemData.item.photos && itemData.item.photos.length === 0 ?
+                                <Image
+                                    style={styles.image}
+                                    source={{
+                                        uri: "https://picsum.photos/id/237/200/300"
+                                    }} />
+                                :
+                                itemData.item.imageUri? 
+                                <Image
+                                    style={styles.image}
+                                    source={{
+                                        uri: itemData.item.imageUri
+                                    }}
+                                />
+                                :
+                                <Image
+                                style={styles.image}
+                                source={{
+                                    uri: "https://picsum.photos/id/237/200/300"
+                                }} />
                     }
                     {itemData.item.gender === "Female" ?
-                        <Text style={styles.text1}>👧 {itemData.item.name}</Text>
-                        :
-                        <Text style={styles.text1}>👦 {itemData.item.name}</Text>
+                        <Text style={styles.text1}>👧 {itemData.item.name}</Text> :
+                        itemData.item.gender === "Male" ?
+                            <Text style={styles.text1}>👦 {itemData.item.name}</Text> :
+                            <Text style={styles.text1}> {itemData.item.name}</Text>
                     }
-                    <Text style={styles.text2}>{itemData.item.age}</Text>
+                    <Text style={styles.text2}>
+                        {itemData.item.age}
+                        {itemData.item.age ? " • " : ""}
+                        {itemData.item.size}
+                        {itemData.item.size ? " size" : ""}
+                    </Text>
+                    <Text style={styles.text2}> {itemData.item.breeds && itemData.item.breeds['primary'] ?
+                        itemData.item.breeds['primary'] : itemData.item.breeds}</Text>
                 </View>
             </TouchableOpacity>
         )
@@ -163,31 +145,28 @@ class AdoptPetScreen extends Component {
 
 
     render() {
-        console.log(this.props)
+        // console.log(this.props)
         return (
             <View style={styles.screen}>
-                <Text>Data from db</Text>
-                <View>
-                    <Text>
-                        {this.props.adoptAnimalFromDB.length}
+                <Text style={styles.header}>
+                    {this.props.adoptAnimalFromDB.length} pet
+                    {
+                        this.props.adoptAnimalFromDB.length >= 2 ? "s" : ""
+                    } posted by our own users. </Text>
 
-                    </Text>
-                    {this.props.adoptAnimalFromDB.length !== 0 ?
-                        <FlatList
-                            keyExtractor={(item, index) => index}
-                            data={this.props.adoptAnimalFromDB}
-                            renderItem={this.renderDBLost}
-                            numColumns={1}
-                        /> : <View />}
-                </View>
-                <Text>----------------------</Text>
+                <Text style={styles.header}>
+                    {this.state.lostCats.length} pet
+                    {
+                        this.state.lostCats.length >= 2 ? "s" : ""
+                    } posted by users on other platforms. </Text>
 
                 <FlatList
                     keyExtractor={(item, index) => index}
-                    data={this.state.lostCats}
+                    data={this.state.lostCats.concat(this.props.adoptAnimalFromDB)}
                     renderItem={this.renderGridItem}
                     numColumns={2} />
             </View>
+
         );
     }
 }
@@ -211,8 +190,6 @@ const styles = StyleSheet.create({
     },
 
     image: {
-        // height: "75%",
-        // width: "100%",
         height: 160,
         width: 160,
         justifyContent: 'center',
@@ -251,6 +228,18 @@ const styles = StyleSheet.create({
         color: "black",
         textAlign: 'center',
         fontSize: 13
+    },
+    header: {
+        fontFamily: 'open-sans-bold',
+        color: "black",
+        textAlign: 'center',
+        fontSize: 20
+    },
+    number: {
+        fontFamily: 'open-sans-bold',
+        color: "red",
+        textAlign: 'center',
+        fontSize: 25
     }
 
 })
@@ -259,12 +248,11 @@ const stateToPropertyMapper = (state) => ({
     adoptAnimalFromDB: state.adoptAnimalReducer.adoptAnimals
 })
 
-
 const propertyToDispatchMapper = (dispatch) => ({
     getAllAdoptAnimal: () =>
         getAllAdoptAnimalService()
             .then(data => {
-                console.log(data)
+                // console.log(data)
                 const loadedAdoptAnimal = [];
                 for (const key in data) {
                     loadedAdoptAnimal.push(new Animal(
@@ -272,8 +260,14 @@ const propertyToDispatchMapper = (dispatch) => ({
                         data[key].animalName,
                         data[key].animalBreeds,
                         data[key].animalColor,
+                        data[key].animalAge,
+                        data[key].animalSize,
+                        data[key].animalGender,
                         data[key].animalSpecies,
                         data[key].phone,
+                        data[key].email,
+                        data[key].address,
+                        data[key].description,
                         data[key].animalImage
                     ))
                 }
@@ -283,6 +277,5 @@ const propertyToDispatchMapper = (dispatch) => ({
                 })
             })
 })
-
 
 export default connect(stateToPropertyMapper, propertyToDispatchMapper)(AdoptPetScreen);

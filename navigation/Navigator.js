@@ -47,19 +47,20 @@ const AdoptFormScreenPetNav = () => (
 );
 
 const Navigator = () => {
-  return (
-    <NavigationContainer>
-      <Drawer.Navigator>
-        <Drawer.Screen name="Home" component={HomeNav} />
-        <Drawer.Screen name="Cat 🐱" component={CatSearchScreen} />
-        <Drawer.Screen name="Dog 🐶" component={DogSearchScreen} />
-        <Drawer.Screen
-          name="Help you choose 📋"
-          component={AdoptFormScreenPetNav}
-        />
-        <Drawer.Screen name="AdoptPet 🦮" component={AdoptPetNav} />
-      </Drawer.Navigator>
-    </NavigationContainer>
-  );
-};
+    return (
+        <NavigationContainer>
+            <Drawer.Navigator>
+                <Drawer.Screen
+                    name="Home"
+                    component={HomeNav}
+                />
+                <Drawer.Screen name="Cat 🐱" component={CatSearchScreen} />
+                <Drawer.Screen name="Dog 🐶" component={DogSearchScreen} />
+                <Drawer.Screen name="Tell us what you like 📋" component={AdoptFormScreenPetNav} />
+                <Drawer.Screen name="AdoptPet 🦮" component={AdoptPetNav} />
+            </Drawer.Navigator>
+        </NavigationContainer>
+    )
+}
 export default Navigator;
+

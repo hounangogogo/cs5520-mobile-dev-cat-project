@@ -6,6 +6,9 @@ import { addNewAdoptAnimal } from '../services/AdoptAnimalService';
 import LocationSelectorComponent from '../components/LocationSelectorComponent';
 
 
+
+
+
 class NewAdoptPetScreen extends Component {
     constructor(props) {
         super(props);
@@ -13,11 +16,20 @@ class NewAdoptPetScreen extends Component {
             name: '',
             breeds: '',
             color: '',
+            age: '',
+            size: '',
+            gender: '',
             species: '',
             phone: '',
-            image: '',
+            email: '',
+            address: '',
+            description: '',
+            image: ''
         }
     }
+
+
+
 
     imageChosenHandler = (imagePath) => {
         this.setState({
@@ -31,12 +43,22 @@ class NewAdoptPetScreen extends Component {
             this.state.name,
             this.state.breeds,
             this.state.color,
+            this.state.age,
+            this.state.size,
+            this.state.gender,
             this.state.species,
             this.state.phone,
-            this.state.image
+            this.state.email,
+            this.state.address,
+            this.state.description,
+            this.state.image,
         );
         this.props.navigation.navigate('AdoptPet 🦮')
     }
+
+    // checkTetxtInput = () => {
+    //     if (!)
+    // }
 
 
     render() {
@@ -65,6 +87,38 @@ class NewAdoptPetScreen extends Component {
                     }}
                     placeholder="Pet Color" />
 
+                <Text style={styles.label}>Pet Age: Young, Adult, or Senior?</Text>
+                <TextInput
+                    style={styles.textInput}
+                    value={this.state.age}
+                    onChangeText={(e) => {
+                        this.setState({
+                            age: e
+                        })
+                    }}
+                    placeholder="Pet Age" />
+
+                <Text style={styles.label}>Pet Size: Small, Medium, or Large?</Text>
+                <TextInput
+                    style={styles.textInput}
+                    value={this.state.size}
+                    onChangeText={(e) => {
+                        this.setState({
+                            size: e
+                        })
+                    }}
+                    placeholder="Pet Size" />
+
+                <Text style={styles.label}>Pet Gender: Female or Male?</Text>
+                <TextInput
+                    style={styles.textInput}
+                    value={this.state.gender}
+                    onChangeText={(e) => {
+                        this.setState({
+                            gender: e
+                        })
+                    }}
+                    placeholder="Pet Gender" />
 
                 <Text style={styles.label}>Pet Breeds</Text>
                 <TextInput
@@ -78,7 +132,7 @@ class NewAdoptPetScreen extends Component {
                     placeholder="Pet Breeds" />
 
 
-                <Text style={styles.label}>Pet Species</Text>
+                <Text style={styles.label}>Pet Type</Text>
                 <TextInput
                     style={styles.textInput}
                     value={this.state.species}
@@ -87,9 +141,7 @@ class NewAdoptPetScreen extends Component {
                             species: e
                         })
                     }}
-                    placeholder="Pet Species" />
-
-
+                    placeholder="Pet Type" />
 
                 <Text style={styles.label}>Contact</Text>
                 <TextInput
@@ -101,11 +153,43 @@ class NewAdoptPetScreen extends Component {
                         })
                     }}
                     placeholder="Phone" />
+                <TextInput
+                    style={styles.textInput}
+                    value={this.state.email}
+                    onChangeText={(e) => {
+                        this.setState({
+                            email: e
+                        })
+                    }}
+                    placeholder="email" />
+                <TextInput
+                    style={styles.textInput}
+                    value={this.state.address}
+                    onChangeText={(e) => {
+                        this.setState({
+                            address: e
+                        })
+                    }}
+                    placeholder="address" />
+
+                <Text style={styles.label}>Description</Text>
+                <TextInput
+                    style={styles.textInput}
+                    value={this.state.description}
+                    onChangeText={(e) => {
+                        this.setState({
+                            description: e
+                        })
+                    }}
+                    placeholder="Please describe your pet or your thoughts" />
+
                 <ImageSelectorComponent
                     onImageChoosen={this.imageChosenHandler}
                     useCamera={true}
                 />
-                <LocationSelectorComponent />
+
+                {/* <LocationSelectorComponent /> */}
+
                 <Button title='Submit' onPress={this.addNewAdopt} />
             </ScrollView>
 
@@ -137,12 +221,11 @@ const stateToPropertyMapper = (state) => ({
 })
 
 
-
 const propertyToDispatchMapper = (dispatch) => ({
     addNewAdoptAnimal: (animalName,
-        animalBreeds, animalColor, animalSpecies, phone, animalImage) =>
+        animalBreeds, animalColor, animalAge, animalSize, animalGender, animalSpecies, phone, email, address, description, animalImage) =>
         addNewAdoptAnimal(animalName,
-            animalBreeds, animalColor, animalSpecies, phone, animalImage)
+            animalBreeds, animalColor, animalAge, animalSize, animalGender, animalSpecies, phone, email, address, description, animalImage)
             .then(data => {
                 console.log(data)
                 dispatch({
@@ -151,9 +234,15 @@ const propertyToDispatchMapper = (dispatch) => ({
                     name: animalName,
                     breeds: animalBreeds,
                     color: animalColor,
+                    age: animalAge,
+                    size: animalSize,
+                    gender: animalGender,
                     species: animalSpecies,
                     phone: phone,
-                    image: animalImage
+                    email: email,
+                    address: address,
+                    description: description,
+                    image: animalImage,
                 })
             })
 })
