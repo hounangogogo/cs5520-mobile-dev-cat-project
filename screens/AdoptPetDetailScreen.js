@@ -302,7 +302,7 @@ class AdoptPetDetailScreen extends Component {
                             <Text></Text>
 
                             <View style={styles.tableContainer}>
-                                <Grid style={{ borderRadius: 100 }}>
+                                <Grid style={{ borderRadius: 300 }}>
                                     <Row
                                         style={{
                                             borderColor: this.state.tableBoardColor,
@@ -513,6 +513,11 @@ const styles = StyleSheet.create({
         // marginTop: "10%",
         // justifyContent: "center",
         // alignItems: "center",
+    },
+    tableContainer: {
+        justifyContent: "center",
+        padding: 10,
+        borderRadius: 100,
     },
     image: {
         height: 250,

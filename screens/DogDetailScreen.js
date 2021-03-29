@@ -10,16 +10,16 @@ const customerImageIn = {
   from: {
     width: 26,
     height: 32,
-    opacity: 1,
-    translateX: -200,
-    translateY: -200,
+    opacity: 0,
+    translateX: -100,
+    translateY: -100,
     borderRadius: 15,
     // rotate: "40deg",
   },
   to: {
-    width: 260,
-    height: 320,
-    opacity: 0.3,
+    width: 250,
+    height: 250,
+    opacity: 1,
     translateX: 0,
     translateY: 0,
     borderRadius: 15,
@@ -109,38 +109,42 @@ class DogDetailScreen extends Component {
     ];
     console.log(DETAILS);
     return (
-      <View style={styles.screen}>
-        <View style={styles.topContainer}>
-          {/* picture block */}
-          <View style={styles.topMiddleContainer1}>
-            <Animatable.Image
-              style={styles.image}
-              source={{
-                uri: this.state.img,
-              }}
-              animation={customerImageIn}
-              duration={5000}
-            />
-          </View>
 
-          {/* description block */}
-          <View style={styles.topMiddleContainer2}>
-            <Text style={styles.headText}>Description</Text>
-            <Text style={styles.text}>{this.state.bred_for}</Text>
-          </View>
+      <View style={styles.screen}>
+
+        <View>
+          <Text></Text>
+          <Text style={styles.headText}>{this.state.breed}</Text>
         </View>
 
-        <View style={styles.bottomContainer}>
-          {/* details block */}
-          <View style={styles.bottomMiddleContainer1}>
-            <Text style={styles.headText}>Introduction</Text>
+        <View style={styles.topContainer}>
+          <Animatable.Image
+            style={styles.image}
+            source={{
+              uri: this.state.img,
+            }}
+            animation={customerImageIn}
+            duration={2000}
+          />
+        </View>
+
+        <View>
+          <Text style={styles.headText}>Description</Text>
+          <Text style={styles.text}>{this.state.bred_for}</Text>
+          <Text></Text>
+        </View>
+
+        <View style={styles.outsideContainer}>
+          <Text style={styles.headText}>Introduction</Text>
+
+          <View style={styles.tableContainer}>
             <Grid style={{ borderRadius: 100 }}>
               <Row
                 style={{
-                  borderWidth: 0.3,
+                  // borderWidth: 0.3,
                   borderColor: this.state.tableBoardColor,
                   backgroundColor: this.state.tableCellColorDark,
-                  height: "10%",
+                  height: 20,
                 }}
               >
                 <Col>
@@ -153,10 +157,10 @@ class DogDetailScreen extends Component {
 
               <Row
                 style={{
-                  borderWidth: 0.3,
+                  // borderWidth: 0.3,
                   borderColor: this.state.tableBoardColor,
                   backgroundColor: this.state.tableCellColor,
-                  height: "10%",
+                  height: 20,
                 }}
               >
                 <Col>
@@ -171,10 +175,10 @@ class DogDetailScreen extends Component {
 
               <Row
                 style={{
-                  borderWidth: 0.3,
+                  // borderWidth: 0.3,
                   borderColor: this.state.tableBoardColor,
                   backgroundColor: this.state.tableCellColorDark,
-                  height: "22%",
+                  height: 40,
                 }}
               >
                 <Col>
@@ -186,11 +190,6 @@ class DogDetailScreen extends Component {
               </Row>
             </Grid>
           </View>
-
-          {/* characteristics block */}
-          <View style={styles.bottomMiddleContainer2}>
-            {/* <PropBar hue="25" saturation="85.5" characs={CHARACS} /> */}
-          </View>
         </View>
       </View>
     );
@@ -200,52 +199,66 @@ class DogDetailScreen extends Component {
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
+    // justifyContent: "center",
+    // alignItems: "center",
     backgroundColor: "#ECEBE4",
   },
   image: {
-    height: 160,
-    width: 130,
+    height: 250,
+    width: 250,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 15,
+    shadowColor: 'black',
+    shadowOpacity: 0.26,
+    shadowOffset: { width: 0, height: 2 },
+    shadowRadius: 10,
+    margin: 10,
   },
 
   topContainer: {
-    flexDirection: "row",
-    height: 300,
-    width: "100%",
-    marginTop: "50%",
-    backgroundColor: "#ECEBE4",
+    // flexDirection: "column",
+    // height: 300,
+    // width: "100%",
+    // marginTop: "50%",
+    // backgroundColor: "#ECEBE4",
+    justifyContent: "center",
+    alignItems: "center",
   },
 
-  topMiddleContainer1: {
-    flex: 1,
-    marginRight: 2,
-    marginLeft: "5%",
-  },
-  topMiddleContainer2: {
-    flex: 2,
-    marginRight: "5%",
-  },
+  // topMiddleContainer1: {
+  //   flex: 1,
+  //   marginRight: 2,
+  //   marginLeft: "5%",
+  // },
+  // topMiddleContainer2: {
+  //   flex: 2,
+  //   marginRight: "5%",
+  // },
   bottomContainer: {
-    flexDirection: "row",
-    height: 500,
-    padding: 7,
-    marginRight: 1,
-    marginBottom: 2,
-    marginTop: "10%",
+    // flexDirection: "row",
+    // height: 500,
+    // padding: 7,
+    // marginRight: 1,
+    // marginBottom: 2,
+    // marginTop: "10%",
   },
-
-  bottomMiddleContainer1: {
-    flex: 1.4,
-    marginLeft: "3%",
-    marginBottom: 2,
-    borderRadius: 15,
+  tableContainer: {
+    justifyContent: "center",
+    padding: 10,
+    borderRadius: 100,
   },
-  bottomMiddleContainer2: {
-    flex: 1,
-    marginTop: "5%",
-    marginBottom: 2,
-  },
+  // bottomMiddleContainer1: {
+  //   flex: 1.4,
+  //   marginLeft: "3%",
+  //   marginBottom: 2,
+  //   borderRadius: 15,
+  // },
+  // bottomMiddleContainer2: {
+  //   flex: 1,
+  //   marginTop: "5%",
+  //   marginBottom: 2,
+  // },
   tableText: {
     textAlign: "auto",
     color: "#54514B",
@@ -263,13 +276,21 @@ const styles = StyleSheet.create({
     color: "#54514B",
     fontWeight: "bold",
     fontSize: 20,
-    marginBottom: "5%",
+    marginBottom: 5,
+    textAlign: 'center',
+  },
+  breedText: {
+    color: "#54514B",
+    fontWeight: "bold",
+    fontSize: 30,
+    marginBottom: 5,
+    textAlign: 'center',
   },
   text: {
     color: "#54514B",
     fontSize: 15,
-    textAlign: "auto",
     marginRight: "5%",
+    textAlign: 'center',
   },
 });
 
