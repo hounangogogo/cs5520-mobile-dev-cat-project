@@ -113,7 +113,7 @@ class CatSearchScreen extends Component {
             <View style={styles.formContainer}>
               <TextInput
                 style={styles.input}
-                placeholder={"Explore Breed (e.g. british)"}
+                placeholder={"  🔍   Explore Breed (e.g. british)      "}
                 onChangeText={(e) =>
                   this.setState(
                     {
@@ -162,11 +162,13 @@ const styles = StyleSheet.create({
   input: {
     // paddingHorizontal: 2,
     // paddingVertical: 5,
+    marginBottom: "2%",
     borderBottomWidth: 1,
     borderBottomColor: "#30475e",
   },
   formContainer: {
-    width: "100%",
+    width: "90%",
+    alignItems: "center",
   },
   gridItem: {
     flex: 1,

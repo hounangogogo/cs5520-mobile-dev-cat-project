@@ -61,7 +61,7 @@ export default class FiliterResultScreen extends Component {
     });
     console.log("@this.state.filterBreeds", this.state.filterBreeds);
     this.setState({
-      filterBreeds: this.state.filterBreeds.slice(0, 5),
+      filterBreeds: this.state.filterBreeds.slice(0, 3),
     });
     let { filterBreeds } = this.state;
     for (let i = 0; i < filterBreeds.length; i++) {
@@ -127,23 +127,23 @@ export default class FiliterResultScreen extends Component {
         <View
           style={{
             marginLeft: "8%",
-            marginBottom: "5%",
-            marginTop: "5%",
+            marginBottom: "3%",
+            marginTop: "3%",
             marginRight: "8%",
           }}
         >
           <Text style={styles.text}>{itemData.item.name}</Text>
           <Text style={styles.text}>
-            Adaptability:{itemData.item.adaptability}
+            Adaptability: {itemData.item.adaptability}
           </Text>
           <Text style={styles.text}>
-            Child Friendly:{itemData.item.child_friendly}
+            Child Friendly: {itemData.item.child_friendly}
           </Text>
           <Text style={styles.text}>
-            Dog Friendly:{itemData.item.dog_friendly}
+            Dog Friendly: {itemData.item.dog_friendly}
           </Text>
           <Text style={styles.text}>
-            Energy Level:{itemData.item.energy_level}
+            Energy Level: {itemData.item.energy_level}
           </Text>
           <Text style={styles.text}>
             Total Score: {this.state.scores[itemData.index]}
@@ -169,12 +169,13 @@ export default class FiliterResultScreen extends Component {
             <Text
               style={{
                 fontFamily: "open-sans-bold",
-                marginBottom: "10%",
-                marginTop: "10%",
+                marginBottom: "3%",
+                marginTop: "5%",
                 marginLeft: "8%",
+                fontSize: 16,
               }}
             >
-              TOP 5 Cats that most suitable for you!
+              TOP 3 Cats that most suitable for you!
             </Text>
 
             <FlatList
@@ -212,12 +213,13 @@ const styles = StyleSheet.create({
   },
   gridItem: {
     flex: 1,
-    margin: 15,
-    height: 200,
+    margin: "7%",
+    // marginTop: "5%",
+    height: "20%",
   },
   image: {
-    height: 160,
-    width: 160,
+    height: 130,
+    width: 130,
     borderRadius: 15,
     shadowColor: "black",
     shadowOpacity: 0.26,
@@ -229,7 +231,7 @@ const styles = StyleSheet.create({
   searchImage: {
     width: dimensions.width,
     height: dimensions.height / 5,
-    marginTop: "-5%",
+    // marginTop: "1%",
     alignSelf: "flex-start",
   },
   catInfo: {
@@ -240,6 +242,8 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   },
   text: {
-    fontFamily: "open-sans-bold",
+    // fontFamily: "open-sans-bold",
+    fontFamily: "600",
+    fontSize: 12,
   },
 });
