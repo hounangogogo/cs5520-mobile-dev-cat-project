@@ -8,12 +8,12 @@ import {
   Button,
   TouchableOpacity,
   Animated,
-  ScrollView
+  ScrollView,
 } from "react-native";
 import { Slider, Icon, CheckBox } from "react-native-elements";
 import { connect } from "react-redux";
 import * as Animatable from "react-native-animatable";
-import { IconButton, Colors } from 'react-native-paper';
+import { IconButton, Colors } from "react-native-paper";
 
 const AnimatableTouch = Animatable.createAnimatableComponent(TouchableOpacity);
 
@@ -26,12 +26,13 @@ class AdoptFormScreen extends Component {
 
       // for cat
       adaptability: 5,
-      affectionLevel: 5,
       childFriendly: 5,
       dogFriendly: 5,
       energyLevel: 5,
       grooming: 5,
       hairless: 5,
+      checkedChildren: false,
+      checkedDog: false,
 
       // for dog
       size: 2,
@@ -46,7 +47,7 @@ class AdoptFormScreen extends Component {
       checkedIndependent: false,
       checkedIntelligent: false,
       checkedStubborn: false,
-      checkedEnergetic: false
+      checkedEnergetic: false,
     };
   }
 
@@ -55,23 +56,33 @@ class AdoptFormScreen extends Component {
       headerLeft: () => (
         <IconButton
           icon="home"
-          color={'black'}
+          color={"black"}
           size={40}
-          onPress={() => this.props.navigation.navigate('Home')}
+          onPress={() => this.props.navigation.navigate("Home")}
         />
+      ),
+    });
+  };
+  handleSubmit = () => {
+    // let { state } = this.state;
+    let rules = {
+      adaptability: this.state.adaptability,
+      childFriendly: this.state.childFriendly,
+      dogFriendly: this.state.dogFriendly,
+      energyLevel: this.state.energyLevel,
+    };
 
-      )
-    })
-  }
+    this.props.navigation.navigate("FiliterResultScreen", {
+      rules: rules,
+    });
+  };
 
   render() {
     let s = this.state.size;
 
     console.log(this.state);
     return (
-
       <View style={styles.screen}>
-
         <View style={styles.choose}>
           <AnimatableTouch
             onPress={() => {
@@ -80,7 +91,6 @@ class AdoptFormScreen extends Component {
               });
             }}
           >
-
             <Animatable.Image
               animation={{
                 from: {
@@ -123,25 +133,39 @@ class AdoptFormScreen extends Component {
         {this.state.chooseDog ? (
           // <View style={styles.scroll}>
           <ScrollView
-            ref={(scrollView) => this.scrollView = scrollView}
+            ref={(scrollView) => (this.scrollView = scrollView)}
             scrollEnabled={this.state.scrollEnabled}
             style={{ flex: 1 }}
-          // style={styles.form}
+            // style={styles.form}
           >
+            {/* dog form */}
             <View style={styles.form}>
-
-              {(s < 0.5) ? <Text style={styles.label}>Choose your favorite size: Extra Small</Text> :
-                (s < 1.5) ? <Text style={styles.label}>Choose your favorite size: Small</Text> :
-                  (s < 2.5) ? <Text style={styles.label}>Choose your favorite size: Medium</Text> :
-                    (s < 3.5) ? <Text style={styles.label}>Choose your favorite size: Large</Text> :
-                      (s >= 3.5) ? <Text style={styles.label}>Choose your favorite size: Extra Large</Text> :
-                        ""
-              }
+              {s < 0.5 ? (
+                <Text style={styles.label}>
+                  Choose your favorite size: Extra Small
+                </Text>
+              ) : s < 1.5 ? (
+                <Text style={styles.label}>
+                  Choose your favorite size: Small
+                </Text>
+              ) : s < 2.5 ? (
+                <Text style={styles.label}>
+                  Choose your favorite size: Medium
+                </Text>
+              ) : s < 3.5 ? (
+                <Text style={styles.label}>
+                  Choose your favorite size: Large
+                </Text>
+              ) : s >= 3.5 ? (
+                <Text style={styles.label}>
+                  Choose your favorite size: Extra Large
+                </Text>
+              ) : (
+                ""
+              )}
               <Slider
                 value={this.state.size}
-                onValueChange={(size) =>
-                  this.setState({ size })
-                }
+                onValueChange={(size) => this.setState({ size })}
                 maximumValue={4}
                 thumbStyle={{
                   height: 20,
@@ -161,335 +185,397 @@ class AdoptFormScreen extends Component {
                 }}
               />
 
-              <Text style={styles.label}>Choose breed groups you are interested in:</Text>
+              <Text style={styles.label}>
+                Choose breed groups you are interested in:
+              </Text>
               <CheckBox
                 left
-                title='Working'
+                title="Working"
                 iconLeft
-                checkedIcon='dot-circle-o'
-                uncheckedIcon='circle-o'
-                checkedColor='green'
+                checkedIcon="dot-circle-o"
+                uncheckedIcon="circle-o"
+                checkedColor="green"
                 checked={this.state.checkedWorking}
-                onPress={() => this.setState({ checkedWorking: !this.state.checkedWorking })}
+                onPress={() =>
+                  this.setState({ checkedWorking: !this.state.checkedWorking })
+                }
               />
               <CheckBox
                 left
-                title='Sporting'
+                title="Sporting"
                 iconLeft
-                checkedIcon='dot-circle-o'
-                uncheckedIcon='circle-o'
-                checkedColor='green'
+                checkedIcon="dot-circle-o"
+                uncheckedIcon="circle-o"
+                checkedColor="green"
                 checked={this.state.checkedSporting}
-                onPress={() => this.setState({ checkedSporting: !this.state.checkedSporting })}
+                onPress={() =>
+                  this.setState({
+                    checkedSporting: !this.state.checkedSporting,
+                  })
+                }
               />
               <CheckBox
                 left
-                title='Non-Sporting'
+                title="Non-Sporting"
                 iconLeft
-                checkedIcon='dot-circle-o'
-                uncheckedIcon='circle-o'
-                checkedColor='green'
+                checkedIcon="dot-circle-o"
+                uncheckedIcon="circle-o"
+                checkedColor="green"
                 checked={this.state.checkedNonSporting}
-                onPress={() => this.setState({ checkedNonSporting: !this.state.checkedNonSporting })}
+                onPress={() =>
+                  this.setState({
+                    checkedNonSporting: !this.state.checkedNonSporting,
+                  })
+                }
               />
               <CheckBox
                 left
-                title='Hound'
+                title="Hound"
                 iconLeft
-                checkedIcon='dot-circle-o'
-                uncheckedIcon='circle-o'
-                checkedColor='green'
+                checkedIcon="dot-circle-o"
+                uncheckedIcon="circle-o"
+                checkedColor="green"
                 checked={this.state.checkedHound}
-                onPress={() => this.setState({ checkedHound: !this.state.checkedHound })}
+                onPress={() =>
+                  this.setState({ checkedHound: !this.state.checkedHound })
+                }
               />
               <CheckBox
                 left
-                title='Toy'
+                title="Toy"
                 iconLeft
-                checkedIcon='dot-circle-o'
-                uncheckedIcon='circle-o'
-                checkedColor='green'
+                checkedIcon="dot-circle-o"
+                uncheckedIcon="circle-o"
+                checkedColor="green"
                 checked={this.state.checkedToy}
-                onPress={() => this.setState({ checkedToy: !this.state.checkedToy })}
+                onPress={() =>
+                  this.setState({ checkedToy: !this.state.checkedToy })
+                }
               />
               <CheckBox
                 left
-                title='Terrier'
+                title="Terrier"
                 iconLeft
-                checkedIcon='dot-circle-o'
-                uncheckedIcon='circle-o'
-                checkedColor='green'
+                checkedIcon="dot-circle-o"
+                uncheckedIcon="circle-o"
+                checkedColor="green"
                 checked={this.state.checkedTerrier}
-                onPress={() => this.setState({ checkedTerrier: !this.state.checkedTerrier })}
+                onPress={() =>
+                  this.setState({ checkedTerrier: !this.state.checkedTerrier })
+                }
               />
               <CheckBox
                 left
-                title='Mixed'
+                title="Mixed"
                 iconLeft
-                checkedIcon='dot-circle-o'
-                uncheckedIcon='circle-o'
-                checkedColor='green'
+                checkedIcon="dot-circle-o"
+                uncheckedIcon="circle-o"
+                checkedColor="green"
                 checked={this.state.checkedMixed}
-                onPress={() => this.setState({ checkedMixed: !this.state.checkedMixed })}
+                onPress={() =>
+                  this.setState({ checkedMixed: !this.state.checkedMixed })
+                }
               />
 
-              <Text style={styles.label}>Choose the temperaments you like:</Text>
+              <Text style={styles.label}>
+                Choose the temperaments you like:
+              </Text>
               <CheckBox
                 left
-                title='Curious'
+                title="Curious"
                 iconLeft
-                checkedIcon='dot-circle-o'
-                uncheckedIcon='circle-o'
-                checkedColor='green'
+                checkedIcon="dot-circle-o"
+                uncheckedIcon="circle-o"
+                checkedColor="green"
                 checked={this.state.checkedCurious}
-                onPress={() => this.setState({ checkedCurious: !this.state.checkedCurious })}
+                onPress={() =>
+                  this.setState({ checkedCurious: !this.state.checkedCurious })
+                }
               />
               <CheckBox
                 left
-                title='Independent'
+                title="Independent"
                 iconLeft
-                checkedIcon='dot-circle-o'
-                uncheckedIcon='circle-o'
-                checkedColor='green'
+                checkedIcon="dot-circle-o"
+                uncheckedIcon="circle-o"
+                checkedColor="green"
                 checked={this.state.checkedIndependent}
-                onPress={() => this.setState({ checkedIndependent: !this.state.checkedIndependent })}
+                onPress={() =>
+                  this.setState({
+                    checkedIndependent: !this.state.checkedIndependent,
+                  })
+                }
               />
               <CheckBox
                 left
-                title='Intelligent'
+                title="Intelligent"
                 iconLeft
-                checkedIcon='dot-circle-o'
-                uncheckedIcon='circle-o'
-                checkedColor='green'
+                checkedIcon="dot-circle-o"
+                uncheckedIcon="circle-o"
+                checkedColor="green"
                 checked={this.state.checkedIntelligent}
-                onPress={() => this.setState({ checkedIntelligent: !this.state.checkedIntelligent })}
+                onPress={() =>
+                  this.setState({
+                    checkedIntelligent: !this.state.checkedIntelligent,
+                  })
+                }
               />
               <CheckBox
                 left
-                title='Stubborn'
+                title="Stubborn"
                 iconLeft
-                checkedIcon='dot-circle-o'
-                uncheckedIcon='circle-o'
-                checkedColor='green'
+                checkedIcon="dot-circle-o"
+                uncheckedIcon="circle-o"
+                checkedColor="green"
                 checked={this.state.checkedStubborn}
-                onPress={() => this.setState({ checkedStubborn: !this.state.checkedStubborn })}
+                onPress={() =>
+                  this.setState({
+                    checkedStubborn: !this.state.checkedStubborn,
+                  })
+                }
               />
               <CheckBox
                 left
-                title='Energetic'
+                title="Energetic"
                 iconLeft
-                checkedIcon='dot-circle-o'
-                uncheckedIcon='circle-o'
-                checkedColor='green'
+                checkedIcon="dot-circle-o"
+                uncheckedIcon="circle-o"
+                checkedColor="green"
                 checked={this.state.checkedEnergetic}
-                onPress={() => this.setState({ checkedEnergetic: !this.state.checkedEnergetic })}
+                onPress={() =>
+                  this.setState({
+                    checkedEnergetic: !this.state.checkedEnergetic,
+                  })
+                }
               />
               <CheckBox
                 left
-                title='Wild'
+                title="Wild"
                 iconLeft
-                checkedIcon='dot-circle-o'
-                uncheckedIcon='circle-o'
-                checkedColor='green'
+                checkedIcon="dot-circle-o"
+                uncheckedIcon="circle-o"
+                checkedColor="green"
                 checked={this.state.checkedWild}
-                onPress={() => this.setState({ checkedWild: !this.state.checkedWild })}
+                onPress={() =>
+                  this.setState({ checkedWild: !this.state.checkedWild })
+                }
               />
               <CheckBox
                 left
-                title='Alert'
+                title="Alert"
                 iconLeft
-                checkedIcon='dot-circle-o'
-                uncheckedIcon='circle-o'
-                checkedColor='green'
+                checkedIcon="dot-circle-o"
+                uncheckedIcon="circle-o"
+                checkedColor="green"
                 checked={this.state.checkedAlert}
-                onPress={() => this.setState({ checkedAlert: !this.state.checkedAlert })}
+                onPress={() =>
+                  this.setState({ checkedAlert: !this.state.checkedAlert })
+                }
               />
-
 
               <Button title="Submit" onPress={this.addNewLost} />
             </View>
           </ScrollView>
-          // </View>
         ) : (
-          <View style={styles.scroll}>
-            <ScrollView
-              ref={(scrollView) => this.scrollView = scrollView}
-              scrollEnabled={this.state.scrollEnabled}
-              style={{ height: "100%" }}
+          // </View>
+          // <View style={styles.scroll}>
+          <ScrollView
+            ref={(scrollView) => (this.scrollView = scrollView)}
+            scrollEnabled={this.state.scrollEnabled}
+            style={{ height: "100%" }}
             // style={styles.screen}
-            >
-              {/* Cat Form */}
-              <View style={styles.form}>
-                <Text style={styles.label}>
-                  Adaptability: {Math.round(this.state.adaptability, 2)}
-                </Text>
-                <Slider
-                  value={this.state.adaptability}
-                  onValueChange={(adaptability) =>
-                    this.setState({ adaptability })
-                  }
-                  maximumValue={10}
-                  thumbStyle={{
-                    height: 20,
-                    width: 20,
-                    backgroundColor: "transparent",
-                  }}
-                  thumbProps={{
-                    children: (
-                      <Icon
-                        name="pets"
-                        size={10}
-                        reverse
-                        containerStyle={{ bottom: 10, right: 10 }}
-                        color="#54514B"
-                      />
-                    ),
-                  }}
-                />
+          >
+            {/* Cat Form */}
+            <View style={styles.form}>
+              <Text style={styles.label}>
+                Your cat will have adaptability level :{" "}
+                {Math.round(this.state.adaptability, 2)}
+              </Text>
+              <Slider
+                value={this.state.adaptability}
+                onValueChange={(adaptability) =>
+                  this.setState({ adaptability })
+                }
+                maximumValue={10}
+                thumbStyle={{
+                  height: 20,
+                  width: 20,
+                  backgroundColor: "transparent",
+                }}
+                thumbProps={{
+                  children: (
+                    <Icon
+                      name="pets"
+                      size={10}
+                      reverse
+                      containerStyle={{ bottom: 10, right: 10 }}
+                      color="#54514B"
+                    />
+                  ),
+                }}
+              />
 
+              <Text style={styles.label}>
+                Your cat will have an energy level:{" "}
+                {Math.round(this.state.energyLevel, 2)}
+              </Text>
+              <Slider
+                value={this.state.energyLevel}
+                onValueChange={(energyLevel) => this.setState({ energyLevel })}
+                maximumValue={10}
+                thumbStyle={{
+                  height: 20,
+                  width: 20,
+                  backgroundColor: "transparent",
+                }}
+                thumbProps={{
+                  children: (
+                    <Icon
+                      name="pets"
+                      size={10}
+                      reverse
+                      containerStyle={{ bottom: 10, right: 10 }}
+                      color="#54514B"
+                    />
+                  ),
+                }}
+              />
+              <Text style={styles.label}>
+                Is there any child at your family?
+              </Text>
+              <CheckBox
+                left
+                title="Yes"
+                iconLeft
+                checkedIcon="dot-circle-o"
+                uncheckedIcon="circle-o"
+                checkedColor="#54514B"
+                checked={this.state.checkedChildren}
+                onPress={() =>
+                  this.setState({
+                    checkedChildren: !this.state.checkedChildren,
+                  })
+                }
+              />
+              <CheckBox
+                left
+                title="No"
+                iconLeft
+                checkedIcon="dot-circle-o"
+                uncheckedIcon="circle-o"
+                checkedColor="#54514B"
+                checked={!this.state.checkedChildren}
+                onPress={() =>
+                  this.setState({
+                    checkedChildren: !this.state.checkedChildren,
+                  })
+                }
+              />
+              {this.state.checkedChildren ? (
+                <View>
+                  <Text style={styles.label}>
+                    Your cat will have an child friendly level:{" "}
+                    {Math.round(this.state.childFriendly, 2)}
+                  </Text>
+                  <Slider
+                    value={this.state.childFriendly}
+                    onValueChange={(childFriendly) =>
+                      this.setState({ childFriendly })
+                    }
+                    maximumValue={10}
+                    thumbStyle={{
+                      height: 20,
+                      width: 20,
+                      backgroundColor: "transparent",
+                    }}
+                    thumbProps={{
+                      children: (
+                        <Icon
+                          name="pets"
+                          size={10}
+                          reverse
+                          containerStyle={{ bottom: 10, right: 10 }}
+                          color="#54514B"
+                        />
+                      ),
+                    }}
+                  />
+                </View>
+              ) : (
+                <Text></Text>
+              )}
 
-                <Text style={styles.label}>
-                  AffectionLevel: {Math.round(this.state.affectionLevel, 2)}
-                </Text>
-                <Slider
-                  value={this.state.affectionLevel}
-                  onValueChange={(affectionLevel) =>
-                    this.setState({ affectionLevel })
-                  }
-                  maximumValue={10}
-                  thumbStyle={{
-                    height: 20,
-                    width: 20,
-                    backgroundColor: "transparent",
-                  }}
-                  thumbProps={{
-                    children: (
-                      <Icon
-                        name="pets"
-                        size={10}
-                        reverse
-                        containerStyle={{ bottom: 10, right: 10 }}
-                        color="#54514B"
-                      />
-                    ),
-                  }}
-                />
+              <Text style={styles.label}>Do you have a dog?</Text>
+              <CheckBox
+                left
+                title="Yes"
+                iconLeft
+                checkedIcon="dot-circle-o"
+                uncheckedIcon="circle-o"
+                checkedColor="#54514B"
+                checked={this.state.checkedDog}
+                onPress={() =>
+                  this.setState({
+                    checkedDog: !this.state.checkedDog,
+                  })
+                }
+              />
+              <CheckBox
+                left
+                title="No"
+                iconLeft
+                checkedIcon="dot-circle-o"
+                uncheckedIcon="circle-o"
+                checkedColor="#54514B"
+                checked={!this.state.checkedDog}
+                onPress={() =>
+                  this.setState({
+                    checkedDog: !this.state.checkedDog,
+                  })
+                }
+              />
+              {this.state.checkedDog ? (
+                <View>
+                  <Text style={styles.label}>
+                    Your cat will have an dog friendly level:{" "}
+                    {Math.round(this.state.dogFriendly, 2)}
+                  </Text>
+                  <Slider
+                    value={this.state.dogFriendly}
+                    onValueChange={(dogFriendly) =>
+                      this.setState({ dogFriendly })
+                    }
+                    maximumValue={10}
+                    thumbStyle={{
+                      height: 20,
+                      width: 20,
+                      backgroundColor: "transparent",
+                    }}
+                    thumbProps={{
+                      children: (
+                        <Icon
+                          name="pets"
+                          size={10}
+                          reverse
+                          containerStyle={{ bottom: 10, right: 10 }}
+                          color="#54514B"
+                        />
+                      ),
+                    }}
+                  />
+                </View>
+              ) : (
+                <Text></Text>
+              )}
 
-                <Text style={styles.label}>
-                  Child Friendly: {Math.round(this.state.childFriendly, 2)}
-                </Text>
-                <Slider
-                  value={this.state.childFriendly}
-                  onValueChange={(childFriendly) =>
-                    this.setState({ childFriendly })
-                  }
-                  maximumValue={10}
-                  thumbStyle={{
-                    height: 20,
-                    width: 20,
-                    backgroundColor: "transparent",
-                  }}
-                  thumbProps={{
-                    children: (
-                      <Icon
-                        name="pets"
-                        size={10}
-                        reverse
-                        containerStyle={{ bottom: 10, right: 10 }}
-                        color="#54514B"
-                      />
-                    ),
-                  }}
-                />
-
-                <Text style={styles.label}>
-                  Dog Friendly: {Math.round(this.state.dogFriendly, 2)}
-                </Text>
-                <Slider
-                  value={this.state.dogFriendly}
-                  onValueChange={(dogFriendly) =>
-                    this.setState({ dogFriendly })
-                  }
-                  maximumValue={10}
-                  thumbStyle={{
-                    height: 20,
-                    width: 20,
-                    backgroundColor: "transparent",
-                  }}
-                  thumbProps={{
-                    children: (
-                      <Icon
-                        name="pets"
-                        size={10}
-                        reverse
-                        containerStyle={{ bottom: 10, right: 10 }}
-                        color="#54514B"
-                      />
-                    ),
-                  }}
-                />
-
-                <Text style={styles.label}>
-                  Energy Level: {Math.round(this.state.energyLevel, 2)}
-                </Text>
-                <Slider
-                  value={this.state.energyLevel}
-                  onValueChange={(energyLevel) =>
-                    this.setState({ energyLevel })
-                  }
-                  maximumValue={10}
-                  thumbStyle={{
-                    height: 20,
-                    width: 20,
-                    backgroundColor: "transparent",
-                  }}
-                  thumbProps={{
-                    children: (
-                      <Icon
-                        name="pets"
-                        size={10}
-                        reverse
-                        containerStyle={{ bottom: 10, right: 10 }}
-                        color="#54514B"
-                      />
-                    ),
-                  }}
-                />
-
-                <Text style={styles.label}>
-                  Grooming: {Math.round(this.state.grooming, 2)}
-                </Text>
-                <Slider
-                  value={this.state.grooming}
-                  onValueChange={(grooming) => this.setState({ grooming })}
-                  maximumValue={10}
-                  thumbStyle={{
-                    height: 20,
-                    width: 20,
-                    backgroundColor: "transparent",
-                  }}
-                  thumbProps={{
-                    children: (
-                      <Icon
-                        name="pets"
-                        size={10}
-                        reverse
-                        containerStyle={{ bottom: 10, right: 10 }}
-                        color="#54514B"
-                      />
-                    ),
-                  }}
-                />
-
-                <Button title="Submit" onPress={this.addNewLost} />
-              </View>
-            </ScrollView>
-          </View>
+              <Button title="Submit" onPress={this.handleSubmit} />
+            </View>
+          </ScrollView>
+          // </View>
         )}
       </View>
-    )
+    );
   }
-
 }
 
 const styles = StyleSheet.create({
@@ -532,7 +618,6 @@ const styles = StyleSheet.create({
     height: 100,
     width: 100,
   },
-
 });
 
 export default AdoptFormScreen;
