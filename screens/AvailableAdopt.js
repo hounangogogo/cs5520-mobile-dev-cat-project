@@ -93,9 +93,6 @@ class AvailableAdopt extends Component {
     }
 
 
-
-
-
     render() { 
         let animals = this.state.animals
         return ( 
