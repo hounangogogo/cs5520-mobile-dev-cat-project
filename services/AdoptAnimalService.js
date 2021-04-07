@@ -1,4 +1,4 @@
-const url = 'https://cs5520-mobiledev-project-default-rtdb.firebaseio.com/';
+const url = 'https://cs5220-mobile-default-rtdb.firebaseio.com/';
 
 
 
