@@ -10,6 +10,7 @@ import {
   TouchableOpacity,
   StyleSheet,
   Dimensions,
+  ScrollView,
 } from "react-native";
 import Colors from "../constants/Colors";
 import LoadCatAnimation from "../Animation/LoadCatAnimation";
@@ -104,7 +105,7 @@ class CatSearchScreen extends Component {
         }
       >
         {this.state.isAnimationTimeOut ? (
-          <View>
+          <View style ={{flex: 1}}>
             <Image
               style={styles.searchImage}
               source={require("../assets/catSearch.png")}
@@ -126,13 +127,14 @@ class CatSearchScreen extends Component {
               />
               <Button title="Search Cat" onPress={this.handleSearch} />
             </View>
-            <FlatList
-              keyExtractor={(item, index) => index}
-              data={this.state.filterBreeds}
-              renderItem={this.renderGridItem}
-              numColumns={2}
-            />
-          </View>
+              <FlatList
+                keyExtractor={(item, index) => index}
+                data={this.state.filterBreeds}
+                renderItem={this.renderGridItem}
+                numColumns={2}
+                ListFooterComponent={<View style={{ height: 20 }} />}
+              />
+            </View>
         ) : (
           <LoadCatAnimation />
         )}
@@ -151,6 +153,7 @@ class CatSearchScreen extends Component {
 
 const styles = StyleSheet.create({
   screen: {
+    flex: 1
     // margin: 35,
   },
   animationScreen: {

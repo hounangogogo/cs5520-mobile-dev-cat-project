@@ -108,7 +108,7 @@ class DogSearchScreen extends Component {
         }
       >
         {this.state.isAnimationTimeOut ? (
-          <View>
+          <View style={{flex: 1}}>
             <Image
               style={styles.searchImage}
               source={require("../assets/dogSearch.png")}
