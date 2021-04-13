@@ -35,7 +35,7 @@ export default class PropBar extends Component {
                   backgroundColor: `hsl(${hue}, ${saturation}%, ${
                     100 / (index + 3.5)
                   }%)`,
-                  borderRadius: 15,
+                  borderRadius: 5,
                 }}
               >
                 <View tyle={styles.p}>

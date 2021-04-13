@@ -150,7 +150,6 @@ class CatDetailScreen extends Component {
 
     return (
       <ScrollView style={styles.screen}>
-
         <View>
           <Text></Text>
           <Text style={styles.headText}>{this.state.breed}</Text>
@@ -167,7 +166,7 @@ class CatDetailScreen extends Component {
           />
         </View>
 
-        <View style = {styles.description}>
+        <View style={styles.description}>
           <Text style={styles.headText}>Description</Text>
           <Text style={styles.text}>{this.state.description}</Text>
           <Text></Text>
@@ -217,7 +216,7 @@ class CatDetailScreen extends Component {
                   borderWidth: 0.3,
                   borderColor: this.state.tableBoardColor,
                   backgroundColor: this.state.tableCellColorDark,
-                  height: 40,
+                  height: 50,
                 }}
               >
                 <Col>
@@ -232,7 +231,7 @@ class CatDetailScreen extends Component {
         </View>
 
         {/* characteristics block */}
-        <View style = {styles.propBar}>
+        <View style={styles.propBar}>
           <PropBar hue="25" saturation="85.5" characs={CHARACS} />
         </View>
       </ScrollView>
@@ -250,10 +249,10 @@ const styles = StyleSheet.create({
   image: {
     height: 250,
     width: 250,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
     borderRadius: 15,
-    shadowColor: 'black',
+    shadowColor: "black",
     shadowOpacity: 0.26,
     shadowOffset: { width: 0, height: 2 },
     shadowRadius: 10,
@@ -265,10 +264,10 @@ const styles = StyleSheet.create({
     marginRight: 30,
   },
   propBar: {
-    justifyContent: 'center',
+    justifyContent: "center",
     // alignItems: 'center',
     marginRight: 30,
-    marginBottom: 500
+    marginBottom: "20%",
   },
   topContainer: {
     // flexDirection: "row",
@@ -298,7 +297,7 @@ const styles = StyleSheet.create({
     // marginTop: "10%",
   },
   outsideContainer: {
-    marginBottom: 75,
+    marginBottom: "8%",
   },
   // bottomMiddleContainer1: {
   //   flex: 1.4,
@@ -322,7 +321,7 @@ const styles = StyleSheet.create({
     textAlign: "auto",
     color: "#54514B",
     fontWeight: "200",
-    fontFamily: "Arial",
+    // fontFamily: "Arial",
     fontSize: 12.5,
   },
   tableHead: {
@@ -336,20 +335,20 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     fontSize: 20,
     marginBottom: 5,
-    textAlign: 'center',
+    textAlign: "center",
   },
   breedText: {
     color: "#54514B",
     fontWeight: "bold",
     fontSize: 30,
     // marginBottom: 5,
-    textAlign: 'center',
+    textAlign: "center",
   },
   text: {
     color: "#54514B",
     fontSize: 15,
     // marginRight: "5%",
-    textAlign: 'center',
+    textAlign: "center",
   },
 });
 
