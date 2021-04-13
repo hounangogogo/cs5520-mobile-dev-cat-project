@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, Text, Image, StyleSheet } from "react-native";
+import { View, Text, Image, StyleSheet, ScrollView } from "react-native";
 import PropBar from "../components/PropBar.js";
 import { IconButton, Colors } from "react-native-paper";
 import { Col, Row, Grid } from "react-native-easy-grid";
@@ -149,7 +149,7 @@ class CatDetailScreen extends Component {
     ];
 
     return (
-      <View style={styles.screen}>
+      <ScrollView style={styles.screen}>
 
         <View>
           <Text></Text>
@@ -235,7 +235,7 @@ class CatDetailScreen extends Component {
         <View style = {styles.propBar}>
           <PropBar hue="25" saturation="85.5" characs={CHARACS} />
         </View>
-      </View>
+      </ScrollView>
     );
   }
 }

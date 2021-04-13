@@ -242,8 +242,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   },
   text: {
-    // fontFamily: "open-sans-bold",
-    fontFamily: "600",
+    fontFamily: "open-sans-bold",
     fontSize: 12,
   },
 });

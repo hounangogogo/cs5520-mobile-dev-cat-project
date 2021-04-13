@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, Text, Image, StyleSheet } from "react-native";
+import { View, Text, Image, StyleSheet, ScrollView } from "react-native";
 import PropBar from "../components/PropBar.js";
 import { IconButton, Colors } from "react-native-paper";
 
@@ -110,7 +110,7 @@ class DogDetailScreen extends Component {
     console.log(DETAILS);
     return (
 
-      <View style={styles.screen}>
+      <ScrollView style={styles.screen}>
 
         <View>
           <Text></Text>
@@ -191,7 +191,7 @@ class DogDetailScreen extends Component {
             </Grid>
           </View>
         </View>
-      </View>
+      </ScrollView>
     );
   }
 }
