@@ -94,9 +94,9 @@ class AvailableAdopt extends Component {
   render() {
     let animals = this.state.animals;
     return (
-      <View>
+      <View style={{flex: 1}}>
         {this.state.animals.length !== 0 ? (
-          <View>
+          <View style={{flex:1}}>
             <Text
               style={{
                 fontFamily: "open-sans-bold",
